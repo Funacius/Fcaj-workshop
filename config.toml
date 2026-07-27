@@ -27,6 +27,24 @@ home = ["HTML", "RSS", "JSON"]
     weight = 1
 
     [[languages.en.menu.shortcuts]]
+      name = "<i class='fas fa-external-link-alt'></i> Live EduCloud"
+      identifier = "educloud-live"
+      url = "https://main.djk00b5qbck73.amplifyapp.com/courses"
+      weight = 1
+
+    [[languages.en.menu.shortcuts]]
+      name = "<i class='fab fa-github'></i> EduCloud source code"
+      identifier = "educloud-source"
+      url = "https://github.com/Funacius/EduCloud"
+      weight = 2
+
+    [[languages.en.menu.shortcuts]]
+      name = "<i class='fas fa-tools'></i> Build and setup guide"
+      identifier = "educloud-build-guide"
+      url = "https://github.com/Funacius/EduCloud#run-locally-with-supabase"
+      weight = 3
+
+    [[languages.en.menu.shortcuts]]
       name = "<i class='fab fa-aws'></i> AWS Study Group - Blog"
       identifier = "aws-study-group-blog"
       url = "https://awsstudygroup.com"
@@ -42,6 +60,24 @@ home = ["HTML", "RSS", "JSON"]
     title = "Báo cáo thực tập EduCloud Lite"
     languageName = "Tiếng Việt"
     weight = 2
+
+    [[languages.vi.menu.shortcuts]]
+      name = "<i class='fas fa-external-link-alt'></i> Website EduCloud"
+      identifier = "educloud-live-vi"
+      url = "https://main.djk00b5qbck73.amplifyapp.com/courses"
+      weight = 1
+
+    [[languages.vi.menu.shortcuts]]
+      name = "<i class='fab fa-github'></i> Mã nguồn EduCloud"
+      identifier = "educloud-source-vi"
+      url = "https://github.com/Funacius/EduCloud"
+      weight = 2
+
+    [[languages.vi.menu.shortcuts]]
+      name = "<i class='fas fa-tools'></i> Hướng dẫn build và cài đặt"
+      identifier = "educloud-build-guide-vi"
+      url = "https://github.com/Funacius/EduCloud#run-locally-with-supabase"
+      weight = 3
 
     [[languages.vi.menu.shortcuts]]
       name = "<i class='fab fa-aws'></i> AWS Study Group - Blog"

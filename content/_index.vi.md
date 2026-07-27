@@ -40,4 +40,19 @@ chapter: false
 <li><a href="7-feedback/">Chia sẻ, đóng góp ý kiến</a></li>
 </ol>
 </div>
+<div class="project-demo-access">
+<h2>Truy cập project demo</h2>
+<ul>
+<li><strong>Website:</strong> <a href="https://main.djk00b5qbck73.amplifyapp.com/courses" target="_blank" rel="noopener noreferrer">Mở EduCloud Lite</a></li>
+<li><strong>Mã nguồn:</strong> <a href="https://github.com/Funacius/EduCloud" target="_blank" rel="noopener noreferrer">Funacius/EduCloud</a></li>
+<li><strong>Hướng dẫn build và chạy local:</strong> <a href="https://github.com/Funacius/EduCloud#run-locally-with-supabase" target="_blank" rel="noopener noreferrer">README hướng dẫn cài đặt</a></li>
+</ul>
+<h3>Tài khoản demo dành cho mentor</h3>
+<ul>
+<li><strong>Student:</strong> <code>student2@educloud.edu</code></li>
+<li><strong>Instructor:</strong> <code>instructor@educloud.edu</code></li>
+<li><strong>Mật khẩu:</strong> được cung cấp riêng cho mentor cùng nội dung nộp bài.</li>
+</ul>
+<p>Hai tài khoản chỉ chứa dữ liệu demo. Mật khẩu được chủ động không công khai trong report này.</p>
+</div>
 </div>

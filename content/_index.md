@@ -40,4 +40,19 @@ chapter: false
 <li><a href="7-feedback/">Sharing and feedback</a></li>
 </ol>
 </div>
+<div class="project-demo-access">
+<h2>Project demo</h2>
+<ul>
+<li><strong>Live application:</strong> <a href="https://main.djk00b5qbck73.amplifyapp.com/courses" target="_blank" rel="noopener noreferrer">Open EduCloud Lite</a></li>
+<li><strong>Source code:</strong> <a href="https://github.com/Funacius/EduCloud" target="_blank" rel="noopener noreferrer">Funacius/EduCloud</a></li>
+<li><strong>Build and local setup:</strong> <a href="https://github.com/Funacius/EduCloud#run-locally-with-supabase" target="_blank" rel="noopener noreferrer">README setup guide</a></li>
+</ul>
+<h3>Mentor demo accounts</h3>
+<ul>
+<li><strong>Student:</strong> <code>student2@educloud.edu</code></li>
+<li><strong>Instructor:</strong> <code>instructor@educloud.edu</code></li>
+<li><strong>Password:</strong> provided privately to the mentor with the submission.</li>
+</ul>
+<p>These accounts contain demonstration data only. The password is intentionally not published in this public report.</p>
+</div>
 </div>
