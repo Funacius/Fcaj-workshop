@@ -1,0 +1,9 @@
+public/
+resources/
+.hugo_build.lock
+.DS_Store
+.chrome-*/
+*-preview.png
+proposal-header-*.png
+sample-reference.png
+static/event 1/

@@ -1,0 +1,600 @@
+:root {
+  --MAIN-TEXT-color: #323235; /* Color of text by default */
+  --MAIN-TITLES-TEXT-color: #778ba5; /* Color of titles h2-h3-h4-h5 */
+  --MAIN-LINK-color: #4881cd; /* Color of links */
+  --MAIN-LINK-HOVER-color: #599af1; /* Color of hovered links */
+  --MAIN-ANCHOR-color: #4881cd; /* color of anchors on titles */
+
+  --MENU-HEADER-BG-color: #283e5b; /* Background color of menu header */
+  --MENU-HEADER-BORDER-color: #435c7c; /*Color of menu header border */
+
+  --MENU-SEARCH-BG-color: #202c3c; /* Search field background color (by default borders + icons) */
+  --MENU-SEARCH-BOX-color: #4d6584; /* Override search field border color */
+  --MENU-SEARCH-BOX-ICONS-color: #4d6584; /* Override search field icons color */
+
+  --MENU-SECTIONS-ACTIVE-BG-color: #0a0c0e; /* Background color of the active section and its childs */
+  --MENU-SECTIONS-BG-color: #1c222a; /* Background color of other sections */
+  --MENU-SECTIONS-LINK-color: #ccc; /* Color of links in menu */
+  --MENU-SECTIONS-LINK-HOVER-color: #e6e6e6; /* Color of links in menu, when hovered */
+  --MENU-SECTION-ACTIVE-CATEGORY-color: #777; /* Color of active category text */
+  --MENU-SECTION-ACTIVE-CATEGORY-BG-color: #fff; /* Color of background for the active category (only) */
+
+  --MENU-VISITED-color: #33a1ff; /* Color of 'page visited' icons in menu */
+  --MENU-SECTION-HR-color: #20272b; /* Color of <hr> separator in menu */
+}
+
+.educloud-sidebar-logo {
+  display: flex !important;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  color: #fff !important;
+  text-decoration: none;
+}
+
+.educloud-sidebar-logo img {
+  display: block;
+  width: 150px;
+  max-height: 54px;
+  object-fit: contain;
+}
+
+.educloud-sidebar-logo span {
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.educloud-sidebar-logo small {
+  color: #a9bed8;
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.educloud-footer {
+  color: #c8d2df;
+  font-size: 0.7rem;
+  line-height: 1.5;
+}
+
+.educloud-footer strong {
+  color: #ff9900;
+}
+
+#body img {
+  max-width: 100%;
+  height: auto;
+}
+
+.architecture-image {
+  border: 1px solid #d5dbdb;
+  box-shadow: 0 4px 18px rgba(35, 47, 62, 0.12);
+}
+
+#top-bar {
+  background: #f5f5f5;
+  min-height: 58px;
+  display: flex;
+  align-items: center;
+  border: 1px solid #f0f0f0;
+  box-shadow: none;
+}
+
+.is-sticky #top-bar {
+  z-index: 1000 !important;
+  border-color: #edf0f4;
+  box-shadow: 0 3px 12px rgba(35, 47, 62, 0.14) !important;
+}
+
+#body #breadcrumbs {
+  width: 100%;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  min-height: 58px;
+  position: static;
+  top: auto;
+  transform: none;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+#body #breadcrumbs .links {
+  display: inline;
+  font-size: 1.12rem;
+  line-height: 1.25;
+}
+
+#sidebar-toggle-span,
+#toc-menu {
+  display: inline-flex !important;
+  align-items: center;
+  min-height: 28px;
+}
+
+#sidebar-toggle,
+#toc-menu i {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media only all and (min-width: 60em) {
+  #sidebar-toggle-span {
+    display: none !important;
+  }
+
+  #toc-menu {
+    margin-left: 0 !important;
+  }
+}
+
+.proposal-hero-title {
+  max-width: 1040px;
+  margin: 34px auto 42px;
+  color: #778ba5;
+  font-size: clamp(2.5rem, 4vw, 4rem);
+  font-weight: 400;
+  line-height: 1.35;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+#body-inner > h1 {
+  margin: 32px 0 44px;
+  color: #778ba5 !important;
+  font-size: clamp(3rem, 4.3vw, 4rem);
+  font-weight: 400;
+  line-height: 1.15;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+#body-inner h2 {
+  color: #778ba5 !important;
+  font-weight: 400;
+}
+
+.blog-list-title {
+  margin-top: 34px;
+  margin-bottom: 12px;
+  color: var(--MAIN-LINK-color) !important;
+  font-size: clamp(2rem, 2.65vw, 2.65rem);
+  line-height: 1.22;
+}
+
+.blog-list-title a {
+  color: var(--MAIN-LINK-color) !important;
+  text-decoration: none;
+}
+
+.blog-list-title a:hover {
+  color: var(--MAIN-LINK-HOVER-color) !important;
+  text-decoration: underline;
+}
+
+.blog-list-title a::after {
+  content: " \f0c1";
+  font-family: "Font Awesome 5 Free";
+  font-size: 0.55em;
+  font-weight: 900;
+  vertical-align: 0.18em;
+}
+
+.event-hero-title {
+  max-width: 1120px;
+  margin: 34px auto 42px;
+  color: #778ba5;
+  font-size: clamp(2.4rem, 4vw, 4rem);
+  font-weight: 400;
+  line-height: 1.35;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.event-list-title {
+  margin-top: 34px;
+  margin-bottom: 18px;
+  color: var(--MAIN-LINK-color) !important;
+  font-size: 2rem;
+  font-weight: 400;
+}
+
+.event-list-title a {
+  color: var(--MAIN-LINK-color) !important;
+  text-decoration: none;
+}
+
+.event-list-title a:hover {
+  color: var(--MAIN-LINK-HOVER-color) !important;
+  text-decoration: underline;
+}
+
+#body-inner table {
+  width: 100%;
+}
+
+#body-inner table th {
+  background: #f7f7f7;
+}
+
+body {
+  color: var(--MAIN-TEXT-color) !important;
+}
+
+textarea:focus,
+input[type="email"]:focus,
+input[type="number"]:focus,
+input[type="password"]:focus,
+input[type="search"]:focus,
+input[type="tel"]:focus,
+input[type="text"]:focus,
+input[type="url"]:focus,
+input[type="color"]:focus,
+input[type="date"]:focus,
+input[type="datetime"]:focus,
+input[type="datetime-local"]:focus,
+input[type="month"]:focus,
+input[type="time"]:focus,
+input[type="week"]:focus,
+select[multiple="multiple"]:focus {
+  border-color: none;
+  box-shadow: none;
+}
+
+h2,
+h3,
+h4,
+h5 {
+  color: var(--MAIN-TITLES-TEXT-color) !important;
+}
+
+a {
+  color: var(--MAIN-LINK-color);
+}
+
+.anchor {
+  color: var(--MAIN-ANCHOR-color);
+}
+
+a:hover {
+  color: var(--MAIN-LINK-HOVER-color);
+}
+
+#sidebar ul li.visited > a .read-icon {
+  color: var(--MENU-VISITED-color);
+}
+
+#sidebar #footer {
+  padding-top: 20px !important;
+}
+
+#sidebar #footer h2.github-title {
+  font-size: 20px;
+  color: #fd9827 !important;
+  margin: 10px 0px 5px;
+  padding: 0px;
+  font-weight: normal !important;
+  margin-top: 10px;
+  padding-top: 30px;
+  border-top: 1px dotted #384657;
+}
+
+#sidebar #footer h3.github-title {
+  font-size: 14px;
+  margin: 10px 0px 5px;
+  padding: 0px;
+  text-transform: uppercase;
+  letter-spacing: 0.15px;
+}
+
+#sidebar #footer h5.copyright,
+#sidebar #footer p.build-number {
+  font-size: 10px;
+  letter-spacing: 0.15px;
+  line-height: 150% !important;
+}
+
+#body a.highlight:after {
+  display: block;
+  content: "";
+  height: 1px;
+  width: 0%;
+  -webkit-transition: width 0.5s ease;
+  -moz-transition: width 0.5s ease;
+  -ms-transition: width 0.5s ease;
+  transition: width 0.5s ease;
+  background-color: var(--MAIN-LINK-HOVER-color);
+}
+#sidebar {
+  background-color: var(--MENU-SECTIONS-BG-color);
+}
+#sidebar #header-wrapper {
+  background: var(--MENU-HEADER-BG-color);
+  color: var(--MENU-SEARCH-BOX-color);
+  border-color: var(--MENU-HEADER-BORDER-color);
+}
+#sidebar .searchbox {
+  border-color: var(--MENU-SEARCH-BOX-color);
+  background: var(--MENU-SEARCH-BG-color);
+}
+#sidebar ul.topics > li.parent,
+#sidebar ul.topics > li.active {
+  background: var(--MENU-SECTIONS-ACTIVE-BG-color);
+}
+#sidebar .searchbox * {
+  color: var(--MENU-SEARCH-BOX-ICONS-color);
+}
+
+#sidebar a {
+  color: var(--MENU-SECTIONS-LINK-color);
+}
+
+#sidebar a:hover {
+  color: var(--MENU-SECTIONS-LINK-HOVER-color);
+}
+
+#sidebar ul.topics li > a b {
+  display: inline-block;
+  margin-right: 0.22rem;
+}
+
+#sidebar ul li.active > a {
+  background: var(--MENU-SECTION-ACTIVE-CATEGORY-BG-color);
+  color: var(--MENU-SECTION-ACTIVE-CATEGORY-color) !important;
+}
+
+#sidebar hr {
+  border-color: var(--MENU-SECTION-HR-color);
+}
+
+#navigation a.nav-prev,
+#navigation a.nav-next {
+  color: #f19e39 !important;
+}
+
+#navigation a.nav-prev:hover,
+#navigation a.nav-next:hover {
+  color: #e07d04 !important;
+}
+
+div.notices p:first-child:before {
+  position: absolute;
+  top: 2px;
+  color: #fff;
+  font-family: "Font Awesome\ 5 Free";
+  content: #f06a;
+  font-weight: 900; /* Fix version 5.0.9 */
+  left: 10px;
+}
+
+body {
+  color: var(--MAIN-TEXT-color) !important;
+  font-family: "Amazon Ember", "Work Sans", sans-serif;
+  text-align: left;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  color: var(--MAIN-TITLES-TEXT-color) !important;
+  font-family: "Amazon Ember", "Montserrat", sans-serif;
+}
+
+.ui-state-default,
+.ui-widget-content .ui-state-default,
+.ui-widget-header .ui-state-default,
+.ui-button,
+html .ui-button.ui-state-disabled:hover,
+html .ui-button.ui-state-disabled:active {
+  border: 1px solid #dddddd;
+  font-weight: normal;
+  color: #454545;
+}
+
+.ui-state-active,
+.ui-widget-content .ui-state-active,
+.ui-widget-header .ui-state-active,
+a.ui-button:active,
+.ui-button:active,
+.ui-button.ui-state-active:hover {
+  border: 1px solid var(--MENU-HEADER-BG-color);
+  background: var(--MENU-HEADER-BG-color);
+  font-weight: normal;
+  color: #fff;
+}
+
+.ui-widget.ui-widget-content {
+  border: 1px solid #eeeeee;
+}
+
+.ui-widget-header {
+  border: 1px solid #eeeeee;
+}
+
+.hljs {
+  background-color: none;
+}
+
+pre {
+  background-color: var(--MENU-SECTIONS-BG-color) !important;
+}
+
+div.notices.info p {
+  border-top: 30px solid #fd9827;
+  background: #fff2db;
+}
+
+.internship-sidebar-footer {
+  color: #c8d2df;
+  font-size: 0.72rem;
+  line-height: 1.45;
+  text-align: left;
+}
+
+.internship-sidebar-footer strong,
+.internship-sidebar-footer span,
+.internship-sidebar-footer em {
+  display: block;
+}
+
+.internship-sidebar-footer strong {
+  margin-top: 20px;
+  color: #c8d2df;
+}
+
+.internship-sidebar-footer span,
+.internship-sidebar-footer em {
+  color: #ff9900;
+}
+
+.internship-sidebar-footer .internship-team-link {
+  display: inline-block;
+  color: #ff9900;
+  text-decoration: none;
+}
+
+.internship-sidebar-footer .internship-team-link:hover em {
+  color: #ffb84d;
+  text-decoration: underline;
+}
+
+.internship-profile {
+  width: 100%;
+  padding-top: 8px;
+}
+
+.internship-profile > h1 {
+  margin: 22px 0 45px;
+  color: #778ba5 !important;
+  font-size: clamp(2.4rem, 4.2vw, 3.5rem);
+  font-weight: 400;
+  letter-spacing: 0.015em;
+  text-align: center;
+}
+
+.student-information {
+  margin-right: 6.5%;
+  margin-left: 6.5%;
+}
+
+.student-information > h2 {
+  margin: 0 0 18px;
+  font-size: 2rem;
+  font-weight: 400;
+}
+
+.student-information-lines {
+  padding-left: 22px;
+  font-size: 1.05rem;
+}
+
+.student-detail-row {
+  display: block;
+  margin-bottom: 17px;
+  line-height: 1.7;
+}
+
+.student-photo {
+  position: relative;
+  display: flex;
+  width: min(520px, 85%);
+  min-height: 360px;
+  margin: 65px auto 0;
+  align-items: flex-end;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.student-photo > img {
+  position: relative;
+  z-index: 2;
+  display: block;
+  width: 100%;
+  max-height: 620px;
+  object-fit: contain;
+  object-position: center bottom;
+  opacity: 0;
+}
+
+.student-photo.has-photo > img {
+  opacity: 1;
+}
+
+.student-photo-placeholder {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 2px dashed #b8c2cf;
+  background: #f7f8fa;
+  color: #778ba5;
+  text-align: center;
+}
+
+.student-photo-placeholder i {
+  font-size: 5rem;
+}
+
+.student-photo-placeholder span {
+  font-size: 0.85rem;
+}
+
+.student-photo.has-photo .student-photo-placeholder {
+  display: none;
+}
+
+.report-contents {
+  margin: 45px 6.5% 80px;
+}
+
+.report-contents h2 {
+  margin-bottom: 20px;
+  font-size: 2rem;
+  font-weight: 400;
+}
+
+.report-contents ol {
+  margin-left: 28px;
+  font-size: 1.05rem;
+  line-height: 1.65;
+}
+
+.report-contents li {
+  padding-left: 2px;
+}
+
+@media (max-width: 767px) {
+  .internship-profile > h1 {
+    margin-bottom: 30px;
+    font-size: 2.15rem;
+  }
+
+  .student-information {
+    width: 100%;
+  }
+
+  .student-information > h2 {
+    font-size: 1.65rem;
+  }
+
+  .student-information-lines {
+    padding-left: 0;
+    font-size: 1rem;
+  }
+
+  .student-photo {
+    min-height: 280px;
+    margin-top: 35px;
+  }
+
+  .report-contents {
+    margin: 30px 0 60px;
+  }
+}

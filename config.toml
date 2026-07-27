@@ -1,0 +1,65 @@
+baseURL = "/"
+relativeURLs = true
+canonifyURLs = false
+defaultContentLanguage = "en"
+theme = "hugo-theme-learn"
+title = "EduCloud Lite Internship Report"
+enableRobotsTXT = true
+
+[outputs]
+home = ["HTML", "RSS", "JSON"]
+
+[params]
+  themeVariant = "workshop"
+  editURL = ""
+  description = "Internship report and hands-on AWS workshop for the EduCloud Lite learning management platform."
+  author = "EduCloud project team"
+  showVisitedLinks = true
+  disableBreadcrumb = false
+  disableNextPrev = false
+  disableSearch = false
+  disableAssetsBusting = false
+
+[languages]
+  [languages.en]
+    title = "EduCloud Lite Internship Report"
+    languageName = "English"
+    weight = 1
+
+    [[languages.en.menu.shortcuts]]
+      name = "<i class='fab fa-aws'></i> AWS Study Group - Blog"
+      identifier = "aws-study-group-blog"
+      url = "https://awsstudygroup.com"
+      weight = 10
+
+    [[languages.en.menu.shortcuts]]
+      name = "<i class='fab fa-facebook'></i> AWS Study Group - FB Group"
+      identifier = "aws-study-group-fb"
+      url = "https://www.facebook.com/groups/660548818043427"
+      weight = 20
+
+  [languages.vi]
+    title = "Báo cáo thực tập EduCloud Lite"
+    languageName = "Tiếng Việt"
+    weight = 2
+
+    [[languages.vi.menu.shortcuts]]
+      name = "<i class='fab fa-aws'></i> AWS Study Group - Blog"
+      identifier = "aws-study-group-blog-vi"
+      url = "https://awsstudygroup.com"
+      weight = 10
+
+    [[languages.vi.menu.shortcuts]]
+      name = "<i class='fab fa-facebook'></i> AWS Study Group - FB Group"
+      identifier = "aws-study-group-fb-vi"
+      url = "https://www.facebook.com/groups/660548818043427"
+      weight = 20
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+
+[caches]
+  [caches.images]
+    dir = ":cacheDir/images"

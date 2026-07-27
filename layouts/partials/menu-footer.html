@@ -1,0 +1,13 @@
+<div class="internship-sidebar-footer">
+  {{ if eq .Page.Lang "vi" }}
+    <strong>Cập nhật lần cuối</strong>
+  {{ else }}
+    <strong>Last Updated</strong>
+  {{ end }}
+  <span>{{ now.Format "02-01-2006" }}</span>
+
+  <strong>Team</strong>
+  <a class="internship-team-link" href="https://www.facebook.com/groups/awsstudygroupfcj" target="_blank" rel="noopener noreferrer">
+    <em>First Cloud AI Journey</em>
+  </a>
+</div>

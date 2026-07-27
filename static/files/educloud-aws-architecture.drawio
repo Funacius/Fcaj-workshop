@@ -1,0 +1,223 @@
+<mxfile host="app.diagrams.net" modified="2026-07-24T17:30:00.000Z" agent="Codex" version="26.0.16" type="device">
+  <diagram id="educloud-aws-prod" name="EduCloud AWS Architecture">
+    <mxGraphModel dx="1920" dy="1080" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1920" pageHeight="1080" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <mxCell id="title" value="EduCloud Lite — AWS Production Architecture" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=26;fontStyle=1;fontColor=#232F3E;" vertex="1" parent="1">
+          <mxGeometry x="40" y="20" width="760" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="subtitle" value="React/Vite frontend • FastAPI backend • Private course media • Cognito authentication" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=13;fontColor=#5F6B7A;" vertex="1" parent="1">
+          <mxGeometry x="42" y="60" width="760" height="24" as="geometry"/>
+        </mxCell>
+        <mxCell id="status" value="Production • ap-southeast-1 (Singapore)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E7F4EA;strokeColor=#1D8102;fontColor=#1D8102;fontStyle=1;fontSize=12;align=center;" vertex="1" parent="1">
+          <mxGeometry x="1530" y="28" width="310" height="34" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="external-zone" value="CLIENTS &amp; SOURCE CONTROL" style="rounded=1;whiteSpace=wrap;html=1;verticalAlign=top;align=left;spacingTop=13;spacingLeft=15;fontSize=13;fontStyle=1;fontColor=#414D5C;fillColor=#F7F8F8;strokeColor=#AAB7B8;dashed=1;dashPattern=6 4;" vertex="1" parent="1">
+          <mxGeometry x="35" y="110" width="245" height="820" as="geometry"/>
+        </mxCell>
+        <mxCell id="global-zone" value="AWS GLOBAL EDGE &amp; FRONTEND" style="rounded=1;whiteSpace=wrap;html=1;verticalAlign=top;align=left;spacingTop=13;spacingLeft=15;fontSize=13;fontStyle=1;fontColor=#232F3E;fillColor=#FFF8F0;strokeColor=#FF9900;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="310" y="110" width="360" height="820" as="geometry"/>
+        </mxCell>
+        <mxCell id="region-zone" value="AWS CLOUD  •  REGION ap-southeast-1 (SINGAPORE)" style="rounded=1;whiteSpace=wrap;html=1;verticalAlign=top;align=left;spacingTop=13;spacingLeft=15;fontSize=13;fontStyle=1;fontColor=#232F3E;fillColor=#F8FAFC;strokeColor=#FF9900;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="700" y="110" width="835" height="820" as="geometry"/>
+        </mxCell>
+        <mxCell id="vpc-zone" value="AMAZON VPC  •  ELASTIC BEANSTALK SINGLE-INSTANCE ENVIRONMENT" style="rounded=1;whiteSpace=wrap;html=1;verticalAlign=top;align=left;spacingTop=13;spacingLeft=15;fontSize=12;fontStyle=1;fontColor=#147EBA;fillColor=#F2FAFD;strokeColor=#147EBA;strokeWidth=2;dashed=1;dashPattern=8 5;" vertex="1" parent="1">
+          <mxGeometry x="735" y="370" width="470" height="305" as="geometry"/>
+        </mxCell>
+        <mxCell id="external-saas-zone" value="EXTERNAL MANAGED DATABASE" style="rounded=1;whiteSpace=wrap;html=1;verticalAlign=top;align=left;spacingTop=13;spacingLeft=15;fontSize=13;fontStyle=1;fontColor=#1F2937;fillColor=#F0FDF4;strokeColor=#3ECF8E;strokeWidth=2;dashed=1;dashPattern=6 4;" vertex="1" parent="1">
+          <mxGeometry x="1570" y="110" width="300" height="820" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="users-card" value="&lt;b&gt;EduCloud users&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:11px&quot;&gt;Student • Instructor • Admin&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#879596;strokeWidth=1.5;fontColor=#232F3E;fontSize=14;align=center;verticalAlign=bottom;spacingBottom=10;" vertex="1" parent="1">
+          <mxGeometry x="75" y="205" width="165" height="150" as="geometry"/>
+        </mxCell>
+        <mxCell id="users-icon" value="" style="shape=mxgraph.aws4.client;html=1;fillColor=#147EBA;strokeColor=none;aspect=fixed;" vertex="1" parent="1">
+          <mxGeometry x="127" y="225" width="62" height="62" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="github-card" value="&lt;b&gt;GitHub&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:11px&quot;&gt;Funacius/EduCloud&lt;br&gt;branch: main&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#24292F;strokeColor=#24292F;fontColor=#FFFFFF;fontSize=14;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="75" y="720" width="165" height="100" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="amplify" value="" style="sketch=0;points=[[0,0,0],[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[1,1,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];outlineConnect=0;fillColor=#DD344C;strokeColor=#FFFFFF;html=1;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.amplify;" vertex="1" parent="1">
+          <mxGeometry x="365" y="200" width="78" height="78" as="geometry"/>
+        </mxCell>
+        <mxCell id="amplify-label" value="&lt;b&gt;AWS Amplify Hosting&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:11px&quot;&gt;React + Vite SPA&lt;br&gt;main.djk00b5qbck73.amplifyapp.com&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;fontSize=12;fontColor=#232F3E;" vertex="1" parent="1">
+          <mxGeometry x="325" y="288" width="260" height="62" as="geometry"/>
+        </mxCell>
+        <mxCell id="cloudfront" value="" style="sketch=0;points=[[0,0,0],[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[1,1,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];outlineConnect=0;fillColor=#8C4FFF;strokeColor=#FFFFFF;html=1;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.cloudfront;" vertex="1" parent="1">
+          <mxGeometry x="485" y="440" width="82" height="82" as="geometry"/>
+        </mxCell>
+        <mxCell id="cloudfront-label" value="&lt;b&gt;Amazon CloudFront&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:11px&quot;&gt;API + course media distribution&lt;br&gt;d36qv97zxdik48.cloudfront.net&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;fontSize=12;fontColor=#232F3E;" vertex="1" parent="1">
+          <mxGeometry x="365" y="530" width="260" height="62" as="geometry"/>
+        </mxCell>
+        <mxCell id="edge-note" value="&lt;b&gt;Two CloudFront origins&lt;/b&gt;&lt;br&gt;Default → Elastic Beanstalk&lt;br&gt;/courses/* → private S3 (OAC)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F1EBFF;strokeColor=#8C4FFF;fontColor=#232F3E;fontSize=11;align=left;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="365" y="650" width="250" height="90" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="cognito" value="" style="sketch=0;points=[[0,0,0],[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[1,1,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];outlineConnect=0;fillColor=#DD344C;strokeColor=#FFFFFF;html=1;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.cognito;" vertex="1" parent="1">
+          <mxGeometry x="790" y="200" width="76" height="76" as="geometry"/>
+        </mxCell>
+        <mxCell id="cognito-label" value="&lt;b&gt;Amazon Cognito&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:11px&quot;&gt;User Pool • JWT • forgot password&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;fontSize=12;fontColor=#232F3E;" vertex="1" parent="1">
+          <mxGeometry x="730" y="285" width="195" height="50" as="geometry"/>
+        </mxCell>
+        <mxCell id="lambda" value="" style="sketch=0;points=[[0,0,0],[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[1,1,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];outlineConnect=0;fillColor=#ED7100;strokeColor=#FFFFFF;html=1;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.lambda;" vertex="1" parent="1">
+          <mxGeometry x="1015" y="200" width="76" height="76" as="geometry"/>
+        </mxCell>
+        <mxCell id="lambda-label" value="&lt;b&gt;AWS Lambda&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:11px&quot;&gt;Pre sign-up auto-confirm trigger&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;fontSize=12;fontColor=#232F3E;" vertex="1" parent="1">
+          <mxGeometry x="955" y="285" width="195" height="50" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="beanstalk" value="" style="sketch=0;points=[[0,0,0],[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[1,1,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];outlineConnect=0;fillColor=#ED7100;strokeColor=#FFFFFF;html=1;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.elastic_beanstalk;" vertex="1" parent="1">
+          <mxGeometry x="795" y="445" width="80" height="80" as="geometry"/>
+        </mxCell>
+        <mxCell id="beanstalk-label" value="&lt;b&gt;AWS Elastic Beanstalk&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:11px&quot;&gt;Python 3.12 • educloud-backend-prod&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;fontSize=12;fontColor=#232F3E;" vertex="1" parent="1">
+          <mxGeometry x="745" y="535" width="180" height="48" as="geometry"/>
+        </mxCell>
+        <mxCell id="ec2" value="" style="sketch=0;points=[[0,0,0],[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[1,1,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];outlineConnect=0;fillColor=#ED7100;strokeColor=#FFFFFF;html=1;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.ec2;" vertex="1" parent="1">
+          <mxGeometry x="1015" y="445" width="80" height="80" as="geometry"/>
+        </mxCell>
+        <mxCell id="ec2-label" value="&lt;b&gt;Amazon EC2&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:11px&quot;&gt;t3.micro / t3.small • FastAPI + Gunicorn&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;fontSize=12;fontColor=#232F3E;" vertex="1" parent="1">
+          <mxGeometry x="955" y="535" width="200" height="48" as="geometry"/>
+        </mxCell>
+        <mxCell id="backend-note" value="&lt;b&gt;Backend responsibilities&lt;/b&gt;&lt;br&gt;REST API • RBAC • courses • assessments&lt;br&gt;signed/private uploads • certificate data" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#147EBA;fontColor=#232F3E;fontSize=11;align=left;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="800" y="585" width="340" height="68" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="s3" value="" style="sketch=0;points=[[0,0,0],[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[1,1,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];outlineConnect=0;fillColor=#7AA116;strokeColor=#FFFFFF;html=1;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.s3;" vertex="1" parent="1">
+          <mxGeometry x="1325" y="445" width="82" height="82" as="geometry"/>
+        </mxCell>
+        <mxCell id="s3-label" value="&lt;b&gt;Amazon S3&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:11px&quot;&gt;educloud-uploads-686528374680-sg&lt;br&gt;private objects • OAC only&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;fontSize=12;fontColor=#232F3E;" vertex="1" parent="1">
+          <mxGeometry x="1225" y="535" width="280" height="55" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="parameter-store" value="" style="sketch=0;points=[[0,0,0],[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[1,1,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];outlineConnect=0;fillColor=#E7157B;strokeColor=#FFFFFF;html=1;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.parameter_store;" vertex="1" parent="1">
+          <mxGeometry x="805" y="760" width="72" height="72" as="geometry"/>
+        </mxCell>
+        <mxCell id="parameter-store-label" value="&lt;b&gt;AWS Systems Manager&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:11px&quot;&gt;Parameter Store&lt;br&gt;DATABASE_URL • JWT secret&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;fontSize=12;fontColor=#232F3E;" vertex="1" parent="1">
+          <mxGeometry x="740" y="840" width="205" height="58" as="geometry"/>
+        </mxCell>
+        <mxCell id="iam" value="" style="sketch=0;points=[[0,0,0],[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[1,1,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];outlineConnect=0;fillColor=#DD344C;strokeColor=#FFFFFF;html=1;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.identity_and_access_management;" vertex="1" parent="1">
+          <mxGeometry x="1050" y="760" width="72" height="72" as="geometry"/>
+        </mxCell>
+        <mxCell id="iam-label" value="&lt;b&gt;AWS IAM&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:11px&quot;&gt;EB service role + EC2 profile&lt;br&gt;least-privilege S3/SSM access&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;fontSize=12;fontColor=#232F3E;" vertex="1" parent="1">
+          <mxGeometry x="960" y="840" width="250" height="58" as="geometry"/>
+        </mxCell>
+        <mxCell id="cloudwatch" value="" style="sketch=0;points=[[0,0,0],[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[1,1,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];outlineConnect=0;fillColor=#E7157B;strokeColor=#FFFFFF;html=1;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.cloudwatch_2;" vertex="1" parent="1">
+          <mxGeometry x="1305" y="760" width="72" height="72" as="geometry"/>
+        </mxCell>
+        <mxCell id="cloudwatch-label" value="&lt;b&gt;Amazon CloudWatch&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:11px&quot;&gt;Environment health, metrics and logs&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;fontSize=12;fontColor=#232F3E;" vertex="1" parent="1">
+          <mxGeometry x="1235" y="840" width="215" height="50" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="supabase" value="&lt;b&gt;Supabase PostgreSQL&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:11px&quot;&gt;ap-southeast-2 (Sydney)&lt;br&gt;managed connection pooler&lt;br&gt;SSL required&lt;/font&gt;" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=18;fillColor=#E6FFF4;strokeColor=#3ECF8E;strokeWidth=2;fontColor=#153B2E;fontSize=13;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1630" y="430" width="180" height="145" as="geometry"/>
+        </mxCell>
+        <mxCell id="supabase-note" value="Not Amazon RDS&lt;br&gt;&lt;font style=&quot;font-size:10px&quot;&gt;Cross-region latency is acceptable for the current low-traffic submission build.&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#3ECF8E;fontColor=#365B4F;fontSize=11;align=center;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="1620" y="630" width="200" height="85" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="legend" value="&lt;b&gt;Legend&lt;/b&gt;&amp;nbsp;&amp;nbsp; &lt;font color=&quot;#147EBA&quot;&gt;━&lt;/font&gt; request/data &amp;nbsp;&amp;nbsp; &lt;font color=&quot;#DD344C&quot;&gt;━&lt;/font&gt; authentication &amp;nbsp;&amp;nbsp; &lt;font color=&quot;#1D8102&quot;&gt;┄&lt;/font&gt; deployment/control &amp;nbsp;&amp;nbsp; &lt;font color=&quot;#8C4FFF&quot;&gt;━&lt;/font&gt; private media" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#D5DBDB;fontColor=#414D5C;fontSize=11;align=center;" vertex="1" parent="1">
+          <mxGeometry x="590" y="965" width="740" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="footer-note" value="Current submission architecture • Elastic Beanstalk is Single instance (no load balancer / multi-AZ shown)" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=10;fontColor=#687078;" vertex="1" parent="1">
+          <mxGeometry x="590" y="1010" width="740" height="24" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e-github-amplify" value="CI/CD: push to main" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#1D8102;strokeWidth=2;dashed=1;dashPattern=7 4;endArrow=block;endFill=1;fontSize=11;fontColor=#1D8102;labelBackgroundColor=#FFFFFF;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="github-card" target="amplify">
+          <mxGeometry x="-0.65" y="0" relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="295" y="770"/>
+              <mxPoint x="295" y="239"/>
+            </Array>
+            <mxPoint x="8" y="0" as="offset"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e-user-amplify" value="1. HTTPS • SPA assets" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#147EBA;strokeWidth=2;endArrow=block;endFill=1;fontSize=11;fontColor=#147EBA;labelBackgroundColor=#FFFFFF;exitX=1;exitY=0.35;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="users-card" target="amplify">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e-user-cognito" value="2. SRP sign-in / JWT" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#DD344C;strokeWidth=2;endArrow=block;endFill=1;fontSize=11;fontColor=#B1273D;labelBackgroundColor=#FFFFFF;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="users-card" target="cognito">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="157" y="160"/>
+              <mxPoint x="828" y="160"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e-cognito-lambda" value="Pre sign-up trigger" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#DD344C;strokeWidth=2;dashed=1;dashPattern=6 4;endArrow=block;endFill=1;fontSize=11;fontColor=#B1273D;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="cognito" target="lambda">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e-user-cloudfront" value="3. HTTPS • API + media" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#147EBA;strokeWidth=2;endArrow=block;endFill=1;fontSize=11;fontColor=#147EBA;labelBackgroundColor=#FFFFFF;exitX=1;exitY=0.65;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="users-card" target="cloudfront">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="290" y="302"/>
+              <mxPoint x="290" y="481"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e-cloudfront-eb" value="4a. Default behavior • /api/*" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#147EBA;strokeWidth=2;endArrow=block;endFill=1;fontSize=11;fontColor=#147EBA;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="cloudfront" target="beanstalk">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e-eb-ec2" value="deploy &amp; run" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#ED7100;strokeWidth=2;endArrow=block;endFill=1;fontSize=11;fontColor=#B55B00;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="beanstalk" target="ec2">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e-cloudfront-s3" value="4b. /courses/* • OAC" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#8C4FFF;strokeWidth=2;endArrow=block;endFill=1;fontSize=11;fontColor=#6B35C8;labelBackgroundColor=#FFFFFF;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="cloudfront" target="s3">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="660" y="710"/>
+              <mxPoint x="1515" y="710"/>
+              <mxPoint x="1515" y="486"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e-ec2-s3" value="5. Upload course assets" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#7AA116;strokeWidth=2;endArrow=block;endFill=1;fontSize=11;fontColor=#526F0C;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="ec2" target="s3">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e-ec2-supabase" value="6. SQLAlchemy • PostgreSQL TLS 5432" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#3ECF8E;strokeWidth=2;endArrow=block;endFill=1;fontSize=11;fontColor=#16784B;labelBackgroundColor=#FFFFFF;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="ec2" target="supabase">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1180" y="620"/>
+              <mxPoint x="1545" y="620"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e-ec2-ssm" value="7. GetParameter (encrypted)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#E7157B;strokeWidth=2;dashed=1;dashPattern=6 4;endArrow=block;endFill=1;fontSize=11;fontColor=#B20E5C;labelBackgroundColor=#FFFFFF;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="ec2" target="parameter-store">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="940" y="485"/>
+              <mxPoint x="940" y="705"/>
+              <mxPoint x="841" y="705"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e-iam-ec2" value="instance profile" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#1D8102;strokeWidth=2;dashed=1;dashPattern=6 4;endArrow=none;fontSize=11;fontColor=#1D8102;labelBackgroundColor=#FFFFFF;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="iam" target="ec2">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1180" y="796"/>
+              <mxPoint x="1180" y="485"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e-ec2-cloudwatch" value="8. health • metrics • logs" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#E7157B;strokeWidth=2;dashed=1;dashPattern=6 4;endArrow=block;endFill=1;fontSize=11;fontColor=#B20E5C;labelBackgroundColor=#FFFFFF;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="ec2" target="cloudwatch">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1190" y="705"/>
+              <mxPoint x="1341" y="705"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e-ec2-cognito" value="JWKS / token validation" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#DD344C;strokeWidth=1.5;dashed=1;dashPattern=4 4;endArrow=block;endFill=1;fontSize=10;fontColor=#B1273D;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="ec2" target="cognito">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1135" y="340"/>
+              <mxPoint x="828" y="340"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
