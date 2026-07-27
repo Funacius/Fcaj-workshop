@@ -17,7 +17,7 @@ chapter: false
 <div class="student-detail-row"><strong>Class:</strong> CC23KHM6</div>
 <div class="student-detail-row"><strong>Internship Company:</strong> Amazon Web Services Vietnam Company Limited</div>
 <div class="student-detail-row"><strong>Internship Position:</strong> Project Intern - First Cloud AI Journey</div>
-<div class="student-detail-row"><strong>Internship Duration:</strong> From June 15, 2026 to September 15, 2026</div>
+<div class="student-detail-row"><strong>Internship Duration:</strong> From June 1, 2026 to August 15, 2026</div>
 </div>
 </div>
 <div class="student-photo" aria-label="Portrait of Bùi Quốc Thái">

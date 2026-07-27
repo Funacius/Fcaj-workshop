@@ -8,7 +8,7 @@ pre: "<b>6.</b>"
 # Tự đánh giá
 
 Trong thời gian thực tập tại **Công ty TNHH Amazon Web Services Việt Nam** từ
-**15/06/2026** đến **15/09/2026**, tôi có cơ hội áp dụng kiến thức phát triển
+**01/06/2026** đến **15/08/2026**, tôi có cơ hội áp dụng kiến thức phát triển
 phần mềm vào một project cloud application thực tế.
 
 Project chính của tôi là **EduCloud Lite**, một nền tảng quản lý học tập trên
@@ -61,4 +61,3 @@ thành website public trên cloud, có authentication, backend API, private stor
 database integration và website báo cáo Hugo có cấu trúc. Điểm tôi cần cải thiện
 nhiều nhất không phải là triển khai kỹ thuật, mà là giao tiếp tiến độ và thu thập
 minh chứng project một cách hệ thống hơn trong suốt quá trình làm việc.
-

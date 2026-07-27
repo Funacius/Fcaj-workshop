@@ -28,7 +28,7 @@ pre: "<b>1.1.</b>"
 | Jun 08 | Read the program rules, report requirements, and evaluation criteria. | Listed the required submission items and worklog rules. |
 | Jun 09 | Explored the Cloud Journey portal and how workshops are grouped by AWS service area. | Learned how to select references according to project needs. |
 | Jun 10 | Prepared the working environment: GitHub, VS Code, Draw.io, and documentation folders. | Created a consistent workspace for source code and report artifacts. |
-| Jun 11 - Jun 12 | Planned the twelve-week schedule, screenshot evidence structure, and progress tracking format. | Completed the first draft of the internship work plan. |
+| Jun 11 - Jun 12 | Planned the worklog through August 15, the screenshot evidence structure, and the progress tracking format. | Completed the first draft of the internship work plan. |
 
 ## Achievements
 

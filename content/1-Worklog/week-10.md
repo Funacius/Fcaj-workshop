@@ -1,44 +1,40 @@
 ---
-title: "Week 10 - Secrets and backend deployment"
+title: "Week 10 - Generative AI, Agentic AI, and AWS learning review"
 menuTitle: "Week 10"
 weight: 10
 pre: "<b>1.10.</b>"
 ---
 
-**Period:** August 10, 2026 - August 14, 2026
+**Learning period:** August 10, 2026 - August 15, 2026
 
-## Objectives
+## Learning objectives
 
-- Remove production secrets from source code.
-- Deploy FastAPI to AWS Elastic Beanstalk.
-- Validate health, logging, and the remote Supabase connection.
+- Build a clearer foundation in Generative AI and Agentic AI on AWS.
+- Review the architecture lessons shared through First Cloud AI Journey and Agentic AI Build Week.
+- Summarize the internship learning outcomes and define a realistic next learning path.
 
-## AWS Learning Phase
+## Learning plan
 
-| Learning content | Reference | Application in EduCloud |
+| Date | Topic | Expected outcome |
 | --- | --- | --- |
-| Managing database credentials and secrets outside source code. | [Secrets Manager with RDS](https://000096.awsstudygroup.com/) | Applied the same principle with SSM Parameter Store for `DATABASE_URL` and `JWT_SECRET_KEY`. |
-| Instance roles, development/production environments, health checks, and application updates on Elastic Beanstalk. | [Deploy Application Using Elastic Beanstalk](https://000112.awsstudygroup.com/) | Deployed FastAPI on Python 3.12 and Amazon Linux 2023. |
+| Aug 10 | Review Generative AI foundations, foundation models, prompting, embeddings, and responsible AI. | Distinguish conventional application logic, model inference, and retrieval-augmented workflows. |
+| Aug 11 | Study Amazon Bedrock concepts, model access, knowledge bases, guardrails, and evaluation. | Understand the managed building blocks available for secure Generative AI applications. |
+| Aug 12 | Review AI Agent concepts: goals, plans, tools, memory, verification, observability, and human approval. | Describe a production-oriented agent workflow rather than treating an LLM response as a complete system. |
+| Aug 13 | Revisit the Agentic AI Build Week presentations for KFC Bot Agent, S.H.E.P.H.E.R.D, SA Professional Native App, and SignalScout. | Compare how different teams handled architecture, cost, latency, scope, and business value. |
+| Aug 14 | Map the most relevant lessons to possible future EduCloud improvements without implementing them. | Produce a roadmap for optional AI study support, content assistance, and operational improvements. |
+| Aug 15 | Summarize technical skills, AWS knowledge, limitations, and the next certification or workshop goals. | Complete the internship learning reflection. |
 
-## Work completed
+## Learning references
 
-| Date | Activity | Outcome |
-| --- | --- | --- |
-| Aug 10 | Created encrypted Parameter Store entries for `DATABASE_URL` and `JWT_SECRET_KEY` in `ap-southeast-1`. | Centralized secrets outside Git. |
-| Aug 11 | Created the Beanstalk service role, EC2 instance profile, and least-privilege SSM policy. | Limited runtime access to required parameters. |
-| Aug 12 | Prepared Procfile, requirements, port 8000, entry point, and backend source bundle. | Matched the Python 3.12 Beanstalk platform. |
-| Aug 13 | Created a Single Instance environment and configured Cognito, CORS, flags, and SSM references. | Reached Green environment health. |
-| Aug 14 | Checked root/docs/health, SSL database access, and web logs; fixed startup dependencies. | Stabilized the production backend. |
+- [The First Cloud Journey](https://cloudjourney.awsstudygroup.com/)
+- [FCAJ x Agentic AI Build Week 2026 event report](../../4-eventparticipated/event-02/)
+- [EduCloud Lite workshop](../../5-workshop/)
 
-## Achievements
+## Expected learning results
 
-- Kept database and JWT secrets out of GitHub and Amplify.
-- Used the EC2 role to read only required parameters.
-- Ran FastAPI behind Nginx/uvicorn with Green health.
-- Established repeatable log inspection and redeployment.
+- Understand the main responsibilities of a production Agentic AI system.
+- Recognize when managed AWS AI services are appropriate and when a simpler architecture is sufficient.
+- Evaluate AI ideas using security, cost, latency, observability, explainability, and user-value criteria.
+- Finish the internship with a focused learning roadmap instead of adding untested features after submission.
 
-## Project evidence
-
-- [Backend Procfile](https://github.com/Funacius/EduCloud/blob/main/backend/Procfile)
-- [Production config](https://github.com/Funacius/EduCloud/blob/main/backend/app/config.py)
-- [Backend documentation](https://github.com/Funacius/EduCloud/blob/main/backend/README.md)
+> August 15, 2026 is the final internship date. This page records the learning plan for the post-submission period, not additional EduCloud implementation.

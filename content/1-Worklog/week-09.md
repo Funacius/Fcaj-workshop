@@ -1,45 +1,41 @@
 ---
-title: "Week 9 - Cognito and security hardening"
+title: "Week 9 - AWS operations, security, and cost learning"
 menuTitle: "Week 9"
 weight: 9
 pre: "<b>1.9.</b>"
 ---
 
-**Period:** August 3, 2026 - August 7, 2026
+**Learning period:** August 3, 2026 - August 7, 2026
 
-## Objectives
+## Learning objectives
 
-- Move production identity management to Amazon Cognito.
-- Complete confirmation, first-login, and password-recovery flows.
-- Separate identity from application role and harden APIs.
+- Continue the First Cloud AI Journey learning path after submitting EduCloud Lite.
+- Review AWS operational excellence, security, reliability, and cost-optimization concepts.
+- Reflect on the deployed architecture without adding new application features.
 
-## AWS Learning Phase
+## Learning plan
 
-| Learning content | Reference | Application in EduCloud |
+| Date | Topic | Expected outcome |
 | --- | --- | --- |
-| Cognito User Pools, app clients, user confirmation, password reset, and JWT validation. | [Amazon Cognito Workshop](https://000141.awsstudygroup.com/) | Migrated production identity management from local auth to Cognito. |
-| Amplify authentication integration patterns with Cognito. | [Amplify Authentication and Storage](https://000134.awsstudygroup.com/) | Connected the React sign-in, first-login, and recovery screens to Cognito. |
+| Aug 03 | Review the AWS Shared Responsibility Model, IAM users, roles, policies, and least privilege. | Explain the responsibility boundary for Cognito, Elastic Beanstalk, S3, and Parameter Store. |
+| Aug 04 | Study CloudWatch metrics, logs, alarms, dashboards, and Elastic Beanstalk health reporting. | Prepare a monitoring checklist for small web applications. |
+| Aug 05 | Review S3 security, Block Public Access, encryption, lifecycle rules, and CloudFront private-origin access. | Understand secure and cost-aware file delivery patterns. |
+| Aug 06 | Study AWS Budgets, cost allocation, pricing factors, and resource-cleanup practices. | Create a personal cost-control checklist for student AWS accounts. |
+| Aug 07 | Review the AWS Well-Architected pillars and assess EduCloud as a learning case. | Record strengths, limitations, and future improvements without changing the submitted build. |
 
-## Work completed
+## Learning references
 
-| Date | Activity | Outcome |
-| --- | --- | --- |
-| Aug 03 | Created the Singapore Cognito User Pool/App Client with password and email recovery settings. | Delegated passwords and recovery codes to Cognito. |
-| Aug 04 | Integrated signup, confirmation, resend, and login using Cognito Identity JS. | Completed account lifecycle UI. |
-| Aug 05 | Verified/exchanged Cognito ID tokens and mapped `sub` to the Supabase user. | Preserved database-authoritative roles. |
-| Aug 06 | Implemented NEW_PASSWORD_REQUIRED and profile-first routing for provisioned users. | Supported safe temporary-account onboarding. |
-| Aug 07 | Added forgot/reset, generic anti-enumeration responses, optional pre-sign-up Lambda, and production auth flags. | Hardened the production authentication path. |
+- [The First Cloud Journey](https://cloudjourney.awsstudygroup.com/)
+- [Access Control with AWS IAM](https://000002.awsstudygroup.com/)
+- [AWS Budgets](https://000007.awsstudygroup.com/)
+- [AWS CloudWatch Workshop](https://000008.awsstudygroup.com/)
+- [Amazon S3 Security Best Practices](https://000069.awsstudygroup.com/)
 
-## Achievements
+## Expected learning results
 
-- Cognito owns identity while Supabase owns profile and role.
-- Added email confirmation, reset, resend, and first-login password flows.
-- Validated Cognito signatures before issuing an EduCloud JWT.
-- Added throttling, security headers, and production legacy-auth controls.
+- Better understanding of least privilege and the AWS shared responsibility model.
+- Ability to identify the minimum monitoring and alerting required for a deployed application.
+- Improved awareness of storage security, CDN behavior, backup, and lifecycle trade-offs.
+- A reusable checklist for controlling costs and cleaning up temporary AWS resources.
 
-## Project evidence
-
-- [Backend Cognito service](https://github.com/Funacius/EduCloud/blob/main/backend/app/services/cognito_service.py)
-- [Frontend Cognito service](https://github.com/Funacius/EduCloud/blob/main/frontend/src/services/cognitoService.ts)
-- [Pre-sign-up Lambda](https://github.com/Funacius/EduCloud/tree/main/aws/cognito-pre-signup)
-- [Cognito tests](https://github.com/Funacius/EduCloud/blob/main/backend/tests/test_cognito_exchange.py)
+> This week is dedicated to learning and reflection only; it does not extend the submitted EduCloud Lite feature scope.

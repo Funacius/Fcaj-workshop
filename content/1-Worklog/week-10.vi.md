@@ -1,44 +1,40 @@
 ---
-title: "Tuần 10 - Secrets và triển khai backend"
+title: "Tuần 10 - Học Generative AI, Agentic AI và tổng kết AWS"
 menuTitle: "Tuần 10"
 weight: 10
 pre: "<b>1.10.</b>"
 ---
 
-**Thời gian:** 10/08/2026 - 14/08/2026
+**Thời gian học:** 10/08/2026 - 15/08/2026
 
-## Mục tiêu
+## Mục tiêu học tập
 
-- Đưa secret production ra khỏi source code.
-- Triển khai FastAPI lên AWS Elastic Beanstalk.
-- Kiểm tra health, logging và kết nối Supabase từ môi trường AWS.
+- Xây dựng nền tảng rõ ràng hơn về Generative AI và Agentic AI trên AWS.
+- Ôn lại bài học kiến trúc từ First Cloud AI Journey và Agentic AI Build Week.
+- Tổng kết kết quả thực tập và xác định lộ trình học tiếp theo có tính thực tế.
 
-## Giai đoạn học AWS
+## Kế hoạch học tập
 
-| Nội dung học | Nguồn tài liệu | Áp dụng vào EduCloud |
+| Ngày | Chủ đề | Kết quả dự kiến |
 | --- | --- | --- |
-| Quản lý thông tin kết nối database và secret ngoài source code. | [Secrets Manager with RDS](https://000096.awsstudygroup.com/) | Áp dụng cùng nguyên tắc bằng SSM Parameter Store cho `DATABASE_URL` và `JWT_SECRET_KEY`. |
-| IAM instance role, môi trường development/production và cập nhật ứng dụng trên Elastic Beanstalk. | [Deploy Application Using Elastic Beanstalk](https://000112.awsstudygroup.com/) | Triển khai FastAPI trên Python 3.12/Amazon Linux 2023. |
+| 10/08 | Ôn nền tảng Generative AI, foundation model, prompting, embedding và responsible AI. | Phân biệt logic ứng dụng thông thường, model inference và quy trình retrieval-augmented. |
+| 11/08 | Tìm hiểu Amazon Bedrock, model access, knowledge base, guardrail và evaluation. | Hiểu các thành phần managed dành cho ứng dụng Generative AI an toàn. |
+| 12/08 | Ôn AI Agent: goal, plan, tool, memory, verification, observability và human approval. | Mô tả được quy trình agent hướng production thay vì xem câu trả lời LLM là một hệ thống hoàn chỉnh. |
+| 13/08 | Xem lại các bài trình bày Agentic AI Build Week gồm KFC Bot Agent, S.H.E.P.H.E.R.D, SA Professional Native App và SignalScout. | So sánh cách các đội xử lý kiến trúc, chi phí, độ trễ, phạm vi và giá trị kinh doanh. |
+| 14/08 | Liên hệ bài học với hướng cải thiện EduCloud trong tương lai nhưng không triển khai thêm. | Có roadmap cho hỗ trợ học bằng AI, hỗ trợ nội dung và cải thiện vận hành. |
+| 15/08 | Tổng kết kỹ năng kỹ thuật, kiến thức AWS, hạn chế và mục tiêu chứng chỉ hoặc workshop tiếp theo. | Hoàn thành phần tổng kết học tập của kỳ thực tập. |
 
-## Công việc thực hiện
+## Nguồn học tập
 
-| Ngày | Công việc | Kết quả |
-| --- | --- | --- |
-| 10/08 | Tạo SSM Parameter Store cho `DATABASE_URL` và `JWT_SECRET_KEY` ở `ap-southeast-1`. | Secret được mã hóa và quản lý ngoài repository. |
-| 11/08 | Tạo service role, EC2 instance profile và inline policy chỉ đọc đúng hai parameter. | Elastic Beanstalk có quyền tối thiểu cần thiết. |
-| 12/08 | Chuẩn bị `Procfile`, requirements, port 8000, application entry point và gói deploy backend. | Source bundle phù hợp Python 3.12 trên Amazon Linux 2023. |
-| 13/08 | Tạo Single Instance Elastic Beanstalk environment; cấu hình Cognito, CORS, production flags và SSM references. | Backend được deploy và environment đạt trạng thái Green. |
-| 14/08 | Kiểm tra `/`, `/docs`, API health, database SSL, log `web.stdout`; sửa dependency và startup errors. | Backend production truy cập được và kết nối Supabase ổn định. |
+- [The First Cloud Journey](https://cloudjourney.awsstudygroup.com/)
+- [Báo cáo sự kiện FCAJ x Agentic AI Build Week 2026](../../4-eventparticipated/event-02/)
+- [Workshop EduCloud Lite](../../5-workshop/)
 
-## Kết quả đạt được
+## Kết quả học tập dự kiến
 
-- Không đưa database password hoặc JWT secret vào GitHub/Amplify.
-- Elastic Beanstalk đọc secret bằng instance role.
-- FastAPI chạy qua Nginx/uvicorn và báo Green health.
-- Có quy trình kiểm tra log và redeploy khi thay đổi backend.
+- Hiểu các trách nhiệm chính trong một hệ thống Agentic AI dùng cho production.
+- Nhận biết khi nào nên dùng dịch vụ AI managed của AWS và khi nào kiến trúc đơn giản phù hợp hơn.
+- Đánh giá ý tưởng AI dựa trên bảo mật, chi phí, độ trễ, khả năng quan sát, khả năng giải thích và giá trị người dùng.
+- Kết thúc kỳ thực tập với lộ trình học tập tập trung thay vì thêm tính năng chưa kiểm thử sau khi nộp bài.
 
-## Minh chứng từ dự án
-
-- [Backend Procfile](https://github.com/Funacius/EduCloud/blob/main/backend/Procfile)
-- [Production configuration](https://github.com/Funacius/EduCloud/blob/main/backend/app/config.py)
-- [Backend deployment instructions](https://github.com/Funacius/EduCloud/blob/main/backend/README.md)
+> Ngày 15/08/2026 là ngày kết thúc thực tập. Trang này ghi lại kế hoạch học tập sau khi nộp workshop, không phải phần triển khai EduCloud bổ sung.

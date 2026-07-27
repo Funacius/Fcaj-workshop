@@ -28,7 +28,7 @@ pre: "<b>1.1.</b>"
 | 08/06 | Đọc quy định chương trình, yêu cầu báo cáo và tiêu chí đánh giá. | Lập danh sách các đầu mục cần nộp và nguyên tắc ghi worklog. |
 | 09/06 | Làm quen cổng Cloud Journey và cách tìm workshop theo nhóm dịch vụ AWS. | Biết cách lựa chọn tài liệu theo nhu cầu của dự án. |
 | 10/06 | Chuẩn bị môi trường làm việc: GitHub, VS Code, Draw.io và cấu trúc thư mục lưu tài liệu. | Có không gian làm việc thống nhất cho mã nguồn và báo cáo. |
-| 11/06 - 12/06 | Xây dựng kế hoạch 12 tuần, cách lưu ảnh minh chứng và theo dõi tiến độ. | Hoàn thành lịch làm việc sơ bộ cho toàn kỳ thực tập. |
+| 11/06 - 12/06 | Xây dựng kế hoạch worklog đến ngày 15/08, cách lưu ảnh minh chứng và theo dõi tiến độ. | Hoàn thành lịch làm việc sơ bộ cho toàn kỳ thực tập. |
 
 ## Kết quả đạt được
 
@@ -36,4 +36,3 @@ pre: "<b>1.1.</b>"
 - Hiểu quy trình học tập, báo cáo và lưu minh chứng của chương trình.
 - Truy cập được kho tài liệu Cloud Journey và xác định phương pháp chọn workshop.
 - Chuẩn bị đầy đủ công cụ để bắt đầu học AWS và triển khai dự án ở tuần tiếp theo.
-

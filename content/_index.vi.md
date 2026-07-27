@@ -17,7 +17,7 @@ chapter: false
 <div class="student-detail-row"><strong>Lớp:</strong> CC23KHM6</div>
 <div class="student-detail-row"><strong>Công ty thực tập:</strong> Công ty TNHH Amazon Web Services Việt Nam</div>
 <div class="student-detail-row"><strong>Vị trí thực tập:</strong> Thực tập sinh dự án - First Cloud AI Journey</div>
-<div class="student-detail-row"><strong>Thời gian thực tập:</strong> Từ 15/06/2026 đến 15/09/2026</div>
+<div class="student-detail-row"><strong>Thời gian thực tập:</strong> Từ 01/06/2026 đến 15/08/2026</div>
 </div>
 </div>
 <div class="student-photo" aria-label="Ảnh chân dung của Bùi Quốc Thái">

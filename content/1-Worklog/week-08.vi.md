@@ -1,5 +1,5 @@
 ---
-title: "Tuần 8 - Hồ sơ, xét duyệt giảng viên và Admin"
+title: "Tuần 8 - Kiểm tra cuối, hoàn thiện báo cáo và nộp bài"
 menuTitle: "Tuần 8"
 weight: 8
 pre: "<b>1.8.</b>"
@@ -7,39 +7,47 @@ pre: "<b>1.8.</b>"
 
 **Thời gian:** 27/07/2026 - 31/07/2026
 
+**Hạn nộp workshop:** 31/07/2026
+
 ## Mục tiêu
 
-- Hoàn thiện hồ sơ Student dùng trên chứng chỉ.
-- Xây dựng quy trình đăng ký trở thành Instructor có Admin xét duyệt.
-- Thay số liệu demo bằng dashboard lấy từ database.
+- Đóng phạm vi tính năng EduCloud Lite và không bổ sung thay đổi rủi ro trước khi nộp.
+- Kiểm tra lại luồng Student, Instructor, các dịch vụ AWS và toàn bộ public link.
+- Hoàn thiện Hugo workshop song ngữ, ảnh minh chứng, sơ đồ kiến trúc và hồ sơ nộp bài.
+- Nộp workshop chậm nhất vào ngày 31/07/2026.
 
-## Giai đoạn học AWS
+## Kiểm tra cuối project và AWS
 
-| Nội dung học | Nguồn tài liệu | Áp dụng vào EduCloud |
+| Phạm vi kiểm tra | Hoạt động xác minh | Minh chứng nộp bài |
 | --- | --- | --- |
-| IAM group, role, policy và mô hình cấp quyền có kiểm soát. | [Access Control with AWS IAM](https://000002.awsstudygroup.com/) | Đối chiếu với quy trình Admin duyệt Instructor và audit người xét duyệt. |
-| CloudWatch metrics, logs và dashboard vận hành. | [AWS CloudWatch Workshop](https://000008.awsstudygroup.com/) | Xác định các chỉ số traffic, latency, database và storage trên Admin Health Page. |
+| Danh tính và bảo mật | Kiểm tra Cognito login, đổi mật khẩu lần đầu, recovery, JWT exchange, IAM role và secret trong Parameter Store. | Screenshot xác thực, ghi chú cấu hình và link mã nguồn. |
+| Hosting ứng dụng | Kiểm tra Elastic Beanstalk health, Amplify deployment, CloudFront routing, CORS và SPA rewrite. | Link EduCloud public và trạng thái triển khai thành công. |
+| Lưu trữ và dữ liệu | Xác minh phân phối S3 private, kết nối Supabase, đường dẫn upload và role lấy từ database. | Sơ đồ kiến trúc và ảnh trong workshop. |
+| Tài liệu | Rà soát proposal, worklog, blogs, events, workshop, self-assessment và feedback ở cả hai ngôn ngữ. | Hugo report public và GitHub repository. |
 
-## Công việc thực hiện
+## Kế hoạch công việc và tiến độ hiện tại
 
-| Ngày | Công việc | Kết quả |
+| Ngày | Công việc | Kết quả cần đạt |
 | --- | --- | --- |
-| 27/07 | Tạo student_profiles và API đọc/cập nhật tên chứng chỉ, ngày sinh, tổ chức, quốc gia, bio. | Student chủ động hoàn thiện danh tính trước khi học. |
-| 28/07 | Thiết kế instructor_requests với pending/approved/rejected, review note và reviewer audit. | Có quy trình nâng quyền có kiểm soát. |
-| 29/07 | Xây dựng UI Become an Instructor, xem lý do từ chối và gửi lại đơn. | Student theo dõi và resubmit yêu cầu. |
-| 30/07 | Phát triển Admin Dashboard: users, roles, courses, lessons, enrollments, application queue và course oversight. | Admin quản trị từ dữ liệu Supabase thật. |
-| 31/07 | Tạo Admin Health Page cho traffic, latency, database, storage và service status; bổ sung refresh. | Có màn hình theo dõi tình trạng hệ thống. |
+| 27/07 | Sửa thời gian thực tập và phạm vi worklog; hoàn thiện nội dung báo cáo và minh chứng còn thiếu. | Báo cáo phản ánh đúng kỳ thực tập 01/06-15/08. |
+| 28/07 | Chạy checklist production cho login, xem khóa học, ghi danh, học bài, assessment, certificate và Instructor authoring. | Các luồng demo quan trọng hoạt động qua website public. |
+| 29/07 | Rà soát sơ đồ AWS, screenshot, code snippet, hướng dẫn repository và tài khoản demo. | Mentor có thể hiểu và làm theo nội dung nộp bài. |
+| 30/07 | Đọc lại bản Anh/Việt; kiểm tra navigation, dấu tích đã đọc, hình ảnh, liên kết và giao diện responsive. | Hugo report thống nhất, không còn placeholder hoặc ảnh lỗi. |
+| 31/07 | Chuẩn bị hồ sơ cuối và gửi website, repository mã nguồn, workshop cùng các file PDF được chọn. | Nộp workshop đúng hạn. |
 
-## Kết quả đạt được
+## Kết quả hiện tại
 
-- Tách profile chứng chỉ khỏi dữ liệu đăng nhập.
-- Instructor chỉ được kích hoạt sau khi Admin approve.
-- Rejected request bắt buộc có ghi chú và có thể gửi lại.
-- Admin xem thống kê, kiểm duyệt khóa học và theo dõi sức khỏe hệ thống.
+- EduCloud Lite đã có đường dẫn độc lập qua Amplify.
+- Backend FastAPI chạy trên Elastic Beanstalk và đọc secret production từ Parameter Store.
+- Cognito, Supabase, S3, CloudFront và Amplify đã được kết nối với ứng dụng triển khai.
+- Sơ đồ kiến trúc, Hugo report song ngữ, link demo và tài khoản cho mentor đã được ghi lại.
+- Công việc còn lại chỉ gồm kiểm tra cuối, rà soát minh chứng, sửa nội dung và nộp bài.
 
-## Minh chứng từ dự án
+## Liên kết nộp bài
 
-- [Profile routes](https://github.com/Funacius/EduCloud/blob/main/backend/app/routes/profile_routes.py)
-- [Instructor request service](https://github.com/Funacius/EduCloud/blob/main/backend/app/services/instructor_request_service.py)
-- [Admin dashboard](https://github.com/Funacius/EduCloud/blob/main/frontend/src/pages/AdminDashboardPage.tsx)
-- [Admin health page](https://github.com/Funacius/EduCloud/blob/main/frontend/src/pages/AdminHealthPage.tsx)
+- [Website EduCloud Lite](https://main.djk00b5qbck73.amplifyapp.com/courses)
+- [Repository mã nguồn EduCloud](https://github.com/Funacius/EduCloud)
+- [Báo cáo thực tập public](https://funacius.github.io/Fcaj-workshop/vi/)
+- [Repository Hugo report](https://github.com/Funacius/Fcaj-workshop)
+
+> Sau ngày 31/07 không mở rộng thêm tính năng project. Thời gian thực tập còn lại chỉ dành cho việc học AWS và First Cloud AI Journey.

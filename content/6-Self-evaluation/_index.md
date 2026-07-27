@@ -8,7 +8,7 @@ pre: "<b>6.</b>"
 # Self-Assessment
 
 During my internship at **Amazon Web Services Vietnam Company Limited** from
-**June 15, 2026** to **September 15, 2026**, I had the opportunity to apply
+**June 1, 2026** to **August 15, 2026**, I had the opportunity to apply
 software engineering knowledge to a practical cloud-based application project.
 
 My main project was **EduCloud Lite**, a cloud learning management platform that
@@ -62,4 +62,3 @@ a public cloud-hosted website with authentication, backend APIs, private storage
 database integration, and a structured Hugo report. The biggest improvement area
 for me is not technical implementation, but communicating progress and collecting
 project evidence more systematically during the process.
-

@@ -5,10 +5,11 @@ chapter: false
 pre: "<b>1.</b>"
 ---
 
-This twelve-week worklog is derived from the First Cloud AI Journey learning
-path, the EduCloud Lite source code, API documentation, tests, and AWS
-deployment activities, covering the internship period from **June 5, 2026 to
-September 15, 2026**.
+This worklog covers the official internship period from **June 1, 2026 to
+August 15, 2026**. My first recorded First Cloud AI Journey activity was on
+June 5. The EduCloud Lite workshop is scheduled for completion and submission
+by **July 31, 2026**; the final two weeks are reserved for further First Cloud
+AI Journey and AWS learning rather than additional project scope.
 
 | Week | Period | Main focus | Deliverable |
 | --- | --- | --- | --- |
@@ -18,12 +19,10 @@ September 15, 2026**.
 | [Week 4](week-04/) | Jun 29 - Jul 03 | Basic authentication and authorization | JWT, middleware, role guards |
 | [Week 5](week-05/) | Jul 06 - Jul 10 | Courses, lessons, and resources | Instructor workspace and curriculum |
 | [Week 6](week-06/) | Jul 13 - Jul 17 | Enrollment and learning progress | Learning page, enrollment, progress |
-| [Week 7](week-07/) | Jul 20 - Jul 24 | Final assessment and certificates | Timed assessment and certificate |
-| [Week 8](week-08/) | Jul 27 - Jul 31 | Profiles, Instructor requests, Admin | Profile and live dashboards |
-| [Week 9](week-09/) | Aug 03 - Aug 07 | Cognito and security hardening | Confirmation, recovery, token exchange |
-| [Week 10](week-10/) | Aug 10 - Aug 14 | Secrets and backend deployment | Parameter Store and Elastic Beanstalk |
-| [Week 11](week-11/) | Aug 17 - Aug 21 | Storage, delivery, frontend production | S3, CloudFront, Amplify Hosting |
-| [Week 12](week-12/) | Aug 24 - Sep 15 | Testing, optimization, report | Validation, Draw.io, Hugo submission |
+| [Week 7](week-07/) | Jul 20 - Jul 24 | Final assessment, certificates, and AWS deployment | Completed application and public AWS deployment |
+| [Week 8](week-08/) | Jul 27 - Jul 31 | Final validation, report, and submission | Repository, live website, Hugo workshop, submission package |
+| [Week 9](week-09/) | Aug 03 - Aug 07 | First Cloud Journey operations and security study | Well-Architected review and AWS learning notes |
+| [Week 10](week-10/) | Aug 10 - Aug 15 | Generative AI, Agentic AI, and AWS learning review | Final learning summary and development roadmap |
 
 ## Skills developed
 
@@ -32,3 +31,4 @@ September 15, 2026**.
 - Cognito, JWT, and Student/Instructor/Admin authorization.
 - S3, CloudFront, Elastic Beanstalk, Amplify, IAM, and Parameter Store.
 - Automated testing, production troubleshooting, and Hugo documentation.
+- Continued AWS security, operations, cost, and Agentic AI learning after the workshop submission.

@@ -1,45 +1,41 @@
 ---
-title: "Tuần 9 - Cognito và tăng cường bảo mật"
+title: "Tuần 9 - Học vận hành, bảo mật và chi phí AWS"
 menuTitle: "Tuần 9"
 weight: 9
 pre: "<b>1.9.</b>"
 ---
 
-**Thời gian:** 03/08/2026 - 07/08/2026
+**Thời gian học:** 03/08/2026 - 07/08/2026
 
-## Mục tiêu
+## Mục tiêu học tập
 
-- Chuyển authentication production sang Amazon Cognito.
-- Hoàn thiện email confirmation, first login và password recovery.
-- Tăng cường bảo vệ API và tách rõ identity với role nghiệp vụ.
+- Tiếp tục lộ trình First Cloud AI Journey sau khi đã nộp EduCloud Lite.
+- Ôn tập kiến thức AWS về vận hành, bảo mật, độ tin cậy và tối ưu chi phí.
+- Đánh giá lại kiến trúc đã triển khai nhưng không bổ sung tính năng mới cho ứng dụng.
 
-## Giai đoạn học AWS
+## Kế hoạch học tập
 
-| Nội dung học | Nguồn tài liệu | Áp dụng vào EduCloud |
+| Ngày | Chủ đề | Kết quả dự kiến |
 | --- | --- | --- |
-| Cognito User Pool, App Client, JWT và luồng xác thực web. | [Amazon Cognito Across Sites](https://000141.awsstudygroup.com/) | Triển khai signup, confirm, login, first login và token exchange. |
-| Kết hợp Cognito authentication với frontend và storage access. | [Amplify Authentication and Storage](https://000134.awsstudygroup.com/) | Tách identity do Cognito quản lý khỏi role nghiệp vụ lưu trong Supabase. |
+| 03/08 | Ôn AWS Shared Responsibility Model, IAM user, role, policy và least privilege. | Giải thích được ranh giới trách nhiệm của Cognito, Elastic Beanstalk, S3 và Parameter Store. |
+| 04/08 | Học CloudWatch metrics, logs, alarms, dashboard và Elastic Beanstalk health reporting. | Có checklist giám sát dành cho ứng dụng web quy mô nhỏ. |
+| 05/08 | Ôn bảo mật S3, Block Public Access, encryption, lifecycle rule và private origin qua CloudFront. | Hiểu cách phân phối file an toàn và có ý thức chi phí. |
+| 06/08 | Học AWS Budgets, cost allocation, các yếu tố tính giá và quy trình dọn tài nguyên. | Tạo checklist kiểm soát chi phí cho tài khoản AWS sinh viên. |
+| 07/08 | Ôn các trụ cột AWS Well-Architected và dùng EduCloud làm ví dụ đánh giá. | Ghi nhận điểm mạnh, giới hạn và hướng cải thiện tương lai mà không sửa bản đã nộp. |
 
-## Công việc thực hiện
+## Nguồn học tập
 
-| Ngày | Công việc | Kết quả |
-| --- | --- | --- |
-| 03/08 | Tạo Cognito User Pool/App Client tại Singapore; cấu hình password policy và email recovery. | Cognito quản lý password, confirmation code và reset code. |
-| 04/08 | Tích hợp `amazon-cognito-identity-js` cho signup, confirm, resend code và login. | Frontend xử lý đầy đủ vòng đời tài khoản. |
-| 05/08 | Xây dựng Cognito ID-token verification/exchange; ánh xạ `sub` vào users.cognito_sub và phát EduCloud JWT. | Role tiếp tục lấy từ Supabase, không tin dữ liệu client. |
-| 06/08 | Hoàn thiện NEW_PASSWORD_REQUIRED cho tài khoản được cấp; chuyển người dùng sang Profile sau lần đăng nhập đầu. | Tài khoản tạm có thể tự đặt mật khẩu và hoàn thiện hồ sơ. |
-| 07/08 | Tạo forgot/reset password, generic anti-enumeration response, pre-sign-up Lambda tùy chọn; tắt legacy/dev auth production. | Authentication production an toàn và ít làm lộ thông tin tài khoản. |
+- [The First Cloud Journey](https://cloudjourney.awsstudygroup.com/)
+- [Access Control with AWS IAM](https://000002.awsstudygroup.com/)
+- [AWS Budgets](https://000007.awsstudygroup.com/)
+- [AWS CloudWatch Workshop](https://000008.awsstudygroup.com/)
+- [Amazon S3 Security Best Practices](https://000069.awsstudygroup.com/)
 
-## Kết quả đạt được
+## Kết quả học tập dự kiến
 
-- Cognito chịu trách nhiệm danh tính; Supabase chịu trách nhiệm dữ liệu và role.
-- Hỗ trợ xác nhận email, resend code, quên mật khẩu và first-login password.
-- Token exchange kiểm tra chữ ký Cognito trước khi phát JWT nội bộ.
-- Bổ sung rate limiting, security headers và kiểm tra 401/403.
+- Hiểu rõ hơn về least privilege và mô hình trách nhiệm chia sẻ của AWS.
+- Xác định được mức giám sát và cảnh báo tối thiểu cho một ứng dụng đã triển khai.
+- Nâng cao nhận thức về bảo mật storage, hành vi CDN, backup và lifecycle.
+- Có checklist tái sử dụng để kiểm soát chi phí và dọn tài nguyên AWS tạm thời.
 
-## Minh chứng từ dự án
-
-- [Cognito service backend](https://github.com/Funacius/EduCloud/blob/main/backend/app/services/cognito_service.py)
-- [Cognito service frontend](https://github.com/Funacius/EduCloud/blob/main/frontend/src/services/cognitoService.ts)
-- [Pre-sign-up Lambda](https://github.com/Funacius/EduCloud/tree/main/aws/cognito-pre-signup)
-- [Cognito exchange tests](https://github.com/Funacius/EduCloud/blob/main/backend/tests/test_cognito_exchange.py)
+> Tuần này chỉ dành cho học tập và tổng kết, không mở rộng phạm vi tính năng EduCloud Lite đã nộp.

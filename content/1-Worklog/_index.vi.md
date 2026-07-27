@@ -5,9 +5,11 @@ chapter: false
 pre: "<b>1.</b>"
 ---
 
-Nhật ký được tổng hợp từ kiến trúc, mã nguồn, tài liệu API, kiểm thử và quá trình
-triển khai thực tế của dự án **EduCloud Lite** trong thời gian từ
-**05/06/2026 đến 15/09/2026**.
+Worklog này bao quát thời gian thực tập chính thức từ **01/06/2026 đến
+15/08/2026**. Hoạt động First Cloud AI Journey đầu tiên được ghi nhận vào ngày
+05/06. Workshop EduCloud Lite được lên kế hoạch hoàn thiện và nộp trước
+**31/07/2026**; hai tuần cuối chỉ dành cho việc tiếp tục học First Cloud AI
+Journey và các dịch vụ AWS, không mở rộng thêm phạm vi project.
 
 | Tuần | Thời gian | Nội dung chính | Kết quả dự kiến/đạt được |
 | --- | --- | --- | --- |
@@ -17,12 +19,10 @@ triển khai thực tế của dự án **EduCloud Lite** trong thời gian từ
 | [Tuần 4](week-04/) | 29/06 - 03/07 | Xác thực cơ bản và phân quyền | JWT, middleware và role guards |
 | [Tuần 5](week-05/) | 06/07 - 10/07 | Quản lý khóa học, bài học và tài nguyên | Instructor workspace và curriculum editor |
 | [Tuần 6](week-06/) | 13/07 - 17/07 | Ghi danh, học tập và tiến độ | Learning page, enrollment và progress |
-| [Tuần 7](week-07/) | 20/07 - 24/07 | Final assessment và chứng chỉ | Bài thi có thời gian, chấm điểm và certificate |
-| [Tuần 8](week-08/) | 27/07 - 31/07 | Hồ sơ, xét duyệt giảng viên và Admin | Profile, instructor request và dashboard |
-| [Tuần 9](week-09/) | 03/08 - 07/08 | Cognito và tăng cường bảo mật | Email confirmation, password recovery và token exchange |
-| [Tuần 10](week-10/) | 10/08 - 14/08 | Secrets và triển khai backend | Parameter Store, IAM và Elastic Beanstalk |
-| [Tuần 11](week-11/) | 17/08 - 21/08 | Lưu trữ, phân phối và frontend production | S3, CloudFront và Amplify Hosting |
-| [Tuần 12](week-12/) | 24/08 - 15/09 | Kiểm thử, tối ưu và hoàn thiện báo cáo | Validation, monitoring, Draw.io, Hugo và hồ sơ nộp bài |
+| [Tuần 7](week-07/) | 20/07 - 24/07 | Final assessment, chứng chỉ và triển khai AWS | Ứng dụng hoàn chỉnh và website public trên AWS |
+| [Tuần 8](week-08/) | 27/07 - 31/07 | Kiểm tra cuối, hoàn thiện báo cáo và nộp bài | Repository, website, Hugo workshop và hồ sơ nộp bài |
+| [Tuần 9](week-09/) | 03/08 - 07/08 | Học vận hành và bảo mật theo First Cloud Journey | Well-Architected review và ghi chú kiến thức AWS |
+| [Tuần 10](week-10/) | 10/08 - 15/08 | Học Generative AI, Agentic AI và tổng kết AWS | Tổng kết kiến thức và lộ trình phát triển tiếp theo |
 
 ## Năng lực tích lũy
 
@@ -32,3 +32,4 @@ triển khai thực tế của dự án **EduCloud Lite** trong thời gian từ
 - Tích hợp Cognito, JWT và phân quyền Student/Instructor/Admin.
 - Sử dụng S3, CloudFront, Elastic Beanstalk, Amplify, IAM và Parameter Store.
 - Viết kiểm thử, xử lý lỗi production và biên soạn tài liệu kỹ thuật bằng Hugo.
+- Tiếp tục học bảo mật, vận hành, chi phí và Agentic AI trên AWS sau khi nộp workshop.
