@@ -18,10 +18,13 @@ pre: "<b>4.</b>"
 
 <h2 class="event-list-title"><a href="event-02/">Event 2</a></h2>
 
-**Event Name:** To be updated  
-**Date & Time:** To be updated  
-**Location:** To be updated  
-**Role:** Attendee
+**Event Name:** FCAJ x Agentic AI Build Week 2026 — Hackathon Awards & Project Showcase
+
+**Date & Time:** July 25, 2026
+
+**Location:** AWS Office, 26th Floor, Bitexco Tower, 02 Hai Trieu Street, Saigon Ward, Ho Chi Minh City
+
+**Organizers:** First Cloud AI Journey (FCAJ), Amazon Web Services (AWS), and the Agentic AI Build Week community
 
 ---
 
