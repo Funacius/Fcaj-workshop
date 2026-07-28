@@ -1,190 +1,194 @@
 ---
-title: "Triển khai EduCloud Lite trên AWS"
-menuTitle: "Triển khai EduCloud"
+title: "Bảo vệ tài nguyên khóa học riêng tư bằng Amazon S3 và CloudFront OAC"
+menuTitle: "S3 private media với CloudFront"
 weight: 1
 pre: "<b>3.1.</b>"
 ---
 
-## Triển khai EduCloud Lite trên AWS: Từ LMS local đến website public
+# Bảo vệ tài nguyên khóa học riêng tư bằng Amazon S3 và CloudFront OAC
 
-Xin chào AWS Study Group VN! Trong kỳ thực tập First Cloud AI Journey, tôi xây
-dựng **EduCloud Lite**, một nền tảng quản lý học tập gọn nhẹ hỗ trợ publish
-khóa học, ghi danh sinh viên, theo dõi tiến độ bài học, làm final assessment và
-cấp chứng chỉ hoàn thành.
+Một nền tảng học trực tuyến thường phải phân phối thumbnail, video và tài liệu
+cho từng khóa học. Public S3 bucket thì dễ cấu hình, nhưng người dùng có thể bỏ
+qua ứng dụng và truy cập trực tiếp bằng URL S3. Bài viết này trình bày một kiến
+trúc nhỏ, có thể triển khai thực tế, giúp EduCloud Lite giữ file riêng tư nhưng
+vẫn phân phối qua một endpoint HTTPS công khai.
 
-Bài viết này tóm tắt cách tôi đưa dự án từ ứng dụng React/FastAPI chạy local
-lên kiến trúc AWS có managed identity, private storage, HTTPS delivery và một
-link frontend public để trình bày sản phẩm.
+Bài viết được tham khảo từ bài AWS Networking & Content Delivery Blog
+[Amazon CloudFront introduces Origin Access Control (OAC)](https://aws.amazon.com/blogs/networking-and-content-delivery/amazon-cloudfront-introduces-origin-access-control-oac/).
+Nội dung dưới đây là phần triển khai và phân tích riêng cho EduCloud Lite,
+không sao chép nguyên văn bài nguồn.
 
-## 1. Bối cảnh và mục tiêu dự án
+## 1. Bài toán và mục tiêu thiết kế
 
-EduCloud Lite có ba vai trò chính:
+EduCloud Lite có ba nhóm tài nguyên được upload:
 
-- **Student:** Xem khóa học, ghi danh, học bài, hoàn thành assessment và xem
-  certificate.
-- **Instructor:** Tạo khóa học, upload thumbnail/tài nguyên, quản lý lesson,
-  cấu hình final assessment và publish nội dung.
-- **Admin:** Duyệt yêu cầu Instructor, quản lý user/course và theo dõi trạng
-  thái hệ thống cơ bản.
+- thumbnail khóa học;
+- video bài học; và
+- tài liệu đính kèm trong lesson.
 
-Mục tiêu triển khai không phải là xây dựng một LMS enterprise lớn. Mục tiêu là
-tạo một kiến trúc cloud hoạt động thật, dễ giải thích, kiểm soát chi phí và có
-thể demo bằng một đường link độc lập.
+Thiết kế cần đáp ứng bốn mục tiêu:
 
-## 2. Điểm kỹ thuật nổi bật
+1. không cho đọc object bằng public S3 URL;
+2. người dùng truy cập qua một domain HTTPS duy nhất;
+3. tách riêng API traffic và media traffic; và
+4. chi phí, cấu hình phù hợp với một dự án thực tập.
 
-### Tách identity, application data và storage
+## 2. Kiến trúc
 
-Thiết kế đầu tiên là không gom mọi trách nhiệm vào một server.
+Luồng request như sau:
 
-| Trách nhiệm | Service / Component | Lý do sử dụng |
-| --- | --- | --- |
-| Browser application | React, TypeScript, Vite, Amplify Hosting | Build frontend nhanh và host public |
-| Business API | FastAPI trên Elastic Beanstalk | Backend Python rõ ràng theo REST API |
-| User identity | Amazon Cognito | Quản lý mật khẩu, xác nhận, first login và password recovery |
-| Application data | Supabase PostgreSQL | Lưu user, course, lesson, progress, attempt và certificate |
-| Private course assets | Amazon S3 | Lưu thumbnail, video và tài liệu |
-| HTTPS delivery và routing | Amazon CloudFront | Một lớp phân phối cho API và private course assets |
-| Secrets | Systems Manager Parameter Store | Đưa database URL và JWT secret ra khỏi source code |
+1. Trình duyệt tải React application từ Amplify Hosting.
+2. Ứng dụng gọi CloudFront qua đường dẫn `/courses/*` để lấy media.
+3. CloudFront ký origin request bằng Origin Access Control (OAC).
+4. S3 xác thực chữ ký và chỉ trả object cho distribution đã được cấp quyền.
 
-Cách tách này giúp quá trình debug rõ ràng hơn. Khi login lỗi, tôi kiểm tra
-Cognito và token exchange. Khi file không load, tôi kiểm tra S3, CloudFront
-behavior, bucket policy và CORS. Khi API lỗi, tôi kiểm tra Elastic Beanstalk
-health và backend logs.
+API dùng behavior riêng tại `/api/*` và được forward tới FastAPI trên Elastic
+Beanstalk với caching bị tắt.
 
-### Luồng request production
+![Kiến trúc media riêng tư của EduCloud](/images/educloud-aws-architecture.png)
 
-Luồng request sau cùng:
+*Hình 1 — EduCloud Lite tách frontend delivery, API execution và private course
+storage.*
 
-1. Người dùng mở React frontend từ Amplify Hosting.
-2. Browser đăng nhập bằng Amazon Cognito.
-3. Frontend gửi API request đến CloudFront qua `/api/*`.
-4. CloudFront forward API traffic đến Elastic Beanstalk.
-5. FastAPI xác thực token, kiểm tra role và đọc/ghi Supabase PostgreSQL.
-6. File khóa học được upload vào S3.
-7. Tài nguyên khóa học được phân phối qua CloudFront ở `/courses/*` bằng private
-   S3 access.
+CloudFront OAC được ưu tiên hơn Origin Access Identity (OAI) cũ vì hỗ trợ các
+Region S3, SSE-KMS và nhiều HTTP method hơn. Xem
+[bài công bố của AWS](https://aws.amazon.com/blogs/networking-and-content-delivery/amazon-cloudfront-introduces-origin-access-control-oac/)
+và [tài liệu CloudFront OAC](https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/private-content-restricting-access-to-s3.html)
+để hiểu access model chính thức.
 
-## 3. Các bước triển khai thực tế
+## 3. Các bước triển khai
 
-### Deploy backend bằng Elastic Beanstalk
+### 3.1 Tạo S3 bucket riêng tư
 
-FastAPI được deploy lên Elastic Beanstalk với Python 3.12. Gói backend gồm mã
-nguồn, dependencies và `Procfile` để khởi động API server.
+Bucket chỉ dùng cho file upload của EduCloud. Các thiết lập chính:
 
-Các cấu hình quan trọng không được lưu trực tiếp trong source code. Thay vào đó,
-deployment dùng Parameter Store cho:
+- bật Block all public access;
+- Object Ownership: bucket owner enforced, tắt ACL;
+- mã hóa mặc định bằng SSE-S3; và
+- bật versioning/lifecycle khi cần lưu trữ dài hạn.
 
-- `DATABASE_URL`
-- `JWT_SECRET_KEY`
+Tên bucket không được dùng làm public media URL. Backend upload object theo
+prefix như `courses/<course-id>/` và lưu object key trong PostgreSQL.
 
-EC2 instance profile của Elastic Beanstalk chỉ được cấp quyền đọc đúng các
-parameter cần thiết cho EduCloud Lite.
+### 3.2 Tạo Origin Access Control
 
-### Cognito authentication
+Trong CloudFront, tạo OAC cho S3 origin và chọn **Sign requests**. Distribution
+sẽ tạo request có chữ ký SigV4 để S3 xác thực. Vì vậy không cần mở public bucket.
 
-Cognito được dùng làm identity provider, phụ trách:
+Bucket policy cấp `s3:GetObject` cho CloudFront service principal và giới hạn
+request theo ARN của EduCloud distribution. Đây là ranh giới bảo mật chính:
+ngay cả khi biết tên bucket, người dùng vẫn không thể đọc object trực tiếp.
 
-- Đăng nhập bằng email.
-- Forgot password và reset code.
-- First-login password challenge cho tài khoản được cấp sẵn.
-- Email verification tùy theo cấu hình tài khoản.
+Policy do CloudFront sinh ra thường có dạng sau (thay các placeholder bằng giá
+trị thật trong tài khoản AWS):
 
-Ứng dụng vẫn lưu role trong PostgreSQL. Cognito trả lời câu hỏi "người này là
-ai?", còn EduCloud trả lời "người này được làm gì trong LMS?"
+```json
+{
+  "Version": "2012-10-17",
+  "Statement": [{
+    "Sid": "AllowCloudFrontServicePrincipalReadOnly",
+    "Effect": "Allow",
+    "Principal": { "Service": "cloudfront.amazonaws.com" },
+    "Action": "s3:GetObject",
+    "Resource": "arn:aws:s3:::EDUCLOUD_BUCKET/courses/*",
+    "Condition": {
+      "StringEquals": {
+        "AWS:SourceArn": "arn:aws:cloudfront::ACCOUNT_ID:distribution/DISTRIBUTION_ID"
+      }
+    }
+  }]
+}
+```
 
-### Private storage với S3 và CloudFront
+Đây là policy tham khảo, không phải credential và không nên dán nguyên trạng
+vào production. Distribution ARN và prefix object phải khớp deployment thật.
 
-Tài nguyên khóa học được lưu trong một S3 bucket riêng, không dùng bucket service
-của Elastic Beanstalk. Upload bucket được cấu hình:
+### 3.3 Cấu hình CloudFront behaviors
 
-- Bật Block Public Access.
-- Tắt ACL.
-- Server-side encryption bằng SSE-S3.
-- Bucket policy giới hạn cho CloudFront Origin Access Control.
-
-CloudFront có các behavior tách riêng:
-
-| Path pattern | Origin | Cache policy | Mục đích |
+| Path pattern | Origin | Cache policy | Allowed methods |
 | --- | --- | --- | --- |
-| `Default (*)` / `/api/*` | Elastic Beanstalk | Caching disabled | Dynamic API requests |
-| `/courses/*` | Private S3 origin | Caching optimized | Thumbnail, video và tài liệu khóa học |
+| `/courses/*` | S3 riêng tư có OAC | CachingOptimized | GET, HEAD |
+| `/api/*` | Elastic Beanstalk | CachingDisabled | GET, HEAD, OPTIONS, PUT, POST, PATCH, DELETE |
+| Default (`*`) | frontend/API fallback | tùy dự án | tùy dự án |
 
-Cách này cho phép phân phối tài nguyên hiệu quả mà không cần public S3 bucket.
+Behavior media dùng cache vì file khóa học ít thay đổi hơn API response. API
+behavior tắt cache để không trả nhầm dữ liệu xác thực hoặc tiến độ cũ từ edge.
 
-### Deploy frontend bằng Amplify Hosting
+### 3.4 Kết nối upload với ứng dụng
 
-Frontend được deploy từ GitHub bằng Amplify Hosting. Monorepo app root là
-`frontend`, với:
+Luồng upload của Instructor:
 
-- Build command: `npm run build`
-- Output directory: `dist`
-- SPA rewrite về `/index.html`
+1. FastAPI xác thực Cognito access token và kiểm tra role Instructor.
+2. FastAPI kiểm tra loại file và quyền sở hữu khóa học.
+3. File được upload lên S3, object key được lưu cùng lesson/course record trong
+   Supabase PostgreSQL.
+4. API trả về CloudFront URL thay vì S3 URL.
 
-Frontend build dùng các biến `VITE_*` an toàn để public trong browser, ví dụ:
+Khi cần xử lý file lớn hơn, có thể mở rộng bằng presigned upload URL có thời hạn
+ngắn để browser upload trực tiếp lên S3, không phải đi qua application server.
 
-- `VITE_API_BASE_URL`
-- `VITE_COGNITO_REGION`
-- `VITE_COGNITO_USER_POOL_ID`
-- `VITE_COGNITO_CLIENT_ID`
+### 3.5 Kiểm tra ranh giới bảo mật
 
-Database URL, JWT secret và AWS credentials không bao giờ được đưa vào frontend
-environment.
+Các kiểm thử đã dùng cho EduCloud:
 
-## 4. Vấn đề gặp phải khi triển khai
+- mở CloudFront URL khi đã đăng nhập và xác nhận asset hiển thị;
+- mở S3 URL tương ứng và xác nhận truy cập public bị từ chối;
+- upload thumbnail bằng Instructor và kiểm tra object dưới đúng course prefix; và
+- gọi API qua `/api/*`, xác nhận request tới Elastic Beanstalk thay vì S3 origin.
 
-| Vấn đề | Nguyên nhân | Cách xử lý |
-| --- | --- | --- |
-| Backend lỗi khi startup | Thiếu dependency hoặc cấu hình production chưa đúng | Xem Elastic Beanstalk logs và sửa requirements/config |
-| Cognito user login được nhưng sai role | Identity nằm trong Cognito, role nằm trong Supabase | Cập nhật user record trong PostgreSQL và giữ role assignment ở server-side |
-| Amplify frontend báo `Failed to fetch` | CORS hoặc API origin chưa khớp | Cập nhật `CORS_ORIGINS` ở backend và `VITE_API_BASE_URL` ở frontend |
-| S3 asset trả về 403 | CloudFront origin access hoặc bucket policy chưa đủ | Thêm OAC và generated bucket policy, vẫn giữ Block Public Access |
-| Refresh `/login` hoặc `/profile` bị lỗi | React dùng client-side routing | Thêm Amplify SPA rewrite về `/index.html` |
+Khi gặp `403`, `404` hoặc lỗi CORS, nên kiểm tra CloudFront/S3 log và health
+event của Elastic Beanstalk trước.
 
-## 5. AWS services trong kiến trúc
+## 4. Bảo mật và vận hành
 
-- **AWS Amplify Hosting:** Build và host React frontend từ GitHub.
-- **Amazon CloudFront:** Route API traffic và phân phối private course assets.
-- **AWS Elastic Beanstalk:** Chạy FastAPI backend.
-- **Amazon Cognito:** Quản lý identity, sign-in, confirmation và password
-  recovery.
-- **Amazon S3:** Lưu thumbnail, video và tài liệu khóa học.
-- **AWS Systems Manager Parameter Store:** Lưu secret production.
-- **AWS IAM:** Cấp quyền runtime theo nguyên tắc least privilege.
-- **Amazon CloudWatch:** Hỗ trợ xem log và kiểm tra health.
+### Least privilege
 
-## 6. Bài học rút ra
+EC2 instance profile của Elastic Beanstalk chỉ nhận các quyền SSM và S3 cần cho
+ứng dụng. Browser chỉ chứa các biến `VITE_*` có thể công khai; database URL,
+JWT secret và AWS credentials luôn ở phía server.
 
-- **Tách identity khỏi role ứng dụng:** Cognito quản lý login, còn database ứng
-  dụng quyết định Student, Instructor và Admin access.
-- **Không public S3 chỉ để file load được:** CloudFront OAC giúp phân phối file
-  private mà vẫn giữ Block Public Access.
-- **Frontend variables là public:** Chỉ đưa các giá trị `VITE_*` an toàn vào
-  Amplify.
-- **Debug production phải theo từng lớp:** API, CORS, Cognito, CloudFront, S3 và
-  database cần được kiểm tra lần lượt.
-- **Kiểm soát chi phí là một phần của thiết kế:** Single-instance backend,
-  private S3 và logging vừa đủ là phù hợp cho bài nộp thực tập.
+### Cache invalidation
 
-## 7. Hạn chế và hướng phát triển
+Nếu thay object bằng cùng key, CloudFront có thể tiếp tục trả bản cache cũ cho
+đến khi TTL hết hạn. Dùng object key có version, ví dụ
+`thumbnail-<timestamp>.jpg`, sẽ giảm nhu cầu invalidation.
 
-- Thêm infrastructure as code để giảm thao tác thủ công trên AWS Console.
-- Thêm end-to-end browser tests cho luồng Student, Instructor và Admin.
-- Dùng Alembic để quản lý migration production tốt hơn.
-- Thêm CloudWatch alarms và dashboard dùng chung.
-- Hardening token storage và cookie/session strategy nếu mở rộng production.
+### Kiểm soát chi phí
+
+Với môi trường demo, một Elastic Beanstalk single instance, một S3 bucket và
+CloudFront pay-as-you-go là đủ. Nên theo dõi log retention và lượng tải video vì
+data transfer và request volume có thể trở thành chi phí chính.
+
+### Vì sao dùng S3 và CloudFront thay vì lưu media trên backend?
+
+S3 là object storage bền vững, còn CloudFront được thiết kế để phân phối nội
+dung từ edge. Tách media khỏi filesystem của Elastic Beanstalk giúp backend
+không bị đầy ổ đĩa và cho phép API scale độc lập với lưu lượng video.
+
+## 5. Kết quả trên EduCloud Lite
+
+Deployment hiện tại sử dụng:
+
+- Amplify Hosting cho React/Vite frontend;
+- Elastic Beanstalk cho FastAPI API;
+- Cognito cho sign-in và password recovery;
+- Supabase PostgreSQL cho application data; và
+- S3 kết hợp CloudFront OAC cho private course media.
+
+Nhờ vậy mentor chỉ cần một public website, nhưng kiến trúc vẫn tách rõ identity,
+business data, API execution và object storage.
 
 ## Kết luận
 
-Triển khai EduCloud Lite trên AWS cho thấy một project sinh viên vẫn có thể đi
-theo các nguyên tắc cloud architecture thực tế: managed identity, private
-storage, least-privilege IAM, externalized secrets, HTTPS delivery và tài liệu
-triển khai có thể làm lại.
+Bài học chính là không cần một media service phức tạp để bảo vệ file riêng tư.
+Một S3 bucket bị khóa public, bucket policy giới hạn và CloudFront OAC đã đủ để
+tạo đường phân phối an toàn cho LMS prototype. Sau này có thể mở rộng bằng
+signed URL, direct-to-S3 upload, WAF rule và CloudWatch alarm.
 
-Bài học quan trọng nhất là "chạy được local" mới chỉ là bước đầu. Phần kỹ thuật
-thật sự bắt đầu khi authentication, networking, storage permissions, CORS,
-logging và cost control phải hoạt động cùng nhau.
+## Tài liệu tham khảo
 
-**Nguồn:** Repository và báo cáo triển khai EduCloud Lite.  
-**Repository:** [https://github.com/Funacius/EduCloud](https://github.com/Funacius/EduCloud)  
-**Live application:** [https://main.djk00b5qbck73.amplifyapp.com/](https://main.djk00b5qbck73.amplifyapp.com/)
+- [Amazon CloudFront introduces Origin Access Control (OAC) — AWS Networking & Content Delivery Blog](https://aws.amazon.com/blogs/networking-and-content-delivery/amazon-cloudfront-introduces-origin-access-control-oac/)
+- [Restrict access to an Amazon S3 origin — Amazon CloudFront Developer Guide](https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/private-content-restricting-access-to-s3.html)
+- [Restrict access to files — Amazon CloudFront Developer Guide](https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/private-content-overview.html)
+- [Mã nguồn EduCloud Lite](https://github.com/Funacius/EduCloud)
+- [Ứng dụng EduCloud Lite](https://main.djk00b5qbck73.amplifyapp.com/)

@@ -21,5 +21,9 @@ Upload `educloud-backend.zip`.
 After deployment, open the Elastic Beanstalk domain and `/docs`. Health should
 be green before continuing.
 
-![Elastic Beanstalk health Green](/images/workshop/05-elastic-beanstalk-green.png)
+In **Configuration**, enable **Instance log streaming to CloudWatch Logs** and
+select a seven-day retention period for this workshop. The application setting
+`AWS_CLOUDWATCH_LOG_GROUP` only selects the group that Admin Logs reads; it does
+not create the group or turn on Elastic Beanstalk streaming.
 
+![Elastic Beanstalk health Green](/images/workshop/05-elastic-beanstalk-green.png)

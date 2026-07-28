@@ -40,4 +40,6 @@ Attach least-privilege policy vào Elastic Beanstalk EC2 instance role:
 
 Backend tạo multipart presigned URL có thời hạn ngắn, sau đó trình duyệt upload
 từng phần video trực tiếp lên S3. `s3:ListBucket` dùng ARN bucket không có `/*`
-và bị giới hạn ở `courses/`; object action dùng `courses/*`.
+và bị giới hạn ở `courses/`; object action dùng `courses/*`. Quyền
+`DeleteObject` cho phép xóa object cũ khi Instructor gỡ hoặc thay video/tài
+liệu, nhờ đó không để lại dữ liệu mồ côi trong bucket.

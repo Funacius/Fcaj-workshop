@@ -5,18 +5,15 @@ chapter: false
 pre: "<b>3.</b>"
 ---
 
-<h2 class="blog-list-title"><a href="educloud-aws-deployment/">Blog 1 - Deploying EduCloud Lite on AWS</a></h2>
+<h2 class="blog-list-title"><a href="educloud-aws-deployment/">Blog 1 - Securing Private Course Assets with Amazon S3 and CloudFront OAC</a></h2>
 
-This blog explains how EduCloud Lite was moved from a local development project
-to a public cloud-based learning platform. It focuses on the AWS services used
-in the deployment, including Elastic Beanstalk, Amazon Cognito, Systems Manager
-Parameter Store, Amazon S3, CloudFront, and Amplify Hosting.
+This blog explains how EduCloud Lite protects private course assets with Amazon
+S3 and CloudFront Origin Access Control, based on an AWS Networking Blog article.
 
-<h2 class="blog-list-title"><a href="s3-cloudfront-private-media/">Blog 2 - Private Course Media Delivery with Amazon S3 and CloudFront</a></h2>
+<h2 class="blog-list-title"><a href="s3-cloudfront-private-media/">Blog 2 - What EduCloud Can Learn from Riot Games' Amazon EKS Platform</a></h2>
 
-This blog summarizes how private course assets such as thumbnails, documents,
-and videos are stored in S3 and delivered through CloudFront while keeping the
-bucket blocked from direct public access.
+This blog studies Riot Games' Amazon EKS migration and translates its lessons
+about automation, scaling, isolation, and standardized infrastructure to EduCloud.
 
 <h2 class="blog-list-title"><a href="cognito-fastapi-auth/">Blog 3 - Authentication Design with Amazon Cognito and FastAPI</a></h2>
 

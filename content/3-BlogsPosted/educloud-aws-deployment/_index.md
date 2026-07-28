@@ -1,197 +1,209 @@
 ---
-title: "Deploying EduCloud Lite on AWS"
-menuTitle: "EduCloud AWS Deployment"
+title: "Securing Private Course Assets with Amazon S3 and CloudFront OAC"
+menuTitle: "Private S3 Media with CloudFront"
 weight: 1
 pre: "<b>3.1.</b>"
 ---
 
-## Deploying EduCloud Lite on AWS: From Local LMS to Public Website
+# Securing Private Course Assets with Amazon S3 and CloudFront OAC
 
-Hello AWS Study Group VN! During my First Cloud AI Journey internship, I built
-**EduCloud Lite**, a lightweight learning management platform that supports
-course publishing, student enrollment, lesson progress tracking, final
-assessments, and completion certificates.
+Course platforms frequently deliver thumbnails, videos, and downloadable
+materials. A public S3 bucket is easy to configure, but it also allows users to
+bypass the application and retrieve objects directly. This article describes a
+small, practical architecture that keeps EduCloud Lite assets private while
+still delivering them through a public HTTPS endpoint.
 
-This article summarizes how I moved the project from a local React/FastAPI
-application to an AWS-based deployment with managed identity, private storage,
-HTTPS delivery, and a public frontend link.
+The design is based on the AWS Networking & Content Delivery Blog article
+[Amazon CloudFront introduces Origin Access Control (OAC)](https://aws.amazon.com/blogs/networking-and-content-delivery/amazon-cloudfront-introduces-origin-access-control-oac/).
+The implementation below is an original EduCloud Lite adaptation; it does not
+copy the source article verbatim.
 
-## 1. Project Context and Goal
+## 1. Problem and design goals
 
-EduCloud Lite started as a full-stack web application with three main roles:
+EduCloud Lite has three types of uploaded course assets:
 
-- **Student:** Browse courses, enroll, learn lessons, complete assessments, and
-  view certificates.
-- **Instructor:** Create courses, upload thumbnails/resources, manage lessons,
-  configure final assessments, and publish content.
-- **Admin:** Review Instructor requests, manage users/courses, and monitor basic
-  system health.
+- course thumbnails;
+- lesson videos; and
+- documents attached to a lesson.
 
-The deployment goal was not to build a large enterprise LMS. The goal was to
-create a working, understandable, and cost-conscious cloud architecture that can
-be demonstrated through one independent website link.
+The design had four requirements:
 
-## 2. Technical Highlights
+1. objects must not be readable through a public S3 URL;
+2. viewers should use one HTTPS delivery domain;
+3. API traffic and media traffic should be separated; and
+4. the configuration should be affordable and understandable for an internship
+   project.
 
-### Separating identity, application data, and storage
+## 2. Architecture
 
-The first design decision was to avoid mixing all responsibilities into one
-server.
+The request path is:
 
-| Responsibility | Service / Component | Why it was used |
-| --- | --- | --- |
-| Browser application | React, TypeScript, Vite, Amplify Hosting | Fast frontend build and public static hosting |
-| Business API | FastAPI on Elastic Beanstalk | Python backend with clear REST endpoints |
-| User identity | Amazon Cognito | Managed passwords, confirmation, first login, and recovery |
-| Application data | Supabase PostgreSQL | Relational data for users, courses, lessons, progress, attempts, and certificates |
-| Private course assets | Amazon S3 | Object storage for thumbnails, videos, and materials |
-| HTTPS delivery and routing | Amazon CloudFront | One delivery layer for API and private course assets |
-| Secrets | Systems Manager Parameter Store | Keep database URL and JWT secret outside source code |
+1. The browser loads the React application from Amplify Hosting.
+2. The application calls CloudFront under `/courses/*` for course media.
+3. CloudFront signs the origin request with Origin Access Control (OAC).
+4. S3 verifies the signed request and returns the object only to the selected
+   distribution.
 
-This separation made the application easier to troubleshoot. When login failed,
-I checked Cognito and token exchange. When file loading failed, I checked S3,
-CloudFront behavior, bucket policy, and CORS. When API calls failed, I checked
-Elastic Beanstalk health and backend logs.
+API requests use a different CloudFront behavior (`/api/*`) and are forwarded
+   to FastAPI on Elastic Beanstalk with caching disabled.
 
-### Production request flow
+![EduCloud private media architecture](/images/educloud-aws-architecture.png)
 
-The final request flow is:
+*Figure 1 — EduCloud Lite separates frontend delivery, API execution, and
+private course storage.*
 
-1. A user opens the React frontend from Amplify Hosting.
-2. The browser signs in through Amazon Cognito.
-3. The frontend sends API requests to CloudFront under `/api/*`.
-4. CloudFront forwards API traffic to Elastic Beanstalk.
-5. FastAPI validates tokens, applies role rules, and reads/writes Supabase
-   PostgreSQL.
-6. Uploaded course files are stored in S3.
-7. Course assets are delivered through CloudFront under `/courses/*` using
-   private S3 access.
+CloudFront OAC is preferred over the legacy Origin Access Identity because it
+supports all S3 Regions, SSE-KMS, and a wider set of HTTP methods. See the
+[AWS announcement](https://aws.amazon.com/blogs/networking-and-content-delivery/amazon-cloudfront-introduces-origin-access-control-oac/)
+and the [CloudFront OAC developer guide](https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/private-content-restricting-access-to-s3.html)
+for the supported access model.
 
-## 3. Practical Deployment Steps
+## 3. Implementation
 
-### Backend deployment with Elastic Beanstalk
+### 3.1 Create a private S3 bucket
 
-FastAPI was deployed on Elastic Beanstalk using the Python 3.12 platform. The
-backend bundle included the application source, dependencies, and a `Procfile`
-that starts the API server.
+The bucket is used only for EduCloud uploads. The following settings are
+important:
 
-Important configuration values were not pasted directly into source code.
-Instead, the deployment used Parameter Store references for:
+- Block all public access: enabled;
+- Object Ownership: bucket owner enforced (ACLs disabled);
+- default encryption: SSE-S3; and
+- versioning and lifecycle rules: selected according to retention needs.
 
-- `DATABASE_URL`
-- `JWT_SECRET_KEY`
+The bucket name is intentionally not exposed as a public media URL. The
+backend uploads objects with a predictable prefix such as `courses/<course-id>/`
+and stores the object key in PostgreSQL.
 
-The Elastic Beanstalk EC2 instance profile was granted read access only to the
-specific parameters required by EduCloud Lite.
+### 3.2 Create an Origin Access Control
 
-### Cognito authentication
+In CloudFront, create an OAC for an S3 origin and select **Sign requests**. The
+distribution then generates SigV4-authenticated requests for the bucket. S3
+does not need to be made public.
 
-Cognito was used as the identity provider. It handled:
+The bucket policy grants `s3:GetObject` to the CloudFront service principal and
+restricts the request to the EduCloud distribution ARN. This is the important
+security boundary: a user who discovers the S3 bucket name still cannot read an
+object directly.
 
-- User sign-in with email.
-- Forgot password and reset code flow.
-- First-login password challenge for provisioned users.
-- Email verification depending on the chosen account setup.
+The policy generated by CloudFront follows this pattern (replace the bucket and
+distribution placeholders with the values from your account):
 
-The application still stores the role in PostgreSQL. Cognito answers the
-question "Who is this identity?", while EduCloud answers "What can this user do
-inside the LMS?"
+```json
+{
+  "Version": "2012-10-17",
+  "Statement": [{
+    "Sid": "AllowCloudFrontServicePrincipalReadOnly",
+    "Effect": "Allow",
+    "Principal": { "Service": "cloudfront.amazonaws.com" },
+    "Action": "s3:GetObject",
+    "Resource": "arn:aws:s3:::EDUCLOUD_BUCKET/courses/*",
+    "Condition": {
+      "StringEquals": {
+        "AWS:SourceArn": "arn:aws:cloudfront::ACCOUNT_ID:distribution/DISTRIBUTION_ID"
+      }
+    }
+  }]
+}
+```
 
-### Private storage with S3 and CloudFront
+This is a reference policy, not a credential or a value to copy unchanged into
+production. The distribution ARN and object prefix must match the actual
+deployment.
 
-Course assets were stored in a dedicated S3 bucket, not in the Elastic Beanstalk
-service bucket. The upload bucket uses:
+### 3.3 Configure CloudFront behaviors
 
-- Block Public Access enabled.
-- ACLs disabled.
-- Server-side encryption with SSE-S3.
-- Bucket policy scoped to CloudFront Origin Access Control.
-
-CloudFront has separate behaviors:
-
-| Path pattern | Origin | Cache policy | Purpose |
+| Path pattern | Origin | Cache policy | Allowed methods |
 | --- | --- | --- | --- |
-| `Default (*)` / `/api/*` | Elastic Beanstalk | Caching disabled | Dynamic API requests |
-| `/courses/*` | Private S3 origin | Caching optimized | Course thumbnails, videos, and materials |
+| `/courses/*` | private S3 origin with OAC | CachingOptimized | GET, HEAD |
+| `/api/*` | Elastic Beanstalk | CachingDisabled | GET, HEAD, OPTIONS, PUT, POST, PATCH, DELETE |
+| Default (`*`) | frontend/API fallback | project-specific | project-specific |
 
-This allowed course assets to be served efficiently without making the S3 bucket
-public.
+The media behavior uses caching because course files change less frequently
+than API responses. The API behavior disables caching so authentication and
+progress updates are not served from a stale edge response.
 
-### Frontend deployment with Amplify Hosting
+### 3.4 Connect uploads to the application
 
-The frontend was deployed from GitHub using Amplify Hosting. The monorepo app
-root was set to `frontend`, with:
+The instructor workflow is:
 
-- Build command: `npm run build`
-- Output directory: `dist`
-- SPA rewrite to `/index.html`
+1. FastAPI authenticates the Cognito access token and checks the Instructor role.
+2. FastAPI validates the file type and course ownership.
+3. The file is uploaded to S3 and the object key is stored with the lesson or
+   course record in Supabase PostgreSQL.
+4. The API returns a CloudFront URL, not an S3 URL.
 
-The frontend build used `VITE_*` environment variables for values that are safe
-to expose in browser code, such as:
+For larger files, a future improvement is to return a short-lived presigned
+upload URL so the browser can upload directly to S3 without sending the entire
+file through the application server.
 
-- `VITE_API_BASE_URL`
-- `VITE_COGNITO_REGION`
-- `VITE_COGNITO_USER_POOL_ID`
-- `VITE_COGNITO_CLIENT_ID`
+### 3.5 Test the security boundary
 
-Database URLs, JWT secrets, and AWS credentials were never added to the frontend
-environment.
+The following tests were used for EduCloud:
 
-## 4. Problems Encountered
+- open the CloudFront URL while signed in and verify that the asset loads;
+- open the equivalent S3 URL and verify that public access is denied;
+- upload a thumbnail as an Instructor and verify that the object appears under
+  the course prefix; and
+- request an API endpoint through `/api/*` and verify that it reaches
+  Elastic Beanstalk rather than the S3 origin.
 
-| Problem | Root Cause | Resolution |
-| --- | --- | --- |
-| Backend failed during startup | Missing dependency and incorrect production environment assumptions | Checked Elastic Beanstalk logs and fixed backend requirements/config |
-| Cognito user could sign in but had wrong application role | Identity existed in Cognito but role mapping was controlled by Supabase | Updated the user record in PostgreSQL and kept role assignment server-side |
-| `Failed to fetch` from Amplify frontend | CORS and API origin mismatch | Updated backend `CORS_ORIGINS` and frontend `VITE_API_BASE_URL` |
-| S3 asset returned 403 | CloudFront origin access and bucket policy were incomplete | Added OAC and the generated bucket policy while keeping Block Public Access enabled |
-| Refreshing `/login` or `/profile` failed | React uses client-side routing | Added Amplify SPA rewrite to `/index.html` |
+The CloudFront and S3 logs, together with Elastic Beanstalk health events, are
+the first places to inspect when a request returns `403`, `404`, or a CORS
+error.
 
-## 5. AWS Services in the Architecture
+## 4. Security and operational considerations
 
-- **AWS Amplify Hosting:** Builds and hosts the React frontend from GitHub.
-- **Amazon CloudFront:** Routes API traffic and delivers private course assets.
-- **AWS Elastic Beanstalk:** Runs the FastAPI backend.
-- **Amazon Cognito:** Manages user identity, sign-in, confirmation, and password
-  recovery.
-- **Amazon S3:** Stores uploaded course thumbnails, videos, and materials.
-- **AWS Systems Manager Parameter Store:** Stores production secrets.
-- **AWS IAM:** Grants least-privilege runtime permissions.
-- **Amazon CloudWatch:** Supports logs and health troubleshooting.
+### Least privilege
 
-## 6. Key Learnings
+The Elastic Beanstalk instance profile receives only the SSM and S3 actions
+needed by the application. Browser code contains only `VITE_*` configuration
+values; database URLs, JWT secrets, and AWS credentials remain server-side.
 
-- **Separate identity from application role:** Cognito should manage login, but
-  the application database should decide Student, Instructor, and Admin access.
-- **Do not publicize S3 just to make files load:** CloudFront OAC allows private
-  delivery without disabling Block Public Access.
-- **Frontend variables are public:** Only `VITE_*` values safe for browsers
-  should be used in Amplify.
-- **Production debugging is layered:** API errors, CORS, Cognito, CloudFront,
-  S3, and database connectivity must be checked one layer at a time.
-- **Cost control matters:** A single-instance backend, private S3, and careful
-  logging choices are enough for an internship submission.
+### Cache invalidation
 
-## 7. Limitations and Future Improvements
+If an instructor replaces an object with the same key, CloudFront may continue
+serving a cached copy until its TTL expires. Versioned object keys (for example,
+`thumbnail-<timestamp>.jpg`) avoid unnecessary invalidations.
 
-- Add infrastructure as code to reduce manual AWS Console steps.
-- Add end-to-end browser tests for Student, Instructor, and Admin flows.
-- Move database migration management to Alembic for production-grade releases.
-- Add CloudWatch alarms and a shared monitoring dashboard.
-- Harden token storage and cookie/session strategy for a larger production
-  environment.
+### Cost control
+
+For a demonstration environment, a single Elastic Beanstalk instance, an S3
+bucket, and the CloudFront pay-as-you-go distribution are sufficient. Log
+retention and large video downloads should be monitored because data transfer
+and request volume can become the dominant cost.
+
+### Why S3 and CloudFront instead of storing media on the backend?
+
+S3 is durable object storage and CloudFront is purpose-built for edge delivery.
+Keeping media outside the Elastic Beanstalk instance avoids filling the local
+filesystem and allows the backend to scale independently from video traffic.
+
+## 5. Result in EduCloud Lite
+
+The completed EduCloud deployment uses:
+
+- Amplify Hosting for the React/Vite frontend;
+- Elastic Beanstalk for the FastAPI API;
+- Cognito for sign-in and password recovery;
+- Supabase PostgreSQL for relational application data; and
+- S3 plus CloudFront OAC for private course media.
+
+This arrangement gives the reviewer one public website while preserving a
+clear separation between identity, business data, API execution, and object
+storage.
 
 ## Conclusion
 
-Deploying EduCloud Lite on AWS showed that a student project can still follow
-real cloud architecture principles: managed identity, private storage,
-least-privilege IAM, externalized secrets, HTTPS delivery, and reproducible
-documentation.
+The main lesson is that private storage does not require a complicated media
+service. A blocked S3 bucket, a narrowly scoped bucket policy, and CloudFront
+OAC are enough to create a secure delivery path for an LMS prototype. The same
+pattern can be extended later with signed URLs, direct-to-S3 uploads, WAF rules,
+and CloudWatch alarms.
 
-The most important lesson is that "it works locally" is only the first stage.
-The real engineering work begins when authentication, networking, storage
-permissions, CORS, logging, and cost control all need to work together.
+## References
 
-**Source:** EduCloud Lite project repository and deployment report.  
-**Repository:** [https://github.com/Funacius/EduCloud](https://github.com/Funacius/EduCloud)  
-**Live application:** [https://main.djk00b5qbck73.amplifyapp.com/](https://main.djk00b5qbck73.amplifyapp.com/)
+- [Amazon CloudFront introduces Origin Access Control (OAC) — AWS Networking & Content Delivery Blog](https://aws.amazon.com/blogs/networking-and-content-delivery/amazon-cloudfront-introduces-origin-access-control-oac/)
+- [Restrict access to an Amazon S3 origin — Amazon CloudFront Developer Guide](https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/private-content-restricting-access-to-s3.html)
+- [Restrict access to files — Amazon CloudFront Developer Guide](https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/private-content-overview.html)
+- [EduCloud Lite source code](https://github.com/Funacius/EduCloud)
+- [EduCloud Lite live application](https://main.djk00b5qbck73.amplifyapp.com/)

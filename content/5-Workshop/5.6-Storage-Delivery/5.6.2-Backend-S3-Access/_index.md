@@ -40,4 +40,6 @@ Attach a least-privilege policy to the Elastic Beanstalk EC2 instance role:
 
 The backend creates short-lived multipart presigned URLs and the browser uploads
 video parts directly to S3. `s3:ListBucket` uses the bucket ARN without `/*` and
-is restricted to `courses/`; object actions use `courses/*`.
+is restricted to `courses/`; object actions use `courses/*`. `DeleteObject` is
+required because removing or replacing a lesson video/material also removes the
+previous object instead of leaving orphaned course data in the bucket.

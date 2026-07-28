@@ -1,199 +1,180 @@
 ---
-title: "Private Course Media Delivery with Amazon S3 and CloudFront"
-menuTitle: "S3 and CloudFront Media"
+title: "What EduCloud Can Learn from Riot Games' Amazon EKS Platform"
+menuTitle: "Riot Games and Amazon EKS"
 weight: 2
 pre: "<b>3.2.</b>"
 ---
 
-## Private Course Media Delivery with Amazon S3 and CloudFront
+# What EduCloud Can Learn from Riot Games' Amazon EKS Platform
 
-Hello AWS Study Group VN! While deploying EduCloud Lite, one of the most
-important problems I had to solve was course media delivery. In a learning
-platform, thumbnails, documents, and videos should load quickly for students,
-but the storage bucket should not be opened directly to the public.
+Large online games and learning platforms appear different, but they share an
+important infrastructure problem: traffic changes quickly, services must remain
+available, and developers should spend more time building product features than
+managing servers.
 
-This blog summarizes how I designed private course media storage with Amazon S3
-and delivered it through Amazon CloudFront using a separate cache behavior for
-course assets.
+This article studies the AWS case study
+[Riot Games Cuts $10M Annual Infrastructure Costs by Migrating to Amazon EKS](https://aws.amazon.com/solutions/case-studies/riot-games-case-study/)
+and translates its engineering lessons to EduCloud Lite. The article is an
+independent analysis; EduCloud Lite does **not** claim to run Amazon EKS in its
+current deployment.
 
-## 1. Problem Context
+## 1. The infrastructure challenge
 
-EduCloud Lite allows instructors to create courses and attach learning
-resources. These resources include:
+Riot Games operates live-service games such as League of Legends and VALORANT.
+Its platform must support a global player base, low latency, high availability,
+automatic scaling, and repeatable deployments across regions.
 
-- Course thumbnails.
-- Lesson videos.
-- Downloadable materials.
-- Images used in course content.
+EduCloud has a smaller scale, but the underlying questions are similar:
 
-At first, using a plain public file URL seems simple. However, this creates
-several risks:
+- How can a new course or lesson be released without manually changing a server?
+- How can the platform handle a sudden assessment or enrollment spike?
+- How can developers use a consistent deployment process?
+- How can infrastructure cost stay proportional to actual usage?
 
-- Anyone with the S3 object URL can access the file directly.
-- Bucket policies may accidentally expose more files than intended.
-- Video and image delivery can be slower without edge caching.
-- It becomes harder to control CORS and HTTP headers consistently.
+## 2. What Riot Games changed
 
-For an internship project, the goal was not to build a full enterprise media
-platform. The goal was to demonstrate a safe and practical architecture: files
-are stored privately in S3 and served through CloudFront.
+According to the AWS case study, Riot began migrating to Amazon EKS in 2021 after
+using a previous container orchestration platform. EKS provided a managed
+Kubernetes control plane, while Riot standardized its developer environment
+around repeatable infrastructure and automated node management.
 
-## 2. Target Architecture
+The reported outcomes include:
 
-The final media delivery flow is:
+- support for more than 180 million monthly active users;
+- approximately 10 million dollars in annual infrastructure savings;
+- 90 percent faster infrastructure setup; and
+- 12 times faster game infrastructure deployment.
 
-1. The instructor uploads a thumbnail or course file from the EduCloud frontend.
-2. The FastAPI backend validates the request and file type.
-3. The backend stores the object in the EduCloud upload bucket.
-4. The frontend stores or receives a CloudFront URL for the asset.
-5. Students load course media through CloudFront under the `/courses/*` path.
-6. CloudFront retrieves the object from S3 using Origin Access Control.
+Riot also used Karpenter for node lifecycle management, Terraform for
+infrastructure automation, isolated clusters for games or use cases, and AWS
+Local Zones/Outposts for latency-sensitive workloads. These details are from the
+[official AWS case study](https://aws.amazon.com/solutions/case-studies/riot-games-case-study/),
+not measurements from EduCloud.
 
-| Layer | AWS service / component | Responsibility |
+## 3. Technical principles behind the result
+
+### 3.1 Managed orchestration
+
+EKS removes the need to operate a Kubernetes control plane manually. Developers
+can focus on application containers, health checks, resource requests, and
+deployment policies while AWS manages the control-plane layer.
+
+### 3.2 Automated capacity
+
+Karpenter observes pending workloads and provisions suitable nodes instead of
+requiring a fixed server pool. This is useful for workloads that have quiet and
+busy periods, such as a game launch or a large online examination.
+
+### 3.3 Standardized developer platform
+
+Riot created a centrally managed environment so teams could request compute,
+networking, and storage using approved patterns. The platform abstracts low-level
+infrastructure while preserving governance.
+
+### 3.4 Isolation and blast-radius control
+
+Riot moved toward isolated clusters for individual games or use cases. A problem
+in one workload is therefore less likely to consume the capacity or
+configuration of another workload.
+
+### 3.5 Location-aware delivery
+
+For strict latency requirements, Riot uses services such as AWS Local Zones and
+Outposts to place workloads closer to players. EduCloud does not need this
+complexity today, but the principle is relevant if a future release serves
+multiple regions.
+
+## 4. A small Kubernetes deployment example
+
+The following example shows the type of declarative configuration that a future
+EduCloud container deployment could use. It is not part of the current
+Elastic Beanstalk deployment.
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: educloud-api
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: educloud-api
+  template:
+    metadata:
+      labels:
+        app: educloud-api
+    spec:
+      containers:
+        - name: api
+          image: ACCOUNT_ID.dkr.ecr.ap-southeast-1.amazonaws.com/educloud-api:1.0.0
+          ports:
+            - containerPort: 8000
+          resources:
+            requests:
+              cpu: "250m"
+              memory: "512Mi"
+            limits:
+              cpu: "1"
+              memory: "1Gi"
+```
+
+In a production EKS design, this Deployment could be combined with a Horizontal
+Pod Autoscaler, an Application Load Balancer, Amazon ECR, CloudWatch Container
+Insights, and an automated node provisioner such as Karpenter.
+
+## 5. Applying the lessons to EduCloud Lite
+
+| Riot Games principle | Current EduCloud implementation | Possible future direction |
 | --- | --- | --- |
-| Upload API | FastAPI on Elastic Beanstalk | Validate uploads and object keys |
-| Object storage | Amazon S3 | Store course media privately |
-| Delivery layer | Amazon CloudFront | Serve assets over HTTPS and cache static objects |
-| Access control | Origin Access Control and bucket policy | Allow only CloudFront to read S3 objects |
-| Runtime permission | IAM instance profile | Allow backend to upload/read scoped S3 keys |
+| Managed compute | FastAPI on Elastic Beanstalk | Container image on EKS or ECS |
+| Automated scaling | Single-instance environment for demo | Auto Scaling or HPA based on demand |
+| Standardized provisioning | Deployment notes and scripts | Terraform or CloudFormation |
+| Workload isolation | Separate API, S3, Cognito, and database responsibilities | Namespace or service isolation |
+| Global delivery | CloudFront for frontend and course media | Regional API deployments and edge-aware routing |
+| Observability | Elastic Beanstalk health and CloudWatch logs | Container Insights, metrics, traces, and alarms |
 
-The key idea is that S3 is not treated as a public website. It is treated as
-private storage behind a controlled distribution layer.
+The correct lesson is not to replace Elastic Beanstalk immediately. For an
+internship submission with low traffic, Elastic Beanstalk is simpler and cheaper
+to operate. EKS becomes reasonable when the application has multiple container
+services, independent scaling requirements, or a team able to operate Kubernetes.
 
-## 3. S3 Bucket Design
+## 6. Cost and complexity trade-offs
 
-The upload bucket was created separately from the Elastic Beanstalk service
-bucket. This matters because the Beanstalk bucket is for deployment artifacts,
-not user course content.
+EKS can improve portability, standardization, and scaling, but it introduces
+cluster operations, networking, IAM for service accounts, observability, image
+management, and Kubernetes security responsibilities. A managed control plane
+does not make the entire application serverless.
 
-For EduCloud Lite, the upload bucket uses these settings:
+For EduCloud, the practical progression is:
 
-- **General purpose bucket** in `ap-southeast-1`.
-- **Block Public Access enabled**.
-- **ACLs disabled** with bucket-owner enforced ownership.
-- **Server-side encryption with SSE-S3**.
-- Object keys grouped by application paths such as `courses/...`.
+1. keep the current Elastic Beanstalk deployment stable;
+2. package FastAPI as a Docker image;
+3. add infrastructure as code and health alarms;
+4. measure request volume and scaling needs; and
+5. migrate to ECS or EKS only when the operational benefit justifies the extra
+   complexity.
 
-Keeping Block Public Access enabled was intentional. If the bucket needs public
-access to work, the design is probably using the wrong access model.
+## 7. Key takeaways
 
-## 4. CloudFront Origin and Cache Behavior
-
-CloudFront was configured with two different origins:
-
-| Origin | Purpose |
-| --- | --- |
-| Elastic Beanstalk origin | Dynamic backend API requests |
-| S3 origin | Static course media files |
-
-The media behavior uses the path pattern:
-
-```text
-courses/*
-```
-
-For this behavior, the origin points to the S3 bucket. The allowed HTTP methods
-can stay simple:
-
-```text
-GET, HEAD
-```
-
-The cache policy can be optimized for static content because thumbnails and
-course resources do not change on every request. This improves perceived
-loading speed and reduces direct traffic to S3.
-
-## 5. Origin Access Control
-
-The important security piece is Origin Access Control. With OAC, CloudFront is
-allowed to access the private S3 bucket, but normal internet users cannot access
-the bucket directly.
-
-The bucket policy should be scoped to:
-
-- The S3 bucket and object path.
-- The CloudFront service principal.
-- The specific CloudFront distribution ARN.
-
-This means a request is allowed only when it comes through the intended
-CloudFront distribution. In EduCloud Lite, this prevented the need to disable
-Block Public Access.
-
-## 6. Backend Upload Rules
-
-The backend still has responsibilities even when S3 and CloudFront are used.
-EduCloud Lite should not accept arbitrary files blindly.
-
-Important backend checks include:
-
-- Validate file size.
-- Validate content type.
-- Generate safe object keys.
-- Keep object paths predictable, for example under `courses/{course_id}/...`.
-- Return a CloudFront-facing URL instead of exposing raw S3 URLs.
-
-This keeps storage organized and avoids accidental overwrites or unsafe file
-names.
-
-## 7. CORS and Browser Loading
-
-Because the frontend, API, and media URLs are served from different domains,
-CORS must be handled carefully.
-
-The final setup separates concerns:
-
-- API CORS is handled by FastAPI.
-- Static media delivery is handled by CloudFront/S3 response behavior.
-- The frontend uses the CloudFront URL when rendering images and course assets.
-
-When a thumbnail did not load during testing, the issue was not always the
-frontend code. It could be:
-
-- Wrong object key.
-- Object was not uploaded.
-- Missing S3 bucket policy for OAC.
-- CloudFront behavior pattern did not match the URL.
-- Browser cached an old failed response.
-
-Debugging one layer at a time made the problem easier to isolate.
-
-## 8. Practical Test Scenarios
-
-| Test | Expected result |
-| --- | --- |
-| Open the S3 object URL directly | Access should be denied |
-| Open the CloudFront `/courses/...` URL | Asset should load |
-| Upload a thumbnail from Instructor UI | Backend stores file and course page displays it |
-| Refresh the course detail page | Thumbnail still loads through CloudFront |
-| Upload an unsupported file type | Backend rejects the file |
-
-This combination proves that the bucket is private while the application still
-serves media correctly.
-
-## 9. Key Learnings
-
-- **Private by default is safer:** Keeping S3 Block Public Access enabled avoids
-  accidental exposure.
-- **CloudFront is more than caching:** It becomes the controlled public delivery
-  layer for private storage.
-- **Behaviors matter:** API traffic and static media should not use the same
-  cache settings.
-- **Backend validation is still required:** Cloud storage does not replace file
-  validation and authorization logic.
-- **Debugging needs layers:** S3 permissions, CloudFront OAC, object keys, CORS,
-  and browser cache can all cause similar-looking image load failures.
+- Scaling is an architectural capability, not only a larger EC2 instance.
+- A platform team can make cloud infrastructure repeatable for developers.
+- Automated capacity should respond to workload demand and cost limits.
+- Isolation reduces the blast radius of failures and simplifies ownership.
+- The best service depends on project scale: EKS is powerful, but not mandatory
+  for every web application.
 
 ## Conclusion
 
-Using Amazon S3 with CloudFront allowed EduCloud Lite to support course media
-without making the storage bucket public. This design is small enough for an
-internship project but still follows an important cloud principle: expose only
-the delivery layer, not the storage layer.
+Riot Games demonstrates how a global game company can use Amazon EKS, Karpenter,
+Terraform, and location-aware AWS services to simplify infrastructure and
+accelerate releases. EduCloud Lite applies the same ideas at a smaller scale:
+separate responsibilities, automate repeatable steps, monitor health, and only
+introduce Kubernetes when the workload and team are ready for it.
 
-For future improvement, the project can add signed URLs or signed cookies for
-premium/private courses, lifecycle rules for old files, and CloudFront
-invalidation automation when instructors replace course media.
+## References
 
-**Source:** EduCloud Lite project repository and deployment report.  
-**Repository:** [https://github.com/Funacius/EduCloud](https://github.com/Funacius/EduCloud)  
-**Live application:** [https://main.djk00b5qbck73.amplifyapp.com/](https://main.djk00b5qbck73.amplifyapp.com/)
+- [Riot Games Cuts $10M Annual Infrastructure Costs by Migrating to Amazon EKS — AWS Case Study](https://aws.amazon.com/solutions/case-studies/riot-games-case-study/)
+- [Amazon Elastic Kubernetes Service documentation](https://docs.aws.amazon.com/eks/latest/userguide/what-is-eks.html)
+- [Karpenter documentation](https://karpenter.sh/)
+- [EduCloud Lite source code](https://github.com/Funacius/EduCloud)

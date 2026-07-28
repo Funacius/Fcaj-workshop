@@ -17,6 +17,9 @@ pre: "<b>5.8.</b>"
    Confirm the video uses multipart presigned upload and no duplicate thumbnail
    object is created when the same image is saved repeatedly.
 6. Add lessons and a published final assessment.
+   Reopen a lesson, remove its PDF/video with **X**, save, and confirm both the
+   lesson URL and old S3 object are gone. Delete a completed lesson and confirm
+   dependent progress does not cause a database error.
 7. Publish the course.
 8. Enroll as a Student, complete lessons, pass the assessment, and open the
    certificate.
@@ -49,6 +52,8 @@ Invoke-WebRequest "https://YOUR_AMPLIFY_DOMAIN/login"
 | Elastic Beanstalk deployment fails | ZIP root, `Procfile`, dependencies, and logs |
 | EB is green but API returns 502 | Confirm `main.py`, `Procfile`, and `app/` are at the ZIP root; inspect `web.stdout.log` |
 | Admin Logs says ResourceNotFound | Copy the exact case-sensitive CloudWatch log group name from CloudWatch Logs |
+| Admin Logs polls but its newest event time is unchanged | Enable EB instance log streaming and verify the chosen stream receives new events; a refresh does not create an event |
+| Deleting a completed lesson fails | Deploy the current backend so dependent progress is removed before the lesson |
 | Database connection fails | URL encoding, pooler host, TLS, password, Supabase network status |
 
 {{% notice tip %}}
