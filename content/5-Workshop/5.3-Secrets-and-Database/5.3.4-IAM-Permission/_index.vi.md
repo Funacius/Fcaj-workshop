@@ -35,3 +35,7 @@ này, thay `ACCOUNT_ID` bằng account ID của bạn:
 Sau đó, trong Elastic Beanstalk Environment properties, tạo `DATABASE_URL` và
 `JWT_SECRET_KEY`, chọn source **Parameter Store** và dán ARN tương ứng.
 
+Cùng EC2 role này sẽ nhận các statement least-privilege riêng cho S3 multipart,
+`s3:ListBucket` giới hạn ở prefix `courses/`, `ce:GetCostAndUsage`,
+`ce:GetCostForecast` và `logs:FilterLogEvents`. Dashboard chỉ cần quyền đọc và
+upload; không cần quyền thay đổi Billing hoặc CloudWatch.

@@ -36,3 +36,8 @@ Later, create Elastic Beanstalk environment properties named `DATABASE_URL` and
 `JWT_SECRET_KEY`, choose **Parameter Store** as their source, and paste the
 matching parameter ARN.
 
+The same EC2 role later receives separate least-privilege statements for S3
+multipart object access, `s3:ListBucket` on the `courses/` prefix,
+`ce:GetCostAndUsage`, `ce:GetCostForecast`, and `logs:FilterLogEvents`. These
+are read/upload capabilities only; no billing or CloudWatch mutation permission
+is required by the application dashboard.

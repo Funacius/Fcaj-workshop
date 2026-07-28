@@ -16,9 +16,12 @@ pre: "<b>5.1.2.</b>"
 5. CloudFront forwards API requests to Elastic Beanstalk.
 6. CloudFront forwards `/courses/*` requests to the private S3 origin using OAC.
 7. FastAPI reads and writes application data in Supabase PostgreSQL over TLS.
-8. FastAPI uploads thumbnails, videos, and course materials to S3.
-9. The EC2 instance profile permits the backend to read encrypted parameters and
-   access the upload bucket.
+8. FastAPI authorizes private object operations and returns short-lived multipart
+   presigned URLs; the browser uploads video parts directly to S3.
+9. S3 objects are delivered through CloudFront, while Elastic Beanstalk streams
+   application logs to CloudWatch.
+10. The EC2 instance profile permits the backend to read encrypted parameters,
+    access the upload bucket, Cost Explorer, and the configured CloudWatch log group.
 
 ## Design intent
 
@@ -27,4 +30,3 @@ private media delivery, and database access separated. This makes the system
 easier to troubleshoot because each failure can be mapped to a specific layer:
 Amplify, Cognito, CloudFront, Elastic Beanstalk, S3, Parameter Store, or
 PostgreSQL.
-

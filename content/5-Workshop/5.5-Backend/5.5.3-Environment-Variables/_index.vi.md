@@ -23,6 +23,10 @@ Cấu hình hai giá trị secret-backed từ Parameter Store và các setting p
 | `ALLOW_LEGACY_AUTH` | `false` |
 | `ENABLE_DEV_AUTH` | `false` |
 | `UPLOAD_STORAGE` | `s3` sau Module 5.6 |
+| `AWS_S3_BUCKET_NAME` | Private upload bucket của bạn |
+| `AWS_S3_PUBLIC_BASE_URL` | URL CloudFront distribution |
+| `AWS_MONITORING_ENABLED` | `true` để bật đọc billing/log AWS |
+| `AWS_CLOUDWATCH_LOG_GROUP` | Tên chính xác của EB `web.stdout.log` group |
 | `CORS_ORIGINS` | Amplify domain của bạn |
 
 Khi thay đổi các setting này, chờ Elastic Beanstalk cập nhật xong rồi mới test

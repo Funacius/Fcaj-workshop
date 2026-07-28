@@ -18,14 +18,26 @@ Attach a least-privilege policy to the Elastic Beanstalk EC2 instance role:
       "Action": [
         "s3:PutObject",
         "s3:GetObject",
-        "s3:DeleteObject"
+        "s3:DeleteObject",
+        "s3:AbortMultipartUpload",
+        "s3:ListMultipartUploadParts"
       ],
       "Resource": "arn:aws:s3:::YOUR_UPLOAD_BUCKET/courses/*"
+    },
+    {
+      "Effect": "Allow",
+      "Action": "s3:ListBucket",
+      "Resource": "arn:aws:s3:::YOUR_UPLOAD_BUCKET",
+      "Condition": {
+        "StringLike": {
+          "s3:prefix": ["courses/", "courses/*"]
+        }
+      }
     }
   ]
 }
 ```
 
-The backend only needs object access under the `courses/` prefix. Keeping the
-scope narrow reduces the blast radius if a bug or credential issue appears.
-
+The backend creates short-lived multipart presigned URLs and the browser uploads
+video parts directly to S3. `s3:ListBucket` uses the bucket ARN without `/*` and
+is restricted to `courses/`; object actions use `courses/*`.

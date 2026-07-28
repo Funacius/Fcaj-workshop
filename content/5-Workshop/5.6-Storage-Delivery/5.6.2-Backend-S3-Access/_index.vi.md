@@ -18,14 +18,26 @@ Attach least-privilege policy vào Elastic Beanstalk EC2 instance role:
       "Action": [
         "s3:PutObject",
         "s3:GetObject",
-        "s3:DeleteObject"
+        "s3:DeleteObject",
+        "s3:AbortMultipartUpload",
+        "s3:ListMultipartUploadParts"
       ],
       "Resource": "arn:aws:s3:::YOUR_UPLOAD_BUCKET/courses/*"
+    },
+    {
+      "Effect": "Allow",
+      "Action": "s3:ListBucket",
+      "Resource": "arn:aws:s3:::YOUR_UPLOAD_BUCKET",
+      "Condition": {
+        "StringLike": {
+          "s3:prefix": ["courses/", "courses/*"]
+        }
+      }
     }
   ]
 }
 ```
 
-Backend chỉ cần object access dưới prefix `courses/`. Giữ scope hẹp giúp giảm
-rủi ro nếu có bug hoặc vấn đề credential.
-
+Backend tạo multipart presigned URL có thời hạn ngắn, sau đó trình duyệt upload
+từng phần video trực tiếp lên S3. `s3:ListBucket` dùng ARN bucket không có `/*`
+và bị giới hạn ở `courses/`; object action dùng `courses/*`.

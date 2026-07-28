@@ -16,9 +16,12 @@ pre: "<b>5.1.2.</b>"
 5. CloudFront chuyển API request tới Elastic Beanstalk.
 6. CloudFront chuyển request `/courses/*` tới S3 private bằng OAC.
 7. FastAPI đọc/ghi dữ liệu trong Supabase PostgreSQL qua TLS.
-8. FastAPI upload thumbnail, video và tài liệu khóa học lên S3.
-9. EC2 instance profile cấp quyền cho backend đọc encrypted parameters và truy
-   cập upload bucket.
+8. FastAPI cấp quyền object private và trả multipart presigned URL có thời hạn
+   ngắn; trình duyệt upload từng phần video trực tiếp lên S3.
+9. Object trong S3 được phân phối qua CloudFront, còn Elastic Beanstalk stream
+   application log sang CloudWatch.
+10. EC2 instance profile cấp quyền cho backend đọc encrypted parameters, truy
+    cập upload bucket, Cost Explorer và CloudWatch log group đã cấu hình.
 
 ## Ý đồ thiết kế
 
@@ -26,4 +29,3 @@ Luồng request tách riêng frontend hosting, authentication, backend execution
 private media delivery và database access. Nhờ đó, khi có lỗi, có thể khoanh vùng
 theo từng lớp: Amplify, Cognito, CloudFront, Elastic Beanstalk, S3, Parameter
 Store hoặc PostgreSQL.
-

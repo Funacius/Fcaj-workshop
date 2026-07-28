@@ -14,11 +14,17 @@ pre: "<b>5.8.</b>"
 3. Confirm Profile, Courses, Instructor, and Admin guards behave correctly.
 4. Create a draft course as an Instructor.
 5. Upload a thumbnail, video, and material; verify the returned URL uses CloudFront.
+   Confirm the video uses multipart presigned upload and no duplicate thumbnail
+   object is created when the same image is saved repeatedly.
 6. Add lessons and a published final assessment.
 7. Publish the course.
 8. Enroll as a Student, complete lessons, pass the assessment, and open the
    certificate.
 9. Confirm Elastic Beanstalk remains green.
+10. Submit an Instructor application as a Student and approve/reject it as Admin.
+11. Submit a verified course rating/review and confirm the aggregate updates.
+12. Open Admin Health and Logs; verify S3 inventory, Cost Explorer status, and
+    recent CloudWatch events. Courses must not expose price or checkout controls.
 
 ![EduCloud Lite live application](/images/workshop/09-live-application.png)
 
@@ -41,6 +47,8 @@ Invoke-WebRequest "https://YOUR_AMPLIFY_DOMAIN/login"
 | S3 returns 403 | OAC selection, bucket policy, behavior path, object key |
 | Thumbnail editor cannot load image | CloudFront URL, object content type, response CORS headers |
 | Elastic Beanstalk deployment fails | ZIP root, `Procfile`, dependencies, and logs |
+| EB is green but API returns 502 | Confirm `main.py`, `Procfile`, and `app/` are at the ZIP root; inspect `web.stdout.log` |
+| Admin Logs says ResourceNotFound | Copy the exact case-sensitive CloudWatch log group name from CloudWatch Logs |
 | Database connection fails | URL encoding, pooler host, TLS, password, Supabase network status |
 
 {{% notice tip %}}
