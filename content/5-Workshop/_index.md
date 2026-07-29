@@ -1,56 +1,62 @@
 ---
 title: "Workshop"
 weight: 5
-chapter: false
+chapter: true
 pre: "<b>5.</b>"
 ---
 
-# Deploy EduCloud Lite on AWS
+# EduCloud Lite – AWS Cloud Learning Platform
 
-This hands-on workshop guides readers through deploying their own EduCloud Lite
-environment. Every participant must use their own AWS account, Cognito User Pool,
-S3 bucket, Parameter Store values, and PostgreSQL database.
+Welcome to the technical workshop for **EduCloud Lite**, a cloud-based learning
+management platform built with React, FastAPI, Amazon Cognito, Amazon S3,
+CloudFront, AWS Amplify, Elastic Beanstalk, and a managed PostgreSQL database.
+This guide explains the decisions behind the architecture and provides a
+repeatable path for deploying the application in your own AWS account.
 
-## Workshop modules
+- **Live application:** [Open EduCloud Lite](https://main.djk00b5qbck73.amplifyapp.com/courses)
+- **Architecture diagram:** [Download the editable draw.io file](../files/educloud-aws-architecture.drawio)
+- **Source code:** [EduCloud on GitHub](https://github.com/Funacius/EduCloud)
+- **Build and deployment guide:** [Download the PDF guide](../files/EduCloud-Build-Deployment-Guide.pdf)
 
-1. [Introduction](5.1-overview/)
-2. [Prerequisites](5.2-prerequisites/)
-3. [Secrets and database](5.3-secrets-and-database/)
-4. [Authentication with Cognito](5.4-authentication/)
-5. [Deploy the backend](5.5-backend/)
-6. [Private storage and CloudFront](5.6-storage-delivery/)
-7. [Deploy the frontend](5.7-frontend/)
-8. [Validation and troubleshooting](5.8-validation/)
-9. [Cleanup](5.9-cleanup/)
+![EduCloud Lite AWS architecture diagram](/images/educloud-aws-architecture.png)
 
-## Suggested screenshots
+## Overview
 
-The workshop will look closer to an AWS hands-on lab if each major step includes
-one screenshot. Save the images under `static/images/workshop/` using the
-suggested names below:
+EduCloud Lite separates the browser interface, application API, identity
+management, object storage, and database responsibilities. The frontend is
+built and hosted by Amplify. FastAPI runs on Elastic Beanstalk. Cognito issues
+the user identity tokens, while Supabase PostgreSQL stores application data.
+Private course assets are uploaded to S3 and delivered through CloudFront with
+Origin Access Control, so the bucket does not need to be public.
 
-| Section | Screenshot content | File name |
-|---|---|---|
-| 5.1 | Overall AWS architecture | `/images/educloud-aws-architecture.png` |
-| 5.4 | Cognito User Pool | `01-cognito-user-pool.png` |
-| 5.3 | Supabase Session Pooler | `02-supabase-session-pooler.png` |
-| 5.3 | Supabase Table Editor | `02b-supabase-table-editor.png` |
-| 5.3 | Parameter Store SecureString values | `03-ssm-secure-parameters.png` |
-| 5.3 | IAM policy for the EC2 role | `04-eb-ec2-role-ssm-policy.png` |
-| 5.5 | Elastic Beanstalk health is Green | `05-elastic-beanstalk-green.png` |
-| 5.6 | S3 bucket with Block Public Access | `06-s3-private-bucket.png` |
-| 5.6 | CloudFront origins and behaviors | `07-cloudfront-origins-behaviors.png` |
-| 5.7 | Amplify deployment succeeded | `08-amplify-deployed.png` |
-| 5.8 | Live EduCloud Lite application | `09-live-application.png` |
+The workshop is intentionally practical: every section maps to a real
+deployment task, includes the relevant AWS settings, and highlights the
+security or cost reason behind the choice. Use your own AWS account and your
+own database credentials; never copy secrets from the example screenshots.
 
-## Estimated duration
+## Documentation outline
 
-Approximately 3–4 hours when the source code and AWS account are ready.
+Use this outline to move directly to a major part of the workshop:
+
+1. [Introduction](5.1-overview/) – architecture and request flow
+   - [Architecture](5.1-overview/5.1.1-architecture/)
+   - [Request flow](5.1-overview/5.1.2-request-flow/)
+2. [Prerequisites](5.2-prerequisites/) – accounts, tools, and repository setup
+3. [Secrets and database](5.3-secrets-and-database/) – Supabase, Parameter Store, and IAM
+4. [Authentication with Cognito](5.4-authentication/) – user pool, app client, and first sign-in
+5. [Deploy the backend](5.5-backend/) – FastAPI packaging and Elastic Beanstalk
+6. [Private storage and CloudFront](5.6-storage-delivery/) – S3, OAC, and delivery paths
+7. [Deploy the frontend](5.7-frontend/) – Amplify build variables and SPA routing
+8. [Validation and troubleshooting](5.8-validation/) – test the live application
+9. [Cleanup](5.9-cleanup/) – remove resources when the submission is complete
 
 ## Final result
 
-- React frontend hosted by Amplify.
+After completing the workshop, you will have a public HTTPS website with:
+
+- React frontend deployed through Amplify Hosting.
 - FastAPI backend running on Elastic Beanstalk.
-- Authentication managed by Cognito.
-- Private course files stored in S3 and delivered by CloudFront.
-- PostgreSQL connection and JWT secret loaded from Parameter Store.
+- Cognito authentication connected to application roles.
+- Supabase PostgreSQL for users, courses, lessons, progress, assessments, and certificates.
+- Private S3 course assets delivered through CloudFront.
+- Production secrets loaded from Systems Manager Parameter Store.
