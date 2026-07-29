@@ -49,14 +49,3 @@ Use this outline to move directly to a major part of the workshop:
 7. [Deploy the frontend](5.7-frontend/) – Amplify build variables and SPA routing
 8. [Validation and troubleshooting](5.8-validation/) – test the live application
 9. [Cleanup](5.9-cleanup/) – remove resources when the submission is complete
-
-## Final result
-
-After completing the workshop, you will have a public HTTPS website with:
-
-- React frontend deployed through Amplify Hosting.
-- FastAPI backend running on Elastic Beanstalk.
-- Cognito authentication connected to application roles.
-- Supabase PostgreSQL for users, courses, lessons, progress, assessments, and certificates.
-- Private S3 course assets delivered through CloudFront.
-- Production secrets loaded from Systems Manager Parameter Store.

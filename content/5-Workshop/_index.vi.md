@@ -49,14 +49,3 @@ Bạn có thể chọn trực tiếp một phần chính bên dưới:
 7. [Triển khai frontend](5.7-frontend/) – biến môi trường và SPA routing trên Amplify
 8. [Kiểm tra và xử lý lỗi](5.8-validation/) – kiểm thử website thực tế
 9. [Dọn dẹp](5.9-cleanup/) – xóa tài nguyên sau khi nộp bài
-
-## Kết quả cuối cùng
-
-Sau khi hoàn thành workshop, bạn sẽ có một website HTTPS độc lập gồm:
-
-- Frontend React được triển khai bằng Amplify Hosting.
-- Backend FastAPI chạy trên Elastic Beanstalk.
-- Cognito xác thực người dùng và kết nối với role trong ứng dụng.
-- Supabase PostgreSQL lưu user, khóa học, bài học, tiến độ, bài kiểm tra và certificate.
-- File khóa học private trên S3 được phân phối qua CloudFront.
-- Secret production được đọc từ Systems Manager Parameter Store.
