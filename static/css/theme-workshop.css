@@ -292,6 +292,24 @@ a:hover {
   color: var(--MENU-VISITED-color);
 }
 
+/* Keep the visited marker attached to its own menu item.  The theme's
+   float-based marker can spill onto the next row when a long blog title
+   wraps, which makes two checks appear beside the following item. */
+#sidebar ul li > a {
+  position: relative;
+  padding-right: 24px !important;
+}
+
+#sidebar ul li > a .read-icon {
+  float: none;
+  position: absolute;
+  top: 7px;
+  right: 0;
+  min-width: 16px;
+  margin: 0;
+  text-align: right;
+}
+
 #sidebar #footer {
   padding-top: 20px !important;
 }
