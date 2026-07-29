@@ -67,6 +67,16 @@
   height: auto;
 }
 
+/* Landing page for the EduCloud workshop. Keep the architecture readable
+   without allowing a wide source image to dominate the entire page. */
+#body img[src$="/images/educloud-aws-architecture.png"] {
+  display: block;
+  width: min(100%, 920px);
+  max-height: none;
+  margin: 0 auto;
+  object-fit: contain;
+}
+
 /* Keep the Event 2 evidence photo compact on wide report pages. */
 #body img[src$="/images/events/event-02.jpg"] {
   display: block;
