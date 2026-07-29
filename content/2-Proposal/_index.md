@@ -2,6 +2,7 @@
 title: "Proposal"
 weight: 2
 chapter: false
+disableTitle: true
 pre: "<b>2.</b>"
 ---
 

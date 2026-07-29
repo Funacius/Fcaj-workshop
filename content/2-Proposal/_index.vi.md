@@ -2,6 +2,7 @@
 title: "Đề xuất dự án"
 weight: 2
 chapter: false
+disableTitle: true
 pre: "<b>2.</b>"
 ---
 

@@ -101,7 +101,7 @@
             {{ $markdownTitle = trim (replaceRE `^\s*#\s+` "" (index $markdownHeadings 0)) " \t\r\n" }}
           {{ end }}
           {{ $duplicateTitle := eq (trim $markdownTitle " \t\r\n") (trim .Title " \t\r\n") }}
-          {{if and (not .IsHome) (not .Params.chapter) (not $duplicateTitle) }}
+          {{if and (not .IsHome) (not .Params.chapter) (not .Params.disableTitle) (not $duplicateTitle) }}
             <h1>
               {{ if eq .Kind "taxonomy" }}
                 {{.Kind}} ::
