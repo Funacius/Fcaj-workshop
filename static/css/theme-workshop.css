@@ -310,6 +310,13 @@ a:hover {
   text-align: right;
 }
 
+/* Active links are expanded by the Learn theme with a 1rem negative
+   right margin. Offset their marker so active and inactive rows share the
+   same vertical alignment. */
+#sidebar ul li.active > a .read-icon {
+  right: 16px;
+}
+
 #sidebar #footer {
   padding-top: 20px !important;
 }
