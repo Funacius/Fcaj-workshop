@@ -15,6 +15,7 @@ home = ["HTML", "RSS", "JSON"]
   description = "Internship report and hands-on AWS workshop for the EduCloud Lite learning management platform."
   author = "EduCloud project team"
   showVisitedLinks = true
+  disableInlineCopyToClipBoard = true
   disableBreadcrumb = false
   disableNextPrev = false
   disableSearch = false

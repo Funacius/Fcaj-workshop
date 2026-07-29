@@ -298,6 +298,9 @@ a:hover {
 #sidebar ul li > a {
   position: relative;
   padding-right: 24px !important;
+  line-height: 1.45;
+  max-height: 2.9em;
+  overflow: hidden;
 }
 
 #sidebar ul li > a .read-icon {
