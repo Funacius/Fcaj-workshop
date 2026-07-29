@@ -59,23 +59,30 @@ database architecture.
 
 ![EduCloud AWS architecture](/images/educloud-aws-architecture.png)
 
-- **Frontend:** React, TypeScript, and Vite provide the browser interface.
-  Amplify Hosting builds and deploys the frontend from GitHub.
-- **Backend:** FastAPI runs on Elastic Beanstalk and exposes REST APIs for
-  courses, lessons, enrollment, progress, assessments, certificates, profiles,
-  Instructor requests, and Admin operations.
-- **Authentication:** Amazon Cognito manages user passwords, confirmation,
-  first-login password changes, and password recovery. The backend validates
-  Cognito tokens and maps identities to Supabase users.
-- **Database:** Supabase PostgreSQL stores application data such as users,
-  roles, courses, lessons, enrollments, progress, attempts, certificates, and
-  review requests.
-- **Storage and delivery:** Amazon S3 stores uploaded course assets privately.
-  CloudFront routes `/api/*` traffic to Elastic Beanstalk and `/courses/*`
-  assets to S3 through Origin Access Control.
-- **Secrets and operations:** AWS Systems Manager Parameter Store stores
-  production secrets. IAM roles grant the backend only the permissions it needs.
-  CloudWatch and Elastic Beanstalk health are used for operational checks.
+- **Frontend:** React, TypeScript, and Vite are hosted on AWS Amplify and
+  automatically deployed from the GitHub `main` branch.
+- **Backend:** FastAPI runs on Amazon EC2 through Elastic Beanstalk and provides
+  APIs for courses, lessons, enrollment, progress, assessments, reviews,
+  certificates, uploads, and administration.
+- **Authentication:** Amazon Cognito handles registration, email verification,
+  sign-in, and password recovery. The backend validates Cognito tokens and maps
+  users to roles stored in Supabase.
+- **Database:** Supabase PostgreSQL stores users, roles, courses, lessons,
+  enrollments, progress, assessments, certificates, reviews, and Instructor
+  applications.
+- **Storage and delivery:** Amazon S3 privately stores thumbnails, videos, and
+  documents. Videos are uploaded directly using presigned URLs, while
+  CloudFront delivers course assets and routes `/api/*` traffic to Elastic
+  Beanstalk.
+- **Monitoring:** Elastic Beanstalk streams application logs to Amazon
+  CloudWatch. The Admin dashboard displays recent logs, application health, S3
+  usage, database statistics, and available AWS cost information.
+- **Secrets and permissions:** AWS Systems Manager Parameter Store securely
+  stores production secrets. Elastic Beanstalk references the Parameter Store
+  ARNs, and IAM roles provide only the required access to S3, CloudWatch, Cost
+  Explorer, and application configuration.
+- **Scope:** All courses are free. Pricing, checkout, and payment processing
+  are not included in the current system.
 
 ## 5. Deployment Timeline
 

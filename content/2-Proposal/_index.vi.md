@@ -58,22 +58,28 @@ và database.
 
 ![Kiến trúc AWS EduCloud](/images/educloud-aws-architecture.png)
 
-- **Frontend:** React, TypeScript và Vite tạo giao diện người dùng. Amplify
-  Hosting build và deploy frontend từ GitHub.
-- **Backend:** FastAPI chạy trên Elastic Beanstalk và cung cấp REST API cho khóa
-  học, bài học, ghi danh, tiến độ, assessment, certificate, profile, yêu cầu
-  Instructor và Admin.
-- **Authentication:** Amazon Cognito quản lý mật khẩu, xác nhận tài khoản, đổi
-  mật khẩu lần đầu và forgot password. Backend xác thực Cognito token và map
-  identity vào user trong Supabase.
-- **Database:** Supabase PostgreSQL lưu user, role, course, lesson, enrollment,
-  progress, attempt, certificate và instructor request.
-- **Storage và delivery:** Amazon S3 lưu file khóa học ở chế độ private.
-  CloudFront route `/api/*` đến Elastic Beanstalk và `/courses/*` đến S3 qua
-  Origin Access Control.
-- **Secrets và vận hành:** Systems Manager Parameter Store lưu secret production.
-  IAM role cấp đúng quyền cần thiết cho backend. CloudWatch và Elastic Beanstalk
-  health được dùng để kiểm tra vận hành.
+- **Frontend:** React, TypeScript và Vite được host trên AWS Amplify, tự động
+  deploy từ nhánh `main` của GitHub.
+- **Backend:** FastAPI chạy trên Amazon EC2 thông qua Elastic Beanstalk và cung
+  cấp API cho khóa học, bài học, ghi danh, tiến độ, bài kiểm tra, review,
+  certificate, upload và quản trị.
+- **Authentication:** Amazon Cognito xử lý đăng ký, xác minh email, đăng nhập và
+  khôi phục mật khẩu. Backend xác thực Cognito token và ánh xạ người dùng với
+  role được lưu trong Supabase.
+- **Database:** Supabase PostgreSQL lưu người dùng, role, khóa học, bài học,
+  enrollment, tiến độ, assessment, certificate, review và yêu cầu Instructor.
+- **Storage và delivery:** Amazon S3 lưu riêng tư thumbnail, video và tài liệu.
+  Video được upload trực tiếp bằng presigned URL; CloudFront phân phối asset khóa
+  học và route `/api/*` đến Elastic Beanstalk.
+- **Monitoring:** Elastic Beanstalk stream application log lên Amazon CloudWatch.
+  Admin dashboard hiển thị log gần đây, health ứng dụng, dung lượng S3, thống kê
+  database và thông tin chi phí AWS khả dụng.
+- **Secrets và permissions:** AWS Systems Manager Parameter Store lưu an toàn
+  secret production. Elastic Beanstalk tham chiếu các Parameter Store ARN, còn
+  IAM role chỉ cấp quyền cần thiết cho S3, CloudWatch, Cost Explorer và cấu hình
+  ứng dụng.
+- **Phạm vi:** Tất cả khóa học đều miễn phí. Hệ thống hiện chưa bao gồm giá bán,
+  checkout hoặc xử lý thanh toán.
 
 ## 5. Kế hoạch triển khai
 

@@ -8,3 +8,9 @@ proposal-header-*.png
 sample-reference.png
 static/event 1/
 static/event 2/
+__pycache__/
+*.pyc
+# Local-only LaTeX/PDF report pipeline
+/report/
+/scripts/
+/build-report.ps1

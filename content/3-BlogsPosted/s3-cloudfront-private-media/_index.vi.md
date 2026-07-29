@@ -1,172 +1,153 @@
 ---
-title: "EduCloud có thể học gì từ nền tảng Amazon EKS của Riot Games?"
-menuTitle: "Riot Games và Amazon EKS"
+title: "Supercell sử dụng Amazon Aurora để mở rộng hệ thống game như thế nào?"
+menuTitle: "Supercell và Amazon Aurora"
 weight: 2
 pre: "<b>3.2.</b>"
 ---
 
-# EduCloud có thể học gì từ nền tảng Amazon EKS của Riot Games?
+# Supercell sử dụng Amazon Aurora để mở rộng hệ thống game như thế nào?
 
-Game online quy mô lớn và nền tảng học tập nhìn khác nhau, nhưng cùng gặp một
-bài toán hạ tầng: lưu lượng thay đổi nhanh, dịch vụ phải luôn sẵn sàng và nhóm
-phát triển nên tập trung vào sản phẩm thay vì quản lý máy chủ.
+Game mobile hoạt động liên tục. Người chơi mong muốn tiến độ, giao dịch, tương
+tác xã hội và các sự kiện luôn sẵn sàng, kể cả khi game trở nên phổ biến trên
+toàn cầu. Vì vậy, khả năng sẵn sàng của database là một yêu cầu của sản phẩm,
+không chỉ là vấn đề hạ tầng.
 
-Bài viết này nghiên cứu case study chính thức của AWS
-[Riot Games Cuts $10M Annual Infrastructure Costs by Migrating to Amazon EKS](https://aws.amazon.com/solutions/case-studies/riot-games-case-study/)
-và chuyển các bài học kỹ thuật đó sang bối cảnh EduCloud Lite. Đây là bài phân
-tích độc lập; EduCloud Lite **chưa sử dụng Amazon EKS trong deployment hiện tại**.
+Bài viết này nghiên cứu AWS customer story
+[Supercell Leverages AWS for Seamless and Scalable Gaming Experience](https://aws.amazon.com/solutions/case-studies/supercell-aurora-case-study/)
+và rút ra các bài học về relational database managed, high availability và vận
+hành hệ thống. Đây là phân tích độc lập, không khẳng định biết các chi tiết nội
+bộ của Supercell.
 
-## 1. Bài toán hạ tầng
+## 1. Bài toán của một game studio toàn cầu
 
-Riot Games vận hành các game live-service như League of Legends và VALORANT.
-Nền tảng cần phục vụ người chơi trên toàn cầu, độ trễ thấp, tính sẵn sàng cao,
-tự động scale và triển khai lặp lại ở nhiều khu vực.
+Supercell phát triển các game mobile như Clash of Clans. Theo AWS, Supercell hỗ
+trợ khoảng 200 triệu người dùng hoạt động hàng tháng trên các game đã phát hành
+toàn cầu. Ở quy mô này, một database outage có thể đồng thời ảnh hưởng tới tiến
+độ, giao dịch, matchmaking và các live event.
 
-EduCloud có quy mô nhỏ hơn nhưng vẫn có các câu hỏi tương tự:
+Các yêu cầu chính gồm:
 
-- Làm sao phát hành khóa học và lesson mà không sửa server thủ công?
-- Làm sao chịu được đợt tăng đột biến khi nhiều người làm assessment?
-- Làm sao chuẩn hóa quy trình triển khai cho các thành viên?
-- Làm sao để chi phí tăng theo nhu cầu thực tế?
+- khả năng sẵn sàng cao trong giờ bình thường và peak event;
+- hiệu năng ổn định khi số người chơi tăng;
+- backup và recovery mà không làm gián đoạn dài; và
+- giảm thời gian xử lý lỗi phần cứng database.
 
-## 2. Riot Games đã thay đổi điều gì?
+## 2. Vì sao Amazon Aurora phù hợp?
 
-Theo case study của AWS, Riot bắt đầu chuyển sang Amazon EKS vào năm 2021 sau khi
-đánh giá nền tảng điều phối container trước đó. EKS cung cấp managed Kubernetes
-control plane, còn Riot chuẩn hóa developer environment và tự động hóa quản lý
-node.
+AWS cho biết Supercell đã sử dụng Amazon Aurora, một relational database tương
+thích với MySQL. Việc chuyển đổi giúp giảm downtime và cho phép kỹ sư tập trung
+nhiều hơn vào tính năng game thay vì xử lý phần cứng.
 
-Các kết quả được AWS công bố gồm:
+Aurora tách database compute khỏi distributed storage layer. Storage volume được
+replicate trên nhiều Availability Zone, đồng thời reader instance có thể dùng
+cho read scaling và failover. Các đặc điểm này được trình bày trong [tài liệu
+high availability của Aurora](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Concepts.AuroraHighAvailability.html).
 
-- hỗ trợ hơn 180 triệu monthly active users;
-- tiết kiệm khoảng 10 triệu USD chi phí hạ tầng mỗi năm;
-- thiết lập hạ tầng nhanh hơn 90%; và
-- triển khai game infrastructure nhanh hơn 12 lần.
+Aurora không chỉ là “database nhanh hơn”. Đây là một mô hình vận hành managed,
+giúp tự động hóa một phần việc provisioning, replication, backup, phát hiện lỗi
+và recovery; trong khi schema design và query tuning vẫn thuộc trách nhiệm của
+đội phát triển.
 
-Riot cũng sử dụng Karpenter để quản lý vòng đời node, Terraform để tự động hóa,
-cluster riêng cho từng game hoặc use case và AWS Local Zones/Outposts cho workload
-cần độ trễ thấp. Đây là số liệu trong [case study chính thức của AWS](https://aws.amazon.com/solutions/case-studies/riot-games-case-study/),
-không phải số liệu của EduCloud.
+## 3. Luồng request Aurora mang tính khái niệm
 
-## 3. Các nguyên tắc kỹ thuật
+Ví dụ sau chỉ minh họa một pattern ứng dụng, không phải mã nguồn riêng của
+Supercell:
 
-### 3.1 Managed orchestration
+```python
+import os
+import psycopg2
 
-EKS giảm nhu cầu tự vận hành Kubernetes control plane. Nhóm phát triển tập trung
-vào container, health check, resource request và deployment policy, còn AWS quản
-lý lớp control plane.
+writer = os.environ["AURORA_WRITER_ENDPOINT"]
+reader = os.environ["AURORA_READER_ENDPOINT"]
 
-### 3.2 Tự động điều chỉnh capacity
+def read_player_profile(player_id: str):
+    with psycopg2.connect(host=reader, dbname="game") as conn:
+        with conn.cursor() as cursor:
+            cursor.execute(
+                "SELECT level, inventory FROM player_profiles WHERE id = %s",
+                (player_id,),
+            )
+            return cursor.fetchone()
 
-Karpenter quan sát workload đang chờ và tạo node phù hợp thay vì duy trì một nhóm
-server cố định. Mô hình này phù hợp với các workload có giờ thấp điểm và cao
-điểm, chẳng hạn lúc ra mắt game hoặc tổ chức kỳ thi trực tuyến.
-
-### 3.3 Developer platform chuẩn hóa
-
-Riot tạo một môi trường quản lý tập trung để team yêu cầu compute, networking và
-storage theo các pattern đã được kiểm soát. Developer không phải xử lý toàn bộ
-chi tiết hạ tầng ở mỗi lần deploy.
-
-### 3.4 Cô lập workload
-
-Riot tiến tới cluster riêng cho từng game hoặc use case. Một sự cố vì vậy ít có
-khả năng làm tiêu tốn capacity hoặc ảnh hưởng cấu hình của workload khác.
-
-### 3.5 Phân phối theo vị trí
-
-Với yêu cầu latency nghiêm ngặt, Riot sử dụng AWS Local Zones và Outposts để đặt
-workload gần người chơi hơn. EduCloud hiện chưa cần mức độ phức tạp này, nhưng
-đây là hướng cần cân nhắc nếu mở rộng nhiều Region.
-
-## 4. Ví dụ cấu hình Kubernetes nhỏ
-
-Ví dụ dưới đây minh họa dạng cấu hình khai báo mà EduCloud có thể dùng trong
-tương lai. Đây **không phải** cấu hình deployment Elastic Beanstalk hiện tại.
-
-```yaml
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: educloud-api
-spec:
-  replicas: 2
-  selector:
-    matchLabels:
-      app: educloud-api
-  template:
-    metadata:
-      labels:
-        app: educloud-api
-    spec:
-      containers:
-        - name: api
-          image: ACCOUNT_ID.dkr.ecr.ap-southeast-1.amazonaws.com/educloud-api:1.0.0
-          ports:
-            - containerPort: 8000
-          resources:
-            requests:
-              cpu: "250m"
-              memory: "512Mi"
-            limits:
-              cpu: "1"
-              memory: "1Gi"
+def save_purchase(player_id: str, item_id: str):
+    with psycopg2.connect(host=writer, dbname="game") as conn:
+        with conn.cursor() as cursor:
+            cursor.execute(
+                "INSERT INTO purchases(player_id, item_id) VALUES (%s, %s)",
+                (player_id, item_id),
+            )
+        conn.commit()
 ```
 
-Trong một thiết kế EKS production, Deployment có thể kết hợp với Horizontal Pod
-Autoscaler, Application Load Balancer, Amazon ECR, CloudWatch Container Insights
-và Karpenter.
+Nguyên tắc là route write tới writer endpoint và phân phối các thao tác đọc tới
+reader capacity. Topology, connection pool, transaction strategy và yêu cầu
+consistency phải được thiết kế riêng cho từng game.
 
-## 5. Áp dụng bài học cho EduCloud Lite
+## 4. Bài học rút ra
 
-| Nguyên tắc của Riot Games | EduCloud hiện tại | Hướng phát triển |
-| --- | --- | --- |
-| Managed compute | FastAPI trên Elastic Beanstalk | Container image trên EKS hoặc ECS |
-| Tự động scale | Single instance cho môi trường demo | Auto Scaling hoặc HPA |
-| Provisioning chuẩn hóa | Script và tài liệu triển khai | Terraform hoặc CloudFormation |
-| Cô lập workload | Tách API, S3, Cognito và database | Cô lập namespace/service |
-| Phân phối toàn cầu | CloudFront cho frontend và media | Regional API và edge-aware routing |
-| Observability | Elastic Beanstalk health và CloudWatch logs | Container Insights, metrics, traces |
+### 4.1 Reliability là một phần của trải nghiệm người chơi
 
-Bài học đúng không phải là thay Elastic Beanstalk ngay lập tức. Với bài nộp có
-lưu lượng thấp, Elastic Beanstalk đơn giản và tiết kiệm hơn. EKS chỉ phù hợp khi
-ứng dụng có nhiều container service, nhu cầu scale độc lập hoặc nhóm đã sẵn sàng
-vận hành Kubernetes.
+Người chơi không phân biệt được lỗi application và database outage. Nếu progress
+bị mất hoặc giao dịch bị trễ, sản phẩm sẽ bị đánh giá là không đáng tin cậy.
 
-## 6. Đánh đổi về chi phí và độ phức tạp
+### 4.2 Managed service giảm phần việc không tạo khác biệt
 
-EKS đem lại khả năng chuẩn hóa, portability và scale mạnh, nhưng cũng yêu cầu
-quản lý cluster, networking, IAM cho service account, observability, container
-image và Kubernetes security. Managed control plane không có nghĩa toàn bộ ứng
-dụng trở thành serverless.
+Giá trị của Aurora không chỉ nằm ở engine compatibility. Managed service giúp
+giảm thời gian bảo trì phần cứng, sửa storage, backup và xử lý failover, trong
+khi đội phát triển vẫn kiểm soát schema và query.
 
-Lộ trình hợp lý của EduCloud là:
+### 4.3 Tách read workload và write workload
 
-1. giữ deployment Elastic Beanstalk ổn định;
-2. đóng gói FastAPI thành Docker image;
-3. thêm infrastructure as code và health alarm;
-4. đo request volume và nhu cầu scale; rồi
-5. chỉ chuyển sang ECS/EKS khi lợi ích vận hành lớn hơn độ phức tạp.
+Game backend thường có rất nhiều thao tác đọc như profile, inventory,
+leaderboard, cấu hình và event data. Tách read capacity khỏi writer giúp bảo vệ
+các giao dịch quan trọng khi traffic tăng.
 
-## 7. Bài học chính
+### 4.4 Thiết kế cho event peak, không chỉ traffic trung bình
 
-- Scale là năng lực của kiến trúc, không chỉ là chọn EC2 lớn hơn.
-- Platform team giúp quy trình cloud lặp lại được cho developer.
-- Capacity nên phản hồi theo workload và giới hạn chi phí.
-- Cô lập workload giúp giảm blast radius khi có sự cố.
-- EKS mạnh nhưng không bắt buộc cho mọi web application.
+Live game có launch, seasonal event, promotion và content update. Database chạy
+ổn trong một tuần bình thường có thể thất bại trong event lớn. Vì vậy cần test
+peak concurrency và write burst.
+
+### 4.5 Managed không có nghĩa là bỏ qua monitoring
+
+Đội vận hành vẫn cần alarm cho connection saturation, query latency, replication
+lag, storage, failed transaction và write volume bất thường.
+
+## 5. Khi nào nên cân nhắc Aurora?
+
+Aurora phù hợp khi ứng dụng cần relational engine managed, high availability qua
+nhiều Availability Zone, read replica, automated backup hoặc global database.
+AWS mô tả Aurora là database tương thích với MySQL và PostgreSQL, sử dụng
+distributed storage có khả năng tăng trưởng theo dữ liệu. [Aurora overview](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/CHAP_AuroraOverview.html)
+
+Tuy nhiên, Aurora không tự động là lựa chọn tốt nhất cho mọi dự án. Prototype
+nhỏ có thể phù hợp hơn với một PostgreSQL managed đơn giản. Cần đánh giá:
+
+- traffic và write volume dự kiến;
+- recovery point objective và recovery time objective;
+- số Availability Zone và Region;
+- yêu cầu read replica và failover;
+- connection pooling và query behavior; và
+- tổng chi phí instance, storage, I/O, backup và data transfer.
+
+## 6. Giới hạn khi diễn giải case study
+
+AWS customer story chỉ mô tả ở mức tổng quan, không cung cấp schema, cluster
+size, query design hay failover runbook đầy đủ của Supercell. Vì vậy bài viết này
+không suy đoán các chi tiết độc quyền đó. Code và mô hình phía trên chỉ là các
+pattern kỹ thuật để minh họa bài học.
 
 ## Kết luận
 
-Riot Games cho thấy một công ty game toàn cầu có thể sử dụng Amazon EKS,
-Karpenter, Terraform và các dịch vụ AWS theo vị trí để đơn giản hóa hạ tầng và
-tăng tốc phát hành. EduCloud Lite áp dụng các ý tưởng đó ở quy mô nhỏ hơn: tách
-trách nhiệm, tự động hóa bước lặp lại, theo dõi health và chỉ đưa Kubernetes vào
-khi workload cũng như nhóm phát triển đã sẵn sàng.
+Case study của Supercell cho thấy database reliability ảnh hưởng trực tiếp đến
+niềm tin của người chơi. Amazon Aurora có thể giảm phần việc vận hành nhờ
+replication, distributed storage, backup và failover managed. Bài học rộng hơn
+là cần chọn database dựa trên yêu cầu reliability và peak workload, không chỉ
+dựa vào traffic trung bình hoặc benchmark.
 
 ## Tài liệu tham khảo
 
-- [Riot Games Cuts $10M Annual Infrastructure Costs by Migrating to Amazon EKS — AWS Case Study](https://aws.amazon.com/solutions/case-studies/riot-games-case-study/)
-- [Tài liệu Amazon Elastic Kubernetes Service](https://docs.aws.amazon.com/eks/latest/userguide/what-is-eks.html)
-- [Tài liệu Karpenter](https://karpenter.sh/)
-- [Mã nguồn EduCloud Lite](https://github.com/Funacius/EduCloud)
+- [Supercell Leverages AWS for Seamless and Scalable Gaming Experience — AWS Customer Story](https://aws.amazon.com/solutions/case-studies/supercell-aurora-case-study/)
+- [What is Amazon Aurora? — AWS Documentation](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/CHAP_AuroraOverview.html)
+- [High availability for Amazon Aurora — AWS Documentation](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Concepts.AuroraHighAvailability.html)
+- [Amazon Aurora storage reliability — AWS Documentation](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.Overview.StorageReliability.html)
