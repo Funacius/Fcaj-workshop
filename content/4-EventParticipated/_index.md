@@ -30,7 +30,7 @@ pre: "<b>4.</b>"
 
 <h2 class="event-list-title"><a href="event-03/">Event 3</a></h2>
 
-**Event Name:** To be updated  
-**Date & Time:** To be updated  
-**Location:** To be updated  
-**Role:** Attendee
+**Event Name:** AgentForge Workshop – Building Production-Ready Agents with Amazon Bedrock AgentCore  
+**Schedule:** August 1, 8, and 15, 2026, from 09:00 to 11:00  
+**Location:** Bitexco Financial Tower, 2 Hai Trieu Street, Saigon Ward, Ho Chi Minh City, Vietnam  
+**Status at report submission:** Registered; the first session is scheduled for August 1, 2026

@@ -1,97 +1,105 @@
 ---
-title: "Sự kiện 3"
-menuTitle: "Sự kiện 3"
+title: "AgentForge Workshop với Amazon Bedrock AgentCore"
+menuTitle: "AgentForge Workshop"
 weight: 3
 pre: "<b>4.3.</b>"
 ---
 
-# Sự kiện 3
-
-<div class="event-hero-title">Báo cáo tóm tắt: “Sẽ cập nhật”</div>
+<div class="event-hero-title">AgentForge Workshop: Xây dựng AI Agent sẵn sàng cho production với Amazon Bedrock AgentCore</div>
 
 ## Thông tin sự kiện
 
-**Tên sự kiện:** Sẽ cập nhật  
-**Ngày & thời gian:** Sẽ cập nhật  
-**Địa điểm:** Sẽ cập nhật  
-**Đơn vị tổ chức:** Sẽ cập nhật  
-**Vai trò:** Người tham dự
+**Tên sự kiện:** AgentForge Workshop – Xây dựng AI Agent sẵn sàng cho production với Amazon Bedrock AgentCore  
+**Lịch trình:** Ngày 01, 08 và 15/08/2026, từ 09:00 đến 11:00  
+**Địa điểm:** Bitexco Financial Tower, 2 Đường Hải Triều, Phường Sài Gòn, Thành phố Hồ Chí Minh 700000, Việt Nam  
+**Hình thức:** Ba buổi trình bày kỹ thuật kết hợp thực hành  
+**Trạng thái khi nộp báo cáo:** Đã đăng ký. Buổi đầu tiên dự kiến diễn ra ngày 01/08/2026.
 
-## Mục tiêu sự kiện
+Workshop được thiết kế thành lộ trình ba giai đoạn, bắt đầu từ nền tảng
+của Amazon Bedrock AgentCore, sau đó mở rộng sang cá nhân hóa, đánh giá,
+khả năng quan sát, tối ưu, sẵn sàng cho production và quản trị.
 
-- Sẽ cập nhật
-- Sẽ cập nhật
-- Sẽ cập nhật
+## Mục tiêu workshop
 
-## Diễn giả / Người hướng dẫn
+- Hiểu các khả năng chính của Amazon Bedrock AgentCore và vai trò của chúng trong một hệ thống agentic.
+- Triển khai một agent lên AgentCore và kết nối agent với công cụ cùng nguồn tri thức.
+- Bổ sung identity, memory, evaluation và observability để cải thiện bảo mật và chất lượng.
+- Tìm hiểu policy, kỹ thuật tối ưu và thực hành DevOps cho agent sẵn sàng vận hành.
 
-- Sẽ cập nhật
-- Sẽ cập nhật
+## Ngày 1 – Nền tảng và thiết lập agent
 
-## Nội dung nổi bật
+**Ngày:** 01/08/2026  
+**Chủ đề:** Giới thiệu Amazon Bedrock AgentCore
 
-### Chủ đề chính 1
+### Phiên kỹ thuật, 09:00–10:00
 
-- Sẽ cập nhật
-- Sẽ cập nhật
+- Giới thiệu workshop và lộ trình học tập.
+- Tổng quan Amazon Bedrock AgentCore.
+- AgentCore Runtime để triển khai và vận hành agent.
+- AgentCore Gateway để kết nối agent với các khả năng bên ngoài.
+- AgentCore Identity cho các tương tác agent đã xác thực.
 
-### Chủ đề chính 2
+### Bài thực hành, 10:00–11:00
 
-- Sẽ cập nhật
-- Sẽ cập nhật
+- Triển khai một agent cơ bản trong AgentCore.
+- Kết nối công cụ bên ngoài và Knowledge Bases.
+- Xây dựng Web UI và tích hợp xác thực Amazon Cognito.
 
-### Chủ đề chính 3
+## Ngày 2 – Cá nhân hóa, đánh giá và tối ưu
 
-- Sẽ cập nhật
-- Sẽ cập nhật
+**Ngày:** 08/08/2026  
+**Chủ đề:** Amazon Bedrock AgentCore nâng cao
 
-## Bài học rút ra
+### Phiên kỹ thuật, 09:00–10:00
 
-### Kiến thức kỹ thuật
+- Khái niệm AgentCore L300 và kiến trúc thành phần.
+- Memory cho hành vi agent có tính liên tục và cá nhân hóa.
+- Evaluations để đo lường chất lượng agent.
+- Observability để truy vết hoạt động và xử lý sự cố.
+- Các thành phần Registry, Harness, Tools, Payments, Optimization và Policy.
 
-- Sẽ cập nhật
-- Sẽ cập nhật
+### Bài thực hành, 10:00–11:00
 
-### Giá trị thực tiễn
+- Thêm memory để hỗ trợ hành vi agent cá nhân hóa.
+- Khám phá Agent Observability.
+- Sử dụng AgentCore Evaluations để đo hiệu suất agent.
+- Khám phá AgentCore Harness.
 
-- Sẽ cập nhật
-- Sẽ cập nhật
+## Ngày 3 – Sẵn sàng cho production và quản trị
 
-### Liên hệ với EduCloud Lite
+**Ngày:** 15/08/2026  
+**Chủ đề:** AgentCore DevOps và các phương pháp tốt
 
-- Sẽ cập nhật
-- Sẽ cập nhật
+### Phiên kỹ thuật, 09:00–10:00
 
-## Áp dụng vào công việc
+- Các trường hợp sử dụng Amazon Bedrock AgentCore trong DevOps.
+- Phương pháp tốt khi thiết kế, triển khai và vận hành hệ thống agentic.
+- Sẵn sàng cho production, ranh giới bảo mật và các vấn đề quản trị.
 
-- Sẽ cập nhật
-- Sẽ cập nhật
-- Sẽ cập nhật
+### Bài thực hành, 10:00–11:00
 
-## Trải nghiệm sự kiện
+- Bảo vệ lời gọi công cụ bằng AgentCore Policy.
+- Thực hiện các cải tiến và tùy chỉnh mở.
+- Hoàn thiện và thử nghiệm cuối cùng.
 
-Việc tham gia sự kiện này là một trải nghiệm có giá trị vì giúp tôi kết nối kiến
-thức học được trong kỳ thực tập với các tình huống thực tế về cloud và phát
-triển phần mềm.
+## Kết quả học tập mong đợi
 
-### Học hỏi từ diễn giả và người tham gia
+Sau khi hoàn thành ba buổi, tôi mong đợi có thể:
 
-- Sẽ cập nhật
-- Sẽ cập nhật
+- Giải thích cách Runtime, Gateway, Identity, Memory, Observability, Evaluations và Policy phối hợp với nhau.
+- Xây dựng và triển khai agent cơ bản có kết nối công cụ và Knowledge Base.
+- Bảo vệ Web UI bằng Amazon Cognito và áp dụng quyền truy cập có kiểm soát cho agent.
+- Đo lường hành vi agent thay vì chỉ đánh giá câu trả lời bằng cảm nhận chủ quan.
+- Áp dụng observability và governance trước khi đưa workload agentic lên production.
+- Xác định khả năng áp dụng AI agent có quản trị trong nền tảng học tập và quy trình quản trị.
 
-### Trải nghiệm thực hành hoặc thảo luận
+## Kế hoạch áp dụng
 
-- Sẽ cập nhật
-- Sẽ cập nhật
+Workshop cung cấp tài liệu tham khảo hữu ích cho hướng phát triển EduCloud.
+Phiên bản sau có thể đánh giá việc bổ sung trợ lý AI cho tìm kiếm khóa
+học, hỗ trợ nội dung hoặc hướng dẫn quản trị. Tính năng này chỉ nên được
+xem xét sau khi xác định ranh giới identity, công cụ được phép, tiêu chí đánh
+giá, observability và cơ chế giám sát của con người.
 
-### Kinh nghiệm rút ra
+## Minh chứng sự kiện
 
-- Sẽ cập nhật
-- Sẽ cập nhật
-
-## Một số hình ảnh sự kiện
-
-_Thêm hình ảnh, screenshot, certificate hoặc minh chứng tham gia tại đây._
-
-> Nhìn chung, sự kiện này giúp tôi mở rộng góc nhìn kỹ thuật và hiểu rõ hơn cách
-> áp dụng kiến thức AWS vào dự án thực tế.
