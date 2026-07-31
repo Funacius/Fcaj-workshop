@@ -15,10 +15,11 @@ CloudFront Origin Access Control, dựa trên một bài AWS Networking Blog.
 Bài viết nghiên cứu việc Supercell sử dụng Amazon Aurora và rút ra bài học về
 database availability, read scaling, failover và độ tin cậy khi vận hành.
 
-<h2 class="blog-list-title"><a href="cognito-fastapi-auth/">Blog 3 - Thiết kế xác thực với Amazon Cognito và FastAPI</a></h2>
+<h2 class="blog-list-title"><a href="cloudwatch-per-resource-alerts/">Blog 3 - Từ log đến cảnh báo theo từng tài nguyên với Amazon CloudWatch</a></h2>
 
-Bài viết mô tả cách Cognito xử lý identity, password recovery và first-login,
-trong khi EduCloud Lite lưu role và profile trong backend database.
+Bài viết nghiên cứu CloudWatch Metrics Insights alarm, thông báo theo từng
+contributor và định tuyến bằng EventBridge, sau đó đánh giá cách áp dụng khi
+backend EduCloud mở rộng.
 
 > Nếu giảng viên yêu cầu URL blog bên ngoài, hãy đăng các bản nháp lên nền tảng
 > yêu cầu rồi thay link nội bộ bằng link public.

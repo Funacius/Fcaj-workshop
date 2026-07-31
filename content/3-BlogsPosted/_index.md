@@ -15,11 +15,11 @@ S3 and CloudFront Origin Access Control, based on an AWS Networking Blog article
 This blog studies Supercell's use of Amazon Aurora and extracts lessons about
 database availability, read scaling, failover, and operational reliability.
 
-<h2 class="blog-list-title"><a href="cognito-fastapi-auth/">Blog 3 - Authentication Design with Amazon Cognito and FastAPI</a></h2>
+<h2 class="blog-list-title"><a href="cloudwatch-per-resource-alerts/">Blog 3 - From Logs to Per-Resource Alerts with Amazon CloudWatch</a></h2>
 
-This blog describes how Cognito handles identity, password recovery, and
-first-login password setup while EduCloud Lite keeps application roles and
-profile data in the backend database.
+This blog studies CloudWatch Metrics Insights alarms, contributor-level
+notifications, and EventBridge routing, then evaluates how these capabilities
+could improve monitoring as the EduCloud backend scales.
 
 > If the instructor requires external blog URLs, publish these drafts to the
 > required platform and replace the internal links with public blog links.
