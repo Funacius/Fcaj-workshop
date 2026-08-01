@@ -30,7 +30,7 @@ pre: "<b>4.</b>"
 
 <h2 class="event-list-title"><a href="event-03/">Sự kiện 3</a></h2>
 
-**Tên sự kiện:** AgentForge Workshop – Xây dựng AI Agent sẵn sàng cho production với Amazon Bedrock AgentCore  
-**Lịch trình:** Ngày 01, 08 và 15/08/2026, từ 09:00 đến 11:00  
+**Tên sự kiện:** AgentForge Ho Chi Minh City – Xây dựng và triển khai AI Agent trên Amazon Bedrock AgentCore với Kiro  
+**Ngày & thời gian:** 01/08/2026, từ 09:00 đến 11:00  
 **Địa điểm:** Bitexco Financial Tower, 2 Đường Hải Triều, Phường Sài Gòn, Thành phố Hồ Chí Minh, Việt Nam  
-**Trạng thái khi nộp báo cáo:** Đã đăng ký; buổi đầu tiên dự kiến diễn ra ngày 01/08/2026
+**Trọng tâm workshop:** Kiro, Vibe Coding, Strands Agents SDK và Amazon Bedrock AgentCore

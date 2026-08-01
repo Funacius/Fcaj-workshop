@@ -1,105 +1,111 @@
 ---
-title: "AgentForge Workshop với Amazon Bedrock AgentCore"
+title: "AgentForge Ho Chi Minh City"
 menuTitle: "AgentForge Workshop"
 weight: 3
 pre: "<b>4.3.</b>"
 ---
 
-<div class="event-hero-title">AgentForge Workshop: Xây dựng AI Agent sẵn sàng cho production với Amazon Bedrock AgentCore</div>
+<div class="event-hero-title">Xây dựng và triển khai AI Agent trên Amazon Bedrock AgentCore với Kiro</div>
 
 ## Thông tin sự kiện
 
-**Tên sự kiện:** AgentForge Workshop – Xây dựng AI Agent sẵn sàng cho production với Amazon Bedrock AgentCore  
-**Lịch trình:** Ngày 01, 08 và 15/08/2026, từ 09:00 đến 11:00  
+**Tên sự kiện:** AgentForge Ho Chi Minh City  
+**Ngày và thời gian:** 01/08/2026, từ 09:00 đến 11:00  
 **Địa điểm:** Bitexco Financial Tower, 2 Đường Hải Triều, Phường Sài Gòn, Thành phố Hồ Chí Minh 700000, Việt Nam  
-**Hình thức:** Ba buổi trình bày kỹ thuật kết hợp thực hành  
-**Trạng thái khi nộp báo cáo:** Đã đăng ký. Buổi đầu tiên dự kiến diễn ra ngày 01/08/2026.
+**Hình thức:** Trình bày kỹ thuật kết hợp bài thực hành có hướng dẫn  
+**Tài liệu workshop:** [Xây dựng và triển khai AI Agent trên Amazon Bedrock AgentCore bằng Vibe Coding với Kiro](http://agentforge-hcmc-workshop-p371s08u.s3-website-ap-southeast-1.amazonaws.com/00-Overview/00-Dashboard-Overview.html)
 
-Workshop được thiết kế thành lộ trình ba giai đoạn, bắt đầu từ nền tảng
-của Amazon Bedrock AgentCore, sau đó mở rộng sang cá nhân hóa, đánh giá,
-khả năng quan sát, tối ưu, sẵn sàng cho production và quản trị.
+## Mục tiêu sự kiện
 
-## Mục tiêu workshop
+- Hiểu cách Kiro hỗ trợ phát triển bằng ngôn ngữ tự nhiên và quy trình dựa trên specification.
+- Tìm hiểu trách nhiệm của Amazon Bedrock AgentCore khi vận hành agent trong production.
+- Xây dựng, kiểm thử, triển khai và gọi một Strands agent cơ bản bằng AgentCore CLI.
+- Khám phá cách tool, nguồn tri thức, authentication và Web UI tạo thành một ứng dụng agentic hoàn chỉnh.
 
-- Hiểu các khả năng chính của Amazon Bedrock AgentCore và vai trò của chúng trong một hệ thống agentic.
-- Triển khai một agent lên AgentCore và kết nối agent với công cụ cùng nguồn tri thức.
-- Bổ sung identity, memory, evaluation và observability để cải thiện bảo mật và chất lượng.
-- Tìm hiểu policy, kỹ thuật tối ưu và thực hành DevOps cho agent sẵn sàng vận hành.
+## Nội dung chính
 
-## Ngày 1 – Nền tảng và thiết lập agent
+### Kiro và phát triển phần mềm có AI hỗ trợ
 
-**Ngày:** 01/08/2026  
-**Chủ đề:** Giới thiệu Amazon Bedrock AgentCore
+Buổi học giới thiệu Kiro như một môi trường phát triển AI-native. Tôi đã
+tìm hiểu giao diện quản lý dự án, chat panel, terminal tích hợp và hai
+phương thức làm việc bổ trợ lẫn nhau:
 
-### Phiên kỹ thuật, 09:00–10:00
+- **Vibe Coding** phù hợp cho prototype, tính năng nhỏ, sửa lỗi và lặp nhanh từ prompt ngôn ngữ tự nhiên.
+- **Spec-Driven Development** phù hợp cho công việc phức tạp hoặc hướng production, cần review requirement, acceptance criteria, design và implementation task.
+- **Steering document** trong `.kiro/steering/` cung cấp cho Kiro ngữ cảnh dự án và quy ước phát triển có tính liên tục.
 
-- Giới thiệu workshop và lộ trình học tập.
-- Tổng quan Amazon Bedrock AgentCore.
-- AgentCore Runtime để triển khai và vận hành agent.
-- AgentCore Gateway để kết nối agent với các khả năng bên ngoài.
-- AgentCore Identity cho các tương tác agent đã xác thực.
+Bài học quan trọng là mọi thay đổi do AI sinh ra vẫn cần con người kiểm tra.
+Kiro có thể tăng tốc việc triển khai và chạy command, nhưng developer vẫn chịu
+trách nhiệm review diff, permission, dependency, bảo mật và kết quả kiểm thử.
 
-### Bài thực hành, 10:00–11:00
+### Nền tảng Amazon Bedrock AgentCore
 
-- Triển khai một agent cơ bản trong AgentCore.
-- Kết nối công cụ bên ngoài và Knowledge Bases.
-- Xây dựng Web UI và tích hợp xác thực Amazon Cognito.
+Workshop giải thích rằng việc tạo một agent sử dụng mô hình chỉ là một phần
+của bài toán. Hệ thống production còn phải xử lý runtime deployment, auto-scaling,
+IAM permission, truy cập an toàn, tích hợp tool, memory và observability. Amazon
+Bedrock AgentCore cung cấp các khối chức năng managed cho những trách nhiệm vận hành này.
 
-## Ngày 2 – Cá nhân hóa, đánh giá và tối ưu
+Ứng dụng tham chiếu là một Returns and Refunds Assistant có khả năng tra cứu đơn
+hàng, kiểm tra điều kiện trả hàng, tính tiền hoàn và truy xuất chính sách trả
+hàng theo từng quốc gia.
 
-**Ngày:** 08/08/2026  
-**Chủ đề:** Amazon Bedrock AgentCore nâng cao
+## Bài thực hành
 
-### Phiên kỹ thuật, 09:00–10:00
+### Tạo và triển khai agent đầu tiên
 
-- Khái niệm AgentCore L300 và kiến trúc thành phần.
-- Memory cho hành vi agent có tính liên tục và cá nhân hóa.
-- Evaluations để đo lường chất lượng agent.
-- Observability để truy vết hoạt động và xử lý sự cố.
-- Các thành phần Registry, Harness, Tools, Payments, Optimization và Policy.
+Tôi đã thực hiện quy trình AgentCore CLI:
 
-### Bài thực hành, 10:00–11:00
+1. Tạo cấu trúc dự án Python agent bằng `agentcore create`.
+2. Chọn Strands Agents SDK và Amazon Bedrock là model provider.
+3. Kiểm tra cấu trúc application và deployment được sinh ra.
+4. Chạy agent local bằng `agentcore dev` và kiểm thử trong terminal.
+5. Triển khai lên AgentCore Runtime bằng `agentcore deploy`.
+6. Gọi agent đã triển khai trên cloud và kiểm tra phản hồi.
 
-- Thêm memory để hỗ trợ hành vi agent cá nhân hóa.
-- Khám phá Agent Observability.
-- Sử dụng AgentCore Evaluations để đo hiệu suất agent.
-- Khám phá AgentCore Harness.
+Quy trình này minh họa cách CLI đóng gói agent, chuẩn bị tài nguyên triển khai và
+tạo vòng lặp nhất quán từ kiểm thử local đến managed runtime.
 
-## Ngày 3 – Sẵn sàng cho production và quản trị
+### Bổ sung hành vi nghiệp vụ và tool
 
-**Ngày:** 15/08/2026  
-**Chủ đề:** AgentCore DevOps và các phương pháp tốt
+Agent cơ bản sau đó được chuyên biệt hóa thành Returns and Refunds Assistant.
+Bài lab bao gồm:
 
-### Phiên kỹ thuật, 09:00–10:00
+- Xác định system prompt tập trung cho vai trò và hành vi của agent.
+- Tạo các hàm Python tool bằng decorator `@tool` của Strands.
+- Dùng docstring rõ ràng và type hint để mô hình hiểu khi nào và cách gọi tool.
+- Kiểm thử hành vi tra cứu order, customer, current time và return policy.
+- Review code được sinh trước khi deploy lại agent.
 
-- Các trường hợp sử dụng Amazon Bedrock AgentCore trong DevOps.
-- Phương pháp tốt khi thiết kế, triển khai và vận hành hệ thống agentic.
-- Sẵn sàng cho production, ranh giới bảo mật và các vấn đề quản trị.
+### Kiến trúc end-to-end được tìm hiểu
 
-### Bài thực hành, 10:00–11:00
+Tài liệu workshop cũng minh họa cách agent có thể mở rộng ra ngoài các inline
+mock tool:
 
-- Bảo vệ lời gọi công cụ bằng AgentCore Policy.
-- Thực hiện các cải tiến và tùy chỉnh mở.
-- Hoàn thiện và thử nghiệm cuối cùng.
+- AgentCore Gateway định tuyến tool request một cách an toàn.
+- AWS Lambda truy vấn dữ liệu customer, order và product trong Amazon DynamoDB.
+- Amazon Bedrock Knowledge Base cung cấp chính sách trả hàng theo từng quốc gia.
+- Amazon Cognito xác thực gateway call và người dùng Web UI.
+- Giao diện chat Streamlit cho phép người dùng đã xác thực tương tác với agent.
+- Amazon CloudWatch cung cấp log, trace và thông tin quan sát vận hành.
 
-## Kết quả học tập mong đợi
+## Kiến thức đạt được
 
-Sau khi hoàn thành ba buổi, tôi mong đợi có thể:
+- Vibe Coding hữu ích cho việc lặp nhanh, trong khi Spec-Driven Development an toàn hơn cho tính năng liên quan nhiều file hoặc ranh giới hệ thống.
+- Steering document giảm việc lặp lại prompt và giữ công việc được sinh phù hợp với quy ước dự án.
+- Tool chuyển agent từ giao diện hội thoại thành hệ thống có thể thực hiện hành động có kiểm soát và truy xuất dữ liệu ứng dụng.
+- Mô tả tool, type hint và giá trị trả về ảnh hưởng trực tiếp đến khả năng agent gọi đúng tool.
+- Nên kiểm thử local trước khi deploy cloud để rút ngắn vòng phản hồi và giảm sử dụng tài nguyên không cần thiết.
+- Runtime, identity, gateway và observability là thành phần thiết yếu của agent production, không phải phần bổ sung sau khi mô hình đã chạy.
+- AI-assisted development cải thiện tốc độ, nhưng phán đoán kiến trúc, review bảo mật và xác minh vẫn là trách nhiệm của con người.
 
-- Giải thích cách Runtime, Gateway, Identity, Memory, Observability, Evaluations và Policy phối hợp với nhau.
-- Xây dựng và triển khai agent cơ bản có kết nối công cụ và Knowledge Base.
-- Bảo vệ Web UI bằng Amazon Cognito và áp dụng quyền truy cập có kiểm soát cho agent.
-- Đo lường hành vi agent thay vì chỉ đánh giá câu trả lời bằng cảm nhận chủ quan.
-- Áp dụng observability và governance trước khi đưa workload agentic lên production.
-- Xác định khả năng áp dụng AI agent có quản trị trong nền tảng học tập và quy trình quản trị.
+## Liên hệ với EduCloud Lite
 
-## Kế hoạch áp dụng
-
-Workshop cung cấp tài liệu tham khảo hữu ích cho hướng phát triển EduCloud.
-Phiên bản sau có thể đánh giá việc bổ sung trợ lý AI cho tìm kiếm khóa
-học, hỗ trợ nội dung hoặc hướng dẫn quản trị. Tính năng này chỉ nên được
-xem xét sau khi xác định ranh giới identity, công cụ được phép, tiêu chí đánh
-giá, observability và cơ chế giám sát của con người.
+Workshop cung cấp một hướng nghiên cứu tương lai cho EduCloud. Agent có thể hỗ trợ
+tìm kiếm khóa học, trả lời câu hỏi dựa trên tài liệu khóa học đã được phê
+duyệt hoặc hướng dẫn quản trị viên. Trước khi triển khai, EduCloud cần xác định
+tool được phép, ranh giới identity, nguồn trả lời, tiêu chí đánh giá, logging,
+giới hạn chi phí và cơ chế giám sát của con người. Phiên bản EduCloud hiện tại
+chưa sử dụng AgentCore; đây là hướng phát triển tương lai được gợi ý từ workshop.
 
 ## Minh chứng sự kiện
 

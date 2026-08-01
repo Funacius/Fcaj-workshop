@@ -1,105 +1,114 @@
 ---
-title: "AgentForge Workshop with Amazon Bedrock AgentCore"
+title: "AgentForge Ho Chi Minh City"
 menuTitle: "AgentForge Workshop"
 weight: 3
 pre: "<b>4.3.</b>"
 ---
 
-<div class="event-hero-title">AgentForge Workshop: Building Production-Ready Agents with Amazon Bedrock AgentCore</div>
+<div class="event-hero-title">Build and Deploy AI Agents on Amazon Bedrock AgentCore with Kiro</div>
 
 ## Event Information
 
-**Event name:** AgentForge Workshop – Building Production-Ready Agents with Amazon Bedrock AgentCore  
-**Schedule:** August 1, 8, and 15, 2026, from 09:00 to 11:00  
+**Event name:** AgentForge Ho Chi Minh City  
+**Date and time:** August 1, 2026, from 09:00 to 11:00  
 **Location:** Bitexco Financial Tower, 2 Hai Trieu Street, Saigon Ward, Ho Chi Minh City 700000, Vietnam  
-**Format:** Three technical sessions with presentations and hands-on labs  
-**Status at report submission:** Registered. The first session is scheduled for August 1, 2026.
+**Format:** Technical presentation and guided hands-on lab  
+**Workshop guide:** [Build and Deploy AI Agents on Amazon Bedrock AgentCore using Vibe Coding with Kiro](http://agentforge-hcmc-workshop-p371s08u.s3-website-ap-southeast-1.amazonaws.com/00-Overview/00-Dashboard-Overview.html)
 
-The workshop is designed as a three-stage learning path, progressing from the
-foundations of Amazon Bedrock AgentCore to personalization, evaluation,
-observability, optimization, production readiness, and governance.
+## Event Objectives
 
-## Workshop Objectives
+- Understand how Kiro supports natural-language and specification-driven development.
+- Learn the responsibilities of Amazon Bedrock AgentCore in operating agents in production.
+- Build, test, deploy, and invoke a basic Strands agent using the AgentCore CLI.
+- Explore how tools, knowledge sources, authentication, and a Web UI form an end-to-end agentic application.
 
-- Understand the main Amazon Bedrock AgentCore capabilities and their roles in an agentic system.
-- Deploy an agent to AgentCore and connect it to tools and knowledge sources.
-- Add identity, memory, evaluation, and observability to improve security and quality.
-- Explore policies, optimization techniques, and DevOps practices for production-ready agents.
+## Main Content
 
-## Day 1 – Foundations and Agent Setup
+### Kiro and AI-assisted development
 
-**Date:** August 1, 2026  
-**Topic:** Introduction to Amazon Bedrock AgentCore
+The session introduced Kiro as an AI-native development environment. I explored
+its project views, chat panel, integrated terminal, and two complementary ways
+of working:
 
-### Technical Session, 09:00–10:00
+- **Vibe Coding** for focused prototypes, small features, bug fixes, and rapid iteration from natural-language prompts.
+- **Spec-Driven Development** for complex or production-oriented work that requires reviewed requirements, acceptance criteria, design, and implementation tasks.
+- **Steering documents** stored under `.kiro/steering/` to give Kiro persistent project context and development guidelines.
 
-- Workshop introduction and learning roadmap.
-- Amazon Bedrock AgentCore overview.
-- AgentCore Runtime for deploying and operating agents.
-- AgentCore Gateway for connecting agents to external capabilities.
-- AgentCore Identity for authenticated agent interactions.
+A central lesson was that generated changes still require human review. Kiro
+can accelerate implementation and command execution, but the developer remains
+responsible for validating diffs, permissions, dependencies, security, and test
+results.
 
-### Hands-on Lab, 10:00–11:00
+### Amazon Bedrock AgentCore foundations
 
-- Deploy a basic agent in AgentCore.
-- Connect external tools and Knowledge Bases.
-- Build a Web UI and integrate Amazon Cognito authentication.
+The workshop explained that creating a model-powered agent is only one part of
+the problem. A production system must also address runtime deployment,
+auto-scaling, IAM permissions, secure access, tool integration, memory, and
+observability. Amazon Bedrock AgentCore provides managed building blocks for
+these operational responsibilities.
 
-## Day 2 – Personalization, Evaluation and Optimization
+The reference application was a Returns and Refunds Assistant capable of
+looking up customer orders, checking return eligibility, calculating refund
+amounts, and retrieving country-specific return policies.
 
-**Date:** August 8, 2026  
-**Topic:** Advanced Amazon Bedrock AgentCore
+## Hands-on Lab
 
-### Technical Session, 09:00–10:00
+### Creating and deploying the first agent
 
-- AgentCore L300 concepts and component architecture.
-- Memory for persistent and personalized agent behavior.
-- Evaluations for measuring agent quality.
-- Observability for tracing agent activity and troubleshooting behavior.
-- Registry, Harness, Tools, Payments, Optimization, and Policy components.
+I followed the AgentCore CLI workflow to:
 
-### Hands-on Lab, 10:00–11:00
+1. Scaffold a Python agent project using `agentcore create`.
+2. Select Strands Agents SDK with Amazon Bedrock as the model provider.
+3. Inspect the generated application and deployment structure.
+4. Run the agent locally using `agentcore dev` and test it through the terminal.
+5. Deploy it to AgentCore Runtime using `agentcore deploy`.
+6. Invoke the deployed cloud agent and verify its response.
 
-- Add memory to support personalized agent behavior.
-- Explore Agent Observability.
-- Use AgentCore Evaluations to measure agent performance.
-- Explore AgentCore Harness.
+This workflow demonstrated how the CLI packages the agent, prepares deployment
+resources, and provides a consistent loop from local testing to managed runtime.
 
-## Day 3 – Production Readiness and Governance
+### Adding domain behavior and tools
 
-**Date:** August 15, 2026  
-**Topic:** AgentCore DevOps and Best Practices
+The basic agent was then specialized as a Returns and Refunds Assistant. The
+lab covered:
 
-### Technical Session, 09:00–10:00
+- Defining a focused system prompt for the agent's role and behavior.
+- Creating Python tool functions with the Strands `@tool` decorator.
+- Using clear docstrings and type hints so the model understands when and how to call a tool.
+- Testing order lookup, customer lookup, current time, and return-policy retrieval behavior.
+- Reviewing generated code before redeploying the updated agent.
 
-- Amazon Bedrock AgentCore DevOps use cases.
-- Best practices for designing, deploying, and operating agentic systems.
-- Production readiness, security boundaries, and governance considerations.
+### End-to-end architecture explored
 
-### Hands-on Lab, 10:00–11:00
+The workshop guide also demonstrated how the agent can evolve beyond inline
+mock tools:
 
-- Secure tool calls using AgentCore Policy.
-- Implement open-ended enhancements and customizations.
-- Perform final improvements and experimentation.
+- AgentCore Gateway securely routes tool requests.
+- AWS Lambda queries customer, order, and product records in Amazon DynamoDB.
+- An Amazon Bedrock Knowledge Base supplies country-specific return policies.
+- Amazon Cognito provides authentication for gateway calls and the Web UI.
+- A Streamlit chat interface allows authenticated users to interact with the deployed agent.
+- Amazon CloudWatch provides logs, traces, and operational observability.
 
-## Expected Learning Outcomes
+## Knowledge Gained
 
-After completing the three sessions, I expect to be able to:
+- Vibe Coding is useful for rapid iteration, while Spec-Driven Development is safer for features spanning multiple files or system boundaries.
+- Steering documents reduce repeated prompting and keep generated work aligned with project conventions.
+- Tools turn an agent from a conversational interface into a system that can perform controlled actions and retrieve application data.
+- Tool descriptions, type hints, and return values strongly affect whether an agent invokes a tool correctly.
+- Local testing should precede cloud deployment to shorten feedback cycles and reduce unnecessary resource usage.
+- Runtime, identity, gateway, and observability are essential parts of a production agent, not optional additions after the model is working.
+- AI-assisted development improves speed, but architectural judgment, security review, and verification remain human responsibilities.
 
-- Explain how Runtime, Gateway, Identity, Memory, Observability, Evaluations, and Policy work together.
-- Build and deploy a basic agent connected to tools and a Knowledge Base.
-- Protect a Web UI with Amazon Cognito and apply controlled access to agent capabilities.
-- Measure agent behavior instead of evaluating responses only by subjective inspection.
-- Apply observability and governance practices before moving an agentic workload to production.
-- Identify possible future uses of governed AI agents in learning platforms and administrative workflows.
+## Relevance to EduCloud Lite
 
-## Planned Application
-
-The workshop provides a useful reference for future EduCloud development. A
-later version could evaluate an AI assistant for course discovery, content
-support, or administrative guidance. Such a feature should only be considered
-after defining identity boundaries, permitted tools, evaluation criteria,
-observability, and human oversight.
+The workshop provides a possible direction for future EduCloud research. An
+agent could support course discovery, answer questions using approved course
+materials, or guide administrators through operational information. Before such
+a feature is implemented, EduCloud would need to define permitted tools,
+identity boundaries, source-grounded responses, evaluation criteria, logging,
+cost limits, and human oversight. The current EduCloud release does not include
+AgentCore; this is a future enhancement informed by the workshop.
 
 ## Event Evidence
 
